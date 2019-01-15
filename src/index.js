@@ -17,10 +17,4 @@ const jsonDate = {
         price: 'price',
     },
 };
-ReactDOM.render(
-    <App
-        {...jsonDate}
-    />,
-    document.getElementById('root')
-);
-
+ReactDOM.render( < App {...jsonDate}/>, document.getElementById('root'));

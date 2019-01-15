@@ -1,4 +1,14 @@
-.text{  
-    font-family: 'Microsoft JhengHei',serif;
-    text-align: center;
+$classname: 'calendars';
+
+.#{$classname} {
+
+    .text {
+        font-family: 'Microsoft JhengHei', serif;
+        text-align: center;
+    }
+    
+    .test {
+        color: blue;
+    }
+
 }

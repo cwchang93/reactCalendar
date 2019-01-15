@@ -6,6 +6,14 @@
 
 */
 
+// additional
+// 篩選日期重複資料
+// 同一天僅可傳入一筆資料，
+// 如果出現相同資料時，
+// 篩選優先順序為 : 可報名 -> 保證出團 -> 低價格
+// 讓同一天只有一筆資料
+
+
 // Plugin usage
 
 $('.calendars').calendar({
@@ -36,7 +44,7 @@ $('.calendars').calendar({
         // 價格
         'price': 'price',
     },
-    // 點上一個月時
+    // 點上一個月時   Q:
     // @param $btn {$object} jquery 物件
     // @param $data {array} 上一個月的資料
     // @param module {object} 此模組實例物件
