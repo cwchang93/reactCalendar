@@ -17,12 +17,12 @@ class App extends Component {
     render() {
         return (
             <React.Fragment>
-                <div className="wholeCalendar">
+                <div className="calendars">
 
 
                     <CalendarHead />
-                    <h1 className = 'text' > {this.props.text}</h1>
-                    <h2 className = 'test'>test2</h2>
+                    {/* <h1 className = 'text' > {this.props.text}</h1> */}
+                    {/* <h2 className = 'test'>test2</h2> */}
                     <CalendarBody />
                 </div>
             </React.Fragment>
