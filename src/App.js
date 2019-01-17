@@ -7,12 +7,14 @@ import CalendarBody from './components/calendarBody.jsx';
 
 
 class App extends Component {
+    // 只要用到props就要指定型別
     static propTypes = {
         text: PropTypes.string,
         dataSource: PropTypes.string,
 
     };
     static defaultProps = {
+        // 預設值 props不能為空值
         text: 'Hello world!',
         newText: 'hithere',
     };
