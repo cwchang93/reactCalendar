@@ -124,13 +124,65 @@ $classname: 'calendars';
                 border: 1px solid #f4f4f4;
                 border-left:none;
                 border-top:none;
-                height: 50px;
+                height: 100px;
                 position: relative;
-                .num {
+                
+                .generalinfo {
+                    width: 100%;
+                    height:20px;
+                    display: inline-block;
+
+                .daynum {
+                    display: block;
                     position: absolute;
                     top: 2px;
                     left: 2px;
                     color: #444;
+                }
+
+                .guaranteed {
+                    padding: 0 3px;
+                    /* width: 100%; */
+                    height: 20px;
+                    color: #fff;
+                    /* text-align: right; */
+                    position: absolute;
+                    top: 3px;
+                    right: 3px;
+                    line-height: 20px;
+                    background-color: #fe8400;
+                }
+
+            }
+
+                .details {
+                    text-align: left;
+                    display:inline-block;
+                    width: 100%;
+                
+                >span {
+                    display: block;
+                    width: 100%;
+                    height: 16px;
+                    text-align: left;
+                }
+
+                    .status {
+                        // color: #ff7800;
+                    }
+                    .sell {
+                    }
+
+                    .group {
+                        
+                    }
+
+                    .price {
+                        display:inline-block;
+                        width: 100%;
+                        color: #e10500;
+                    }
+
                 }
 
             }

@@ -9,6 +9,8 @@ import CalendarBody from './components/calendarBody.jsx';
 class App extends Component {
     static propTypes = {
         text: PropTypes.string,
+        dataSource: PropTypes.string,
+
     };
     static defaultProps = {
         text: 'Hello world!',
@@ -20,10 +22,10 @@ class App extends Component {
                 <div className="calendars">
 
 
-                    <CalendarHead />
+                    <CalendarHead path={this.props.dataSource}/>
                     {/* <h1 className = 'text' > {this.props.text}</h1> */}
                     {/* <h2 className = 'test'>test2</h2> */}
-                    <CalendarBody />
+                    <CalendarBody path={this.props.dataSource}/>
                 </div>
             </React.Fragment>
 
