@@ -5,11 +5,14 @@ class CalendarHead extends Component {
         super(props);
         this.state = {
             //   isLoading: false,
+            initialYearMonth: '',
             travelDataHead: null,
             oldestMonth: '',
             oldestYear: '',
             newestMonth: '',
             newestYear: '',
+            renderYearArr: [],
+            renderMonthArr: [],
         };
     }
 
@@ -46,6 +49,8 @@ class CalendarHead extends Component {
     }
 
     handleCalendarFormat() {}
+
+    handleRenderYearArr() {}
 
     getData(path) {
         fetch(path)
