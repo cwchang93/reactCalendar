@@ -6,8 +6,10 @@ class CalendarHead extends Component {
         this.state = {
             //   isLoading: false,
             travelDataHead: null,
-            mostPreMonth: '',
-            latestMonth: '',
+            oldestMonth: '',
+            oldestYear: '',
+            newestMonth: '',
+            newestYear: '',
         };
     }
 
@@ -22,16 +24,25 @@ class CalendarHead extends Component {
     }
 
     sortedDateFunc(unsortedArr) {
+    // sort=> 整理array排序後
+
         const sortedArr = unsortedArr.sort();
         console.log(sortedArr);
-        const mostPreMonth = sortedArr[0];
-        const latestMonth = sortedArr[sortedArr.length - 1];
-        console.log(mostPreMonth);
-        console.log(latestMonth);
-        this.setState({
-            mostPreMonth: mostPreMonth,
-            latestMonth: latestMonth,
-        });
+        const oldestMonth = sortedArr[0].substr(5, 2); // 找出整理後array的第一個的月
+        const oldestYear = sortedArr[0].substr(0, 4); // 找出整理後array的第一個的年
+        const newestMonth = sortedArr[sortedArr.length - 1].substr(5, 2); // 找出整理後array的第一個月
+        const newestYear = sortedArr[sortedArr.length - 1].substr(0, 4); // 找出整理後array的第一個年
+        console.log('test in sortedDateFunc');
+        console.log('oldestMonth', oldestMonth); // 最左邊月份
+        console.log('oldestYear', oldestYear); // 最左邊月份
+        console.log('newestMonth', newestMonth); // 最右邊月份
+        console.log('newestYear', newestYear); // 最右邊月份
+    // this.setState({  這邊若setState會報錯
+    //    oldestMonth:oldestMonth,
+    //    oldestYear:oldestYear,
+    //     newestMonth: newestMonth,
+    //     newestYear: newestYear,
+    // });
     }
 
     handleCalendarFormat() {}
@@ -57,14 +68,14 @@ class CalendarHead extends Component {
     }
 
     render() {
-        const {travelDataHead, mostPreMonth, latestMonth} = this.state;
+        const {travelDataHead, oldestMonth, newestMonth} = this.state;
         if (travelDataHead) {
             // console.log(this.state.travelDataHead);
             // console.log('fromHead', this.props.path);
             // this.renderDataFunc(travelDataHead, 'date');
             this.sortedDateFunc(this.renderDataFunc(travelDataHead, 'date'));
             // console.log(mostPreMonth);
-            // console.log(latestMonth);
+            // console.log(newestMonth);
 
             return (
                 <React.Fragment>

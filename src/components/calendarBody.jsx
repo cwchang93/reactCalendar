@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+
 // import tripData from '../json/data1.json'; import for testing data
 
 class CalendarBody extends Component {
@@ -20,7 +21,7 @@ class CalendarBody extends Component {
         };
     }
 
-    // 不能直接把變數寫在外面render
+    // 不能直接把變數寫在外面render  =>會報錯
     // const weekDay = ['星期日', '星期一', '星期二','星期三',
     //                 '星期四','星期五','星期六'];
 
@@ -54,8 +55,8 @@ class CalendarBody extends Component {
   render() {
       const {travelData, weekDay} = this.state;
       console.log(this.props.path);
-      this.printTest(13);
-      console.log(travelData);
+      //   this.printTest(13);
+      //   console.log(travelData);
       console.log(weekDay);
 
       //   console.log(weekDay);
