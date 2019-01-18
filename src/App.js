@@ -11,6 +11,8 @@ class App extends Component {
     static propTypes = {
         text: PropTypes.string,
         dataSource: PropTypes.string,
+        initYearMonth: PropTypes.string,
+
 
     };
     static defaultProps = {
@@ -24,7 +26,8 @@ class App extends Component {
                 <div className="calendars">
 
 
-                    <CalendarHead path={this.props.dataSource}/>
+                    <CalendarHead path={this.props.dataSource}
+                        initYearMonth= {this.props.initYearMonth}/>
                     {/* <h1 className = 'text' > {this.props.text}</h1> */}
                     {/* <h2 className = 'test'>test2</h2> */}
                     <CalendarBody path={this.props.dataSource}/>
