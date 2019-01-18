@@ -16,6 +16,9 @@ class CalendarHead extends Component {
             renderYearArr: null,
             renderMonthArr: null, // 之後用map轉出三個
             initYear: null,
+            initMonthAfterZero: null,
+            preInitYear: null,
+            afterInitYear: null,
         };
     }
 
@@ -51,8 +54,6 @@ class CalendarHead extends Component {
     // });
     }
 
-    handleCalendarFormat() {}
-
     handleRenderYearMonthArr() {
         const {initYearMonth} = this.state;
         // 把initYear跟Month分開
@@ -84,9 +85,10 @@ class CalendarHead extends Component {
             afterInitYear = initYear;
             console.log(preInitYear);
         } else if (initMonthAfterZero === '12') {
-            preInitYear = String(parseInt(initYear) + 1);
-            // preInitYear = initYear;
+            preInitYear = String(parseInt(initYear) - 1);
+
             afterInitYear = initYear;
+            // preInitYear = initYear;
         } else {
             preInitYear = initYear;
             afterInitYear = initYear;
@@ -115,18 +117,99 @@ class CalendarHead extends Component {
         console.log('afterInitMonth');
         console.log(afterInitMonth);
         const renderMonthArr = [prevInitMonth, initMonthAfterZero, afterInitMonth];
+
         this.setState({
             renderMonthArr: renderMonthArr,
             renderYearArr: renderYearArr,
             initYear: initYear,
+            initMonthAfterZero: initMonthAfterZero,
+            preInitYear,
+            afterInitYear,
         });
-    // console.log(this.state.render)
+
+    // initYear,
     }
 
-    // renderStateFunc() {
-    //     console.log('afterInitMonthinRender');
-    //     console.log(afterInitMonth);
-    // }
+    handleSlideClick(leftOrRight) {
+        const {
+            initYear,
+            initMonthAfterZero,
+            preInitYear,
+            afterInitYear,
+        } = this.state;
+        // 把initYear跟Month分開
+        // const initYearMonthLen = initYearMonth.length;
+        // const initYear = initYearMonth.substr(0, 4);
+
+        // const initMonth = initYearMonth.substr(initYearMonthLen - 2, 2); // 只取後面兩個
+        // let initMonthAfterZero;
+        // 如果initMonth第一個數字是0 ==>只取後面的數字
+
+        // 全域變數與區域變數問題待研究
+        console.log('this is left');
+        if (leftOrRight == 'left') {
+            console.log('initYear, initMonthAfterZero, preInitYear, afterInitYear');
+            console.log(initYear, initMonthAfterZero, preInitYear, afterInitYear);
+        }
+
+        // if (initMonth[0] == '0') {
+        //     //   initMonth = init[1];  // Uncaught Error: "initMonth" is read-only
+        //     initMonthAfterZero = initMonth[1];
+        //     // console.log(initMonthAfterZero);
+        // } else {
+        //     initMonthAfterZero = initMonth;
+        // }
+
+        // console.log(initMonthAfterZero);
+        // console.log(initYear);
+
+        // if (initMonthAfterZero === '1') {
+        //     console.log('initMonthAfterZero===1');
+        //     // console.log('initMonthAfterZero', initMonthAfterZero);
+        //     preInitYear = String(parseInt(initYear) - 1);
+        //     afterInitYear = initYear;
+        //     console.log(preInitYear);
+        // } else if (initMonthAfterZero === '12') {
+        //     preInitYear = String(parseInt(initYear) + 1);
+        //     // preInitYear = initYear;
+        //     afterInitYear = initYear;
+        // } else {
+        //     preInitYear = initYear;
+        //     afterInitYear = initYear;
+        // }
+
+        // const renderYearArr = [preInitYear, initYear, afterInitYear];
+
+        // // 放進要render(map)的arr
+        // // 待處理:  如果輸入的月份是01 => premonth變12
+        // let prevInitMonth;
+        // if (initMonthAfterZero === '1') {
+        //     prevInitMonth = '12';
+        // } else {
+        //     prevInitMonth = String(parseInt(initMonthAfterZero) - 1);
+        // }
+        // console.log('prevInitMonth');
+        // console.log(prevInitMonth);
+
+        // let afterInitMonth;
+        // if (initMonthAfterZero === '12') {
+        //     afterInitMonth = '1';
+        // } else {
+        //     afterInitMonth = String(parseInt(initMonthAfterZero) + 1);
+        // }
+
+        // console.log('afterInitMonth');
+        // console.log(afterInitMonth);
+        // const renderMonthArr = [prevInitMonth, initMonthAfterZero, afterInitMonth];
+
+        // this.setState({
+        //     renderMonthArr: renderMonthArr,
+        //     renderYearArr: renderYearArr,
+        //     initYear: initYear,
+        //     initMonthAfterZero:initMonthAfterZero,
+
+    // });
+    }
 
     getData(path) {
         fetch(path)
@@ -145,6 +228,7 @@ class CalendarHead extends Component {
         const {travelDataHead} = this.state;
         this.handleRenderYearMonthArr();
         this.getData(this.props.path);
+
     // this.sortedDateFunc(this.renderDataFunc(travelDataHead, 'date'));
     }
 
@@ -192,7 +276,15 @@ class CalendarHead extends Component {
                                 );
                             })} */}
 
-                            <li className="tophead__month">
+                            {/* <li className="tophead__month" onClick ={ ('left') =>{
+                  this.handleSlideClick('left');
+              } } > */}
+                            <li
+                                className="tophead__month"
+                                onClick={() => {
+                                    this.handleSlideClick('left');
+                                }}
+                            >
                                 <a href="#">
                                     <span>
                                         {renderYearArr[0]} {renderMonthArr[0]}月
@@ -208,7 +300,12 @@ className="active">
                                     </span>
                                 </a>
                             </li>
-                            <li className="tophead__month">
+                            <li
+                                className="tophead__month"
+                                onClick={() => {
+                                    this.handleSlideClick('right').bind(this);
+                                }}
+                            >
                                 <a href="#">
                                     <span>
                                         {renderYearArr[2]} {renderMonthArr[2]}月
