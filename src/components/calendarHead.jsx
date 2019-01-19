@@ -34,19 +34,32 @@ class CalendarHead extends Component {
             // console.log(newArr);
         }
         console.log(newArr);
+
+        const oldestMonth = newArr[0].substr(5, 2); // 找出整理後array的第一個的月
+        const oldestYear = newArr[0].substr(0, 4); // 找出整理後array的第一個的年
+        const newestMonth = newArr[newArr.length - 1].substr(5, 2); // 找出整理後array的第一個月
+        const newestYear = newArr[newArr.length - 1].substr(0, 4); // 找出整理後array的第一個年
+        console.log('test in newDateFunc');
+        console.log('oldestMonth', oldestMonth); // 最左邊月份
+        console.log('oldestYear', oldestYear); // 最左邊月份
+        console.log('newestMonth', newestMonth); // 最右邊月份
+        console.log('newestYear', newestYear); // 最右邊月份
         this.setState({
-            unsortedArr: newArr,
+            // 這邊若setState會報錯
+            oldestMonth: oldestMonth,
+            oldestYear: oldestYear,
+            newestMonth: newestMonth,
+            newestYear: newestYear,
         });
-    // return newArr;
     }
 
-    sortedDateFunc(unsortedArr) {
-    // sort=> 整理array排序後
-    // console.log('unsortedArr', unsortedArr);
+    // sortedDateFunc(unsortedArr) {
+    // // sort=> 整理array排序後
+    // // console.log('unsortedArr', unsortedArr);
 
-        // const sortedArr = unsortedArr.sort();
-        console.log('1234 unsortedArr');
-        console.log(unsortedArr);
+    //     // const sortedArr = unsortedArr.sort();
+    //     console.log('1234 unsortedArr');
+    //     console.log(unsortedArr);
     // console.log(sortedArr);
     // const oldestMonth = sortedArr[0].substr(5, 2); // 找出整理後array的第一個的月
     // const oldestYear = sortedArr[0].substr(0, 4); // 找出整理後array的第一個的年
@@ -64,7 +77,7 @@ class CalendarHead extends Component {
     //     newestMonth: newestMonth,
     //     newestYear: newestYear,
     // });
-    }
+    // }
 
     handleRenderYearMonthArr() {
         const {initYearMonth} = this.state;
@@ -256,9 +269,9 @@ class CalendarHead extends Component {
                     () => {
                         this.renderDataFunc(this.state.travelDataHead, 'date');
 
-                        this.sortedDateFunc(this.state.unsortedArr);
-                        console.log('this.state.unsortedArr');
-                        console.log(this.state.unsortedArr);
+                        // this.sortedDateFunc(this.state.unsortedArr);
+                        // console.log('this.state.unsortedArr');
+                        // console.log(this.state.unsortedArr);
                         // console.log('travelDataHead in getData');
                         // console.log(this.state.travelDataHead);
                     }
@@ -279,6 +292,8 @@ class CalendarHead extends Component {
         // this.renderDataFunc(travelDataHead);
         console.log('travelDataHead in DidMount');
         console.log(travelDataHead);
+        console.log('this.state.oldestMonth in DidMount');
+        console.log(this.state.oldestMonth);
         // console.log(this.state.unsortedArr);
 
     // this.sortedDateFunc(this.state.unsortedArr);
@@ -297,23 +312,24 @@ class CalendarHead extends Component {
         console.log('bf if', travelDataHead);
         if (travelDataHead) {
             // this.renderStateFunc();
-            console.log('render in if travelData');
-            console.log('this.state.unsortedArr');
-            console.log(this.state.unsortedArr);
-            console.log('this.props.initialYearMonth');
-            console.log(this.state.initYearMonth);
-            console.log('renderMonthArr');
-            console.log(renderMonthArr);
-            console.log('renderYearArr');
-            console.log(renderYearArr);
+            // console.log('render in if travelData');
+            // console.log('this.state.unsortedArr');
+            // console.log(this.state.unsortedArr);
+            // console.log('this.props.initialYearMonth');
+            // console.log(this.state.initYearMonth);
+            // console.log('renderMonthArr');
+            // console.log(renderMonthArr);
+            // console.log('renderYearArr');
+            // console.log(renderYearArr);
 
-            console.log('travelDataHead', this.state.travelDataHead);
+            // console.log('travelDataHead', this.state.travelDataHead);
             // console.log('fromHead', this.props.path);
             // this.renderDataFunc(travelDataHead, 'date');
             // this.sortedDateFunc(this.renderDataFunc(travelDataHead, 'date'));
             // console.log(mostPreMonth);
             // console.log(newestMonth);
-
+            console.log('this.state.oldestMonth in render');
+            console.log(this.state.oldestMonth);
             return (
                 <React.Fragment>
                     <div>CalendarHead is Me!</div>
