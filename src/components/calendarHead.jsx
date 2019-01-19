@@ -26,6 +26,8 @@ class CalendarHead extends Component {
 
     renderDataFunc(jsonData, jsonKey) {
     // 6666666666666666
+        console.log('jsonKey');
+        console.log(jsonKey);
         const newArr = [];
         for (let i = 0; i < jsonData.length; i++) {
             newArr.push(jsonData[i][jsonKey]);
@@ -40,27 +42,28 @@ class CalendarHead extends Component {
 
     sortedDateFunc(unsortedArr) {
     // sort=> 整理array排序後
-        console.log('unsortedArr', unsortedArr);
+    // console.log('unsortedArr', unsortedArr);
 
-        const sortedArr = unsortedArr.sort();
-
-        console.log(sortedArr);
-        const oldestMonth = sortedArr[0].substr(5, 2); // 找出整理後array的第一個的月
-        const oldestYear = sortedArr[0].substr(0, 4); // 找出整理後array的第一個的年
-        const newestMonth = sortedArr[sortedArr.length - 1].substr(5, 2); // 找出整理後array的第一個月
-        const newestYear = sortedArr[sortedArr.length - 1].substr(0, 4); // 找出整理後array的第一個年
-        console.log('test in sortedDateFunc');
-        console.log('oldestMonth', oldestMonth); // 最左邊月份
-        console.log('oldestYear', oldestYear); // 最左邊月份
-        console.log('newestMonth', newestMonth); // 最右邊月份
-        console.log('newestYear', newestYear); // 最右邊月份
-        this.setState({
-            // 這邊若setState會報錯
-            oldestMonth: oldestMonth,
-            oldestYear: oldestYear,
-            newestMonth: newestMonth,
-            newestYear: newestYear,
-        });
+        // const sortedArr = unsortedArr.sort();
+        console.log('1234 unsortedArr');
+        console.log(unsortedArr);
+    // console.log(sortedArr);
+    // const oldestMonth = sortedArr[0].substr(5, 2); // 找出整理後array的第一個的月
+    // const oldestYear = sortedArr[0].substr(0, 4); // 找出整理後array的第一個的年
+    // const newestMonth = sortedArr[sortedArr.length - 1].substr(5, 2); // 找出整理後array的第一個月
+    // const newestYear = sortedArr[sortedArr.length - 1].substr(0, 4); // 找出整理後array的第一個年
+    // console.log('test in sortedDateFunc');
+    // console.log('oldestMonth', oldestMonth); // 最左邊月份
+    // console.log('oldestYear', oldestYear); // 最左邊月份
+    // console.log('newestMonth', newestMonth); // 最右邊月份
+    // console.log('newestYear', newestYear); // 最右邊月份
+    // this.setState({
+    //     // 這邊若setState會報錯
+    //     oldestMonth: oldestMonth,
+    //     oldestYear: oldestYear,
+    //     newestMonth: newestMonth,
+    //     newestYear: newestYear,
+    // });
     }
 
     handleRenderYearMonthArr() {
@@ -248,25 +251,35 @@ class CalendarHead extends Component {
                 this.setState(
                     {
                         travelDataHead: travelDataHead,
+                        // }
+                    },
+                    () => {
+                        this.renderDataFunc(this.state.travelDataHead, 'date');
+
+                        this.sortedDateFunc(this.state.unsortedArr);
+                        console.log('this.state.unsortedArr');
+                        console.log(this.state.unsortedArr);
+                        // console.log('travelDataHead in getData');
+                        // console.log(this.state.travelDataHead);
                     }
-                    // },
-                    // this.renderDataFunc(this.state.travelDataHead, 'date')
                 )
             )
             .catch((error) => console.log('parsing failed', error));
     }
 
-    componentWillMount() {
-        console.log('willMount');
-    }
+    // componentWillMount() {
+    //     console.log('willMount');
+    //     this.getData(this.props.path); // fetch data
+    // }
 
     componentDidMount() {
         const {travelDataHead} = this.state;
         this.handleRenderYearMonthArr();
-        this.getData(this.props.path); // fetch data
+        this.getData(this.props.path);
         // this.renderDataFunc(travelDataHead);
+        console.log('travelDataHead in DidMount');
         console.log(travelDataHead);
-        console.log(this.state.unsortedArr);
+        // console.log(this.state.unsortedArr);
 
     // this.sortedDateFunc(this.state.unsortedArr);
     }
@@ -281,6 +294,7 @@ class CalendarHead extends Component {
             initYear,
         } = this.state;
         console.log('init Render');
+        console.log('bf if', travelDataHead);
         if (travelDataHead) {
             // this.renderStateFunc();
             console.log('render in if travelData');
