@@ -15,10 +15,11 @@ class CalendarHead extends Component {
             newestYear: '', // 右邊到底的年
             unsortedArr: '',
 
-            renderYearArr: null, // 畫面上要render的年 Arr [String, String, String ]
+            renderYearArr: ['2018', '2018', '2018'], // 畫面上要render的年 Arr [String, String, String ]
             renderMonthArr: null, // 畫面上要render的月 Arr [String, String, String ]
             initYear: null, // 最初輸入的年部分
             initMonthAfterZero: null, // 最初輸入的月份(去掉0)
+
             preInitYear: null, // initYear的前面一格
             afterInitYear: null, // initYear的後面一格
         };
@@ -39,11 +40,6 @@ class CalendarHead extends Component {
         const oldestYear = newArr[0].substr(0, 4); // 找出整理後array的第一個的年
         const newestMonth = newArr[newArr.length - 1].substr(5, 2); // 找出整理後array的第一個月
         const newestYear = newArr[newArr.length - 1].substr(0, 4); // 找出整理後array的第一個年
-        console.log('test in newDateFunc');
-        console.log('oldestMonth', oldestMonth); // 最左邊月份
-        console.log('oldestYear', oldestYear); // 最左邊月份
-        console.log('newestMonth', newestMonth); // 最右邊月份
-        console.log('newestYear', newestYear); // 最右邊月份
         this.setState({
             // 這邊若setState會報錯
             oldestMonth: oldestMonth,
@@ -51,37 +47,73 @@ class CalendarHead extends Component {
             newestMonth: newestMonth,
             newestYear: newestYear,
         });
-    }
-
-    // sortedDateFunc(unsortedArr) {
-    // // sort=> 整理array排序後
-    // // console.log('unsortedArr', unsortedArr);
-
-    //     // const sortedArr = unsortedArr.sort();
-    //     console.log('1234 unsortedArr');
-    //     console.log(unsortedArr);
-    // console.log(sortedArr);
-    // const oldestMonth = sortedArr[0].substr(5, 2); // 找出整理後array的第一個的月
-    // const oldestYear = sortedArr[0].substr(0, 4); // 找出整理後array的第一個的年
-    // const newestMonth = sortedArr[sortedArr.length - 1].substr(5, 2); // 找出整理後array的第一個月
-    // const newestYear = sortedArr[sortedArr.length - 1].substr(0, 4); // 找出整理後array的第一個年
-    // console.log('test in sortedDateFunc');
+    // console.log('test in newDateFunc');
     // console.log('oldestMonth', oldestMonth); // 最左邊月份
     // console.log('oldestYear', oldestYear); // 最左邊月份
     // console.log('newestMonth', newestMonth); // 最右邊月份
     // console.log('newestYear', newestYear); // 最右邊月份
-    // this.setState({
-    //     // 這邊若setState會報錯
-    //     oldestMonth: oldestMonth,
-    //     oldestYear: oldestYear,
-    //     newestMonth: newestMonth,
-    //     newestYear: newestYear,
-    // });
-    // }
+    }
 
-    handleRenderYearMonthArr() {
+    handleYearArr() {
+        const {initMonthAfterZero, initYear} = this.state;
+        console.log('handleYearArr func');
+        let preInitYear;
+        let afterInitYear;
+        if (initMonthAfterZero === '1') {
+            console.log('initMonthAfterZero===1');
+            // console.log('initMonthAfterZero', initMonthAfterZero);
+            preInitYear = String(parseInt(initYear) - 1);
+            afterInitYear = initYear;
+            console.log(preInitYear);
+        } else if (initMonthAfterZero === '12') {
+            preInitYear = initYear;
+            afterInitYear = String(parseInt(initYear) + 1);
+            // preInitYear = initYear;
+        } else {
+            preInitYear = initYear;
+            afterInitYear = initYear;
+        }
+
+        const renderYearArr = [preInitYear, initYear, afterInitYear];
+        this.setState({
+            preInitYear: preInitYear,
+            afterInitYear: afterInitYear,
+            renderYearArr: renderYearArr,
+            // initYear: initYear,
+        });
+    }
+
+    handleMonthArr() {
+        const {initMonthAfterZero} = this.state;
+        let preInitMonth;
+        if (initMonthAfterZero === '1') {
+            preInitMonth = '12';
+        } else {
+            preInitMonth = String(parseInt(initMonthAfterZero) - 1);
+        }
+        console.log('preInitMonth');
+        console.log(preInitMonth);
+
+        let afterInitMonth;
+        if (initMonthAfterZero === '12') {
+            afterInitMonth = '1';
+        } else {
+            afterInitMonth = String(parseInt(initMonthAfterZero) + 1);
+        }
+
+        console.log('afterInitMonth');
+        console.log(afterInitMonth);
+        const renderMonthArr = [preInitMonth, initMonthAfterZero, afterInitMonth];
+        this.setState({
+            preInitMonth: preInitMonth,
+            afterInitMonth: afterInitMonth,
+            renderMonthArr: renderMonthArr,
+        });
+    }
+
+    collectInitYearMonth() {
+    // 把initYear跟Month切開
         const {initYearMonth} = this.state;
-        // 把initYear跟Month分開
         const initYearMonthLen = initYearMonth.length;
         const initYear = initYearMonth.substr(0, 4);
         const initMonth = initYearMonth.substr(initYearMonthLen - 2, 2); // 只取後面兩個
@@ -96,65 +128,34 @@ class CalendarHead extends Component {
             initMonthAfterZero = initMonth;
         }
 
-        console.log(initMonthAfterZero);
-        console.log(initYear);
-
-        // 年
-        let preInitYear;
-        let afterInitYear;
-        if (initMonthAfterZero === '1') {
-            console.log('initMonthAfterZero===1');
-            // console.log('initMonthAfterZero', initMonthAfterZero);
-            preInitYear = String(parseInt(initYear) - 1);
-            afterInitYear = initYear;
-            console.log(preInitYear);
-        } else if (initMonthAfterZero === '12') {
-            preInitYear = initYear;
-
-            afterInitYear = String(parseInt(initYear) + 1);
-            // preInitYear = initYear;
-        } else {
-            preInitYear = initYear;
-            afterInitYear = initYear;
-        }
-
-        const renderYearArr = [preInitYear, initYear, afterInitYear];
-
-        // 放進要render(map)的arr
-        // ok 待處理:  如果輸入的月份是01 => premonth變12
-
-        //  月
-        let prevInitMonth;
-        if (initMonthAfterZero === '1') {
-            prevInitMonth = '12';
-        } else {
-            prevInitMonth = String(parseInt(initMonthAfterZero) - 1);
-        }
-        console.log('prevInitMonth');
-        console.log(prevInitMonth);
-
-        let afterInitMonth;
-        if (initMonthAfterZero === '12') {
-            afterInitMonth = '1';
-        } else {
-            afterInitMonth = String(parseInt(initMonthAfterZero) + 1);
-        }
-
-        console.log('afterInitMonth');
-        console.log(afterInitMonth);
-        const renderMonthArr = [prevInitMonth, initMonthAfterZero, afterInitMonth];
-
         this.setState({
-            renderMonthArr: renderMonthArr,
-            renderYearArr: renderYearArr,
             initYear: initYear,
             initMonthAfterZero: initMonthAfterZero,
-            preInitYear,
-            afterInitYear,
         });
-
-    // initYear,
     }
+
+    // handleRenderYearMonthArr() {
+    //     console.log(initMonthAfterZero);
+    //     console.log(initYear);
+
+    //     // 年
+
+    //     // 放進要render(map)的arr
+    //     // ok 待處理:  如果輸入的月份是01 => premonth變12
+
+    //     //  月
+
+    //     this.setState({
+    //         renderMonthArr: renderMonthArr,
+    //         // renderYearArr: renderYearArr,
+    //         // initYear: initYear,
+    //         initMonthAfterZero: initMonthAfterZero,
+    //         preInitYear,
+    //         afterInitYear,
+    //     });
+
+    // // initYear,
+    // }
 
     // 原本年月合起來的function  以下
 
@@ -200,14 +201,14 @@ class CalendarHead extends Component {
 
     //     // 放進要render(map)的arr
     //     // 待處理:  如果輸入的月份是01 => premonth變12
-    //     let prevInitMonth;
+    //     let preInitMonth;
     //     if (initMonthAfterZero === '1') {
-    //         prevInitMonth = '12';
+    //         preInitMonth = '12';
     //     } else {
-    //         prevInitMonth = String(parseInt(initMonthAfterZero) - 1);
+    //         preInitMonth = String(parseInt(initMonthAfterZero) - 1);
     //     }
-    //     console.log('prevInitMonth');
-    //     console.log(prevInitMonth);
+    //     console.log('preInitMonth');
+    //     console.log(preInitMonth);
 
     //     let afterInitMonth;
     //     if (initMonthAfterZero === '12') {
@@ -218,7 +219,7 @@ class CalendarHead extends Component {
 
     //     console.log('afterInitMonth');
     //     console.log(afterInitMonth);
-    //     const renderMonthArr = [prevInitMonth, initMonthAfterZero, afterInitMonth];
+    //     const renderMonthArr = [preInitMonth, initMonthAfterZero, afterInitMonth];
 
     //     this.setState({
     //         renderMonthArr: renderMonthArr,
@@ -268,7 +269,9 @@ class CalendarHead extends Component {
                     },
                     () => {
                         this.renderDataFunc(this.state.travelDataHead, 'date');
-
+                        // this.collectInitYearMonth();
+                        // this.handleMonthArr();
+                        // this.handleYearArr();
                         // this.sortedDateFunc(this.state.unsortedArr);
                         // console.log('this.state.unsortedArr');
                         // console.log(this.state.unsortedArr);
@@ -287,13 +290,14 @@ class CalendarHead extends Component {
 
     componentDidMount() {
         const {travelDataHead} = this.state;
-        this.handleRenderYearMonthArr();
+        // this.handleRenderYearMonthArr();
         this.getData(this.props.path);
         // this.renderDataFunc(travelDataHead);
-        console.log('travelDataHead in DidMount');
-        console.log(travelDataHead);
-        console.log('this.state.oldestMonth in DidMount');
-        console.log(this.state.oldestMonth);
+
+        // console.log('travelDataHead in DidMount');
+        // console.log(travelDataHead); // 這邊為何拿不到東西?
+        // console.log('this.state.oldestMonth in DidMount');
+        // console.log(this.state.oldestMonth);
         // console.log(this.state.unsortedArr);
 
     // this.sortedDateFunc(this.state.unsortedArr);
