@@ -4,7 +4,7 @@ import App from './App';
 const jsonDate = {
     // dataSource: './json/data.json',
     dataSource: './src/json/data1.json',
-    initYearMonth: '201112', // 一開始的月份
+    initYearMonth: '201806', // 一開始的月份
     dataKeySetting: {
         // 保證出團
         guaranteed: 'guaranteed',

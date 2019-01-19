@@ -15,7 +15,8 @@ class CalendarHead extends Component {
             newestYear: '', // 右邊到底的年
             unsortedArr: '',
 
-            renderYearArr: ['2018', '2018', '2018'], // 畫面上要render的年 Arr [String, String, String ]
+            // renderYearArr: ['2000', '2000', '2000'], // 畫面上要render的年 Arr [String, String, String ]
+            renderYearArr: [], // 畫面上要render的年 Arr [String, String, String ]
             renderMonthArr: null, // 畫面上要render的月 Arr [String, String, String ]
             initYear: null, // 最初輸入的年部分
             initMonthAfterZero: null, // 最初輸入的月份(去掉0)
@@ -56,6 +57,7 @@ class CalendarHead extends Component {
 
     handleYearArr() {
         const {initMonthAfterZero, initYear} = this.state;
+        console.log('66666666666666666666', initMonthAfterZero);
         console.log('handleYearArr func');
         let preInitYear;
         let afterInitYear;
@@ -85,30 +87,33 @@ class CalendarHead extends Component {
 
     handleMonthArr() {
         const {initMonthAfterZero} = this.state;
-        let preInitMonth;
-        if (initMonthAfterZero === '1') {
-            preInitMonth = '12';
-        } else {
-            preInitMonth = String(parseInt(initMonthAfterZero) - 1);
-        }
-        console.log('preInitMonth');
-        console.log(preInitMonth);
+        if (initMonthAfterZero) {
+            console.log('initMonthAfterZero 555', initMonthAfterZero);
+            let preInitMonth;
+            if (initMonthAfterZero === '1') {
+                preInitMonth = '12';
+            } else {
+                preInitMonth = String(parseInt(initMonthAfterZero) - 1);
+            }
+            console.log('preInitMonth');
+            console.log(preInitMonth);
 
-        let afterInitMonth;
-        if (initMonthAfterZero === '12') {
-            afterInitMonth = '1';
-        } else {
-            afterInitMonth = String(parseInt(initMonthAfterZero) + 1);
-        }
+            let afterInitMonth;
+            if (initMonthAfterZero === '12') {
+                afterInitMonth = '1';
+            } else {
+                afterInitMonth = String(parseInt(initMonthAfterZero) + 1);
+            }
 
-        console.log('afterInitMonth');
-        console.log(afterInitMonth);
-        const renderMonthArr = [preInitMonth, initMonthAfterZero, afterInitMonth];
-        this.setState({
-            preInitMonth: preInitMonth,
-            afterInitMonth: afterInitMonth,
-            renderMonthArr: renderMonthArr,
-        });
+            console.log('afterInitMonth');
+            console.log(afterInitMonth);
+            const renderMonthArr = [preInitMonth, initMonthAfterZero, afterInitMonth];
+            this.setState({
+                preInitMonth: preInitMonth,
+                afterInitMonth: afterInitMonth,
+                renderMonthArr: renderMonthArr,
+            });
+        }
     }
 
     collectInitYearMonth() {
@@ -127,11 +132,18 @@ class CalendarHead extends Component {
         } else {
             initMonthAfterZero = initMonth;
         }
+        console.log('initYearinitYear123', initYear);
 
-        this.setState({
-            initYear: initYear,
-            initMonthAfterZero: initMonthAfterZero,
-        });
+        console.log('initMonthAfterZero123', initMonthAfterZero);
+        this.setState(
+            {
+                initYear: initYear,
+                initMonthAfterZero: initMonthAfterZero,
+            },
+            () => {
+                this.handleYearArr(), this.handleMonthArr();
+            }
+        );
     }
 
     // handleRenderYearMonthArr() {
@@ -269,6 +281,7 @@ class CalendarHead extends Component {
                     },
                     () => {
                         this.renderDataFunc(this.state.travelDataHead, 'date');
+                        console.log('hithere');
                         // this.collectInitYearMonth();
                         // this.handleMonthArr();
                         // this.handleYearArr();
@@ -292,6 +305,10 @@ class CalendarHead extends Component {
         const {travelDataHead} = this.state;
         // this.handleRenderYearMonthArr();
         this.getData(this.props.path);
+        this.collectInitYearMonth();
+
+        // this.handleYearArr();
+        // this.handleMonthArr();
         // this.renderDataFunc(travelDataHead);
 
         // console.log('travelDataHead in DidMount');
@@ -314,7 +331,11 @@ class CalendarHead extends Component {
         } = this.state;
         console.log('init Render');
         console.log('bf if', travelDataHead);
+        this.handleYearArr;
         if (travelDataHead) {
+            console.log('initYearinitYear789', this.state.initYear);
+
+            console.log('initMonthAfterZero789', this.state.initMonthAfterZero);
             // this.renderStateFunc();
             // console.log('render in if travelData');
             // console.log('this.state.unsortedArr');
