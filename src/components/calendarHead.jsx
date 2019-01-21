@@ -13,20 +13,20 @@ class CalendarHead extends Component {
             oldestYear: '', // 左邊到底的年
             newestMonth: '', // 右邊到底的月
             newestYear: '', // 右邊到底的年
-            unsortedArr: '',
+            // unsortedArr: '',
 
-            // renderYearArr: ['2000', '2000', '2000'], // 畫面上要render的年 Arr [String, String, String ]
-            renderYearArr: [], // 畫面上要render的年 Arr [String, String, String ]
+            renderYearArr: ['2000', '2000', '2000'], // 畫面上要render的年 Arr [String, String, String ]
+            // renderYearArr: [], // 畫面上要render的年 Arr [String, String, String ]
             renderMonthArr: null, // 畫面上要render的月 Arr [String, String, String ]
 
             initYear: null, // 最初輸入的年部分
             initMonthAfterZero: null, // 最初輸入的月份(去掉0)
 
-            preInitYear: null, // initYear的前面一格
-            afterInitYear: null, // initYear的後面一格
+            // preInitYear: null, // initYear的前面一格
+            // afterInitYear: null, // initYear的後面一格
 
-            preInitMonth: null, // initMonth的前面一格
-            afterInitMonth: null, // initMonth的前面一格
+            // preInitMonth: null, // initMonth的前面一格
+            // afterInitMonth: null, // initMonth的前面一格
         };
     }
 
@@ -88,10 +88,11 @@ class CalendarHead extends Component {
         }
         console.log(newArr);
 
-        const oldestMonth = newArr[0].substr(5, 2); // 找出整理後array的第一個的月
-        const oldestYear = newArr[0].substr(0, 4); // 找出整理後array的第一個的年
-        const newestMonth = newArr[newArr.length - 1].substr(5, 2); // 找出整理後array的第一個月
-        const newestYear = newArr[newArr.length - 1].substr(0, 4); // 找出整理後array的第一個年
+        const sortedArr = newArr.sort();
+        const oldestMonth = sortedArr[0].substr(5, 2); // 找出整理後array的第一個的月
+        const oldestYear = sortedArr[0].substr(0, 4); // 找出整理後array的第一個的年
+        const newestMonth = sortedArr[sortedArr.length - 1].substr(5, 2); // 找出整理後array的第一個月
+        const newestYear = sortedArr[sortedArr.length - 1].substr(0, 4); // 找出整理後array的第一個年
         this.setState({
             // 這邊若setState會報錯
             oldestMonth: oldestMonth,
@@ -138,8 +139,8 @@ class CalendarHead extends Component {
 
     handleYearArr() {
         const {initMonthAfterZero, initYear} = this.state;
-        console.log('66666666666666666666', initMonthAfterZero);
-        console.log('handleYearArr func');
+        // console.log('66666666666666666666', initMonthAfterZero);
+        // console.log('handleYearArr func');
         let preInitYear;
         let afterInitYear;
         if (initMonthAfterZero === '1') {
@@ -198,16 +199,7 @@ class CalendarHead extends Component {
     }
 
     handleSlideClick(leftOrRight) {
-        const {
-            initYear,
-            initMonthAfterZero,
-
-            preInitYear,
-            afterInitYear,
-
-            preInitMonth,
-            afterInitMonth,
-        } = this.state;
+        const {initYear, initMonthAfterZero} = this.state;
         // 把initYear跟Month分開
         // const initYearMonthLen = initYearMonth.length;
         // const initYear = initYearMonth.substr(0, 4);
@@ -218,49 +210,144 @@ class CalendarHead extends Component {
 
         console.log('this is left');
         if (leftOrRight == 'left') {
-            console.log('initYear, initMonthAfterZero, preInitYear, afterInitYear');
-            console.log(initYear, initMonthAfterZero, preInitYear, afterInitYear);
             // if initMonthAfterZero == 1 ( 點左邊時 ) => initMonthAfterZero 變12
-            let slideLeftInitMonth;
-            let slideLeftPreInitMonth;
-            let slideLeftAfterInitMonth;
-            if (initMonthAfterZero === '12') {
-                console.log('if in leftClick');
-                slideLeftInitMonth = String(parseInt(initMonthAfterZero) - 1);
-                slideLeftPreInitMonth = String(parseInt(preInitMonth) - 1);
-                slideLeftAfterInitMonth = '12';
-            } else if (initMonthAfterZero === '1') {
-                console.log('else if in leftClick');
-                slideLeftInitMonth = '12';
-                slideLeftPreInitMonth = String(parseInt(preInitMonth) - 1);
-                slideLeftAfterInitMonth = String(parseInt(afterInitMonth) - 1);
+            let leftSlideInitMonth; // 點左邊箭頭後中間的呈現的值
+            let leftSlideRenderMonthArr;
+            // NOTE: const 不能在外面宣告 -> 改let
+            let leftSlideInitYear;
+            let leftSlideRenderYearArr;
+
+            if (initMonthAfterZero === '1') {
+                leftSlideInitMonth = '12';
+                leftSlideRenderMonthArr = [
+                    String(parseInt(leftSlideInitMonth) - 1),
+                    leftSlideInitMonth,
+                    '1',
+                ];
+
+                leftSlideInitYear = String(parseInt(initYear) - 1);
+                leftSlideRenderYearArr = [
+                    leftSlideInitYear,
+                    leftSlideInitYear,
+                    String(parseInt(leftSlideInitYear) + 1),
+                ];
+            } else if (initMonthAfterZero === '12') {
+                leftSlideInitMonth = '11';
+                leftSlideRenderMonthArr = ['10', leftSlideInitMonth, '12'];
+
+                leftSlideInitYear = initYear;
+                leftSlideRenderYearArr = [
+                    leftSlideInitYear,
+                    leftSlideInitYear,
+                    leftSlideInitYear,
+                ];
+            } else if (initMonthAfterZero === '2') {
+                leftSlideInitMonth = '1';
+                leftSlideRenderMonthArr = [
+                    '12',
+                    leftSlideInitMonth,
+                    String(parseInt(leftSlideInitMonth) + 1),
+                ];
+                leftSlideInitYear = initYear;
+                leftSlideRenderYearArr = [
+                    leftSlideInitYear - 1,
+                    leftSlideInitYear,
+                    leftSlideInitYear,
+                ];
             } else {
-                console.log('else in leftClick');
-                console.log('else: initMonthAfterZero');
-                console.log(initMonthAfterZero);
-                console.log('slideLeftAfterInitMonth before -1');
-                console.log(slideLeftAfterInitMonth);
-                slideLeftInitMonth = String(parseInt(initMonthAfterZero) - 1);
-                console.log('slideLeftAfterInitMonth after -1');
-                console.log(slideLeftAfterInitMonth);
-                slideLeftPreInitMonth = String(parseInt(preInitMonth) - 1);
-                slideLeftAfterInitMonth = String(parseInt(afterInitMonth) - 1);
+                leftSlideInitMonth = String(parseInt(initMonthAfterZero) - 1);
+                leftSlideRenderMonthArr = [
+                    String(parseInt(leftSlideInitMonth) - 1),
+                    leftSlideInitMonth,
+                    String(parseInt(leftSlideInitMonth) + 1),
+                ];
+                leftSlideInitYear = initYear;
+                leftSlideRenderYearArr = [
+                    leftSlideInitYear,
+                    leftSlideInitYear,
+                    leftSlideInitYear,
+                ];
             }
-            const leftSlideRenderMonthArr = [
-                slideLeftPreInitMonth,
-                slideLeftInitMonth,
-                slideLeftAfterInitMonth,
-            ];
 
             this.setState({
-                initMonthAfterZero: slideLeftAfterInitMonth,
-                preInitMonth: slideLeftPreInitMonth,
-                afterInitMonth: slideLeftAfterInitMonth,
+                initMonthAfterZero: leftSlideInitMonth,
+                initYear: leftSlideInitYear,
+                // preInitMonth: leftSlidePreInitMonth,
+                // afterInitMonth: leftSlideAfterInitMonth,
                 renderMonthArr: leftSlideRenderMonthArr,
+                renderYearArr: leftSlideRenderYearArr,
+            });
+        } else if (leftOrRight == 'right') {
+            let rightSlideInitMonth; // 點右邊箭頭後中間的呈現的值
+            let rightSlideRenderMonthArr;
+            // NOTE: const 不能在外面宣告 -> 改let
+            let rightSlideInitYear;
+            let rightSlideRenderYearArr;
+            if (initMonthAfterZero === '1') {
+                rightSlideInitMonth = '2';
+                rightSlideRenderMonthArr = [
+                    String(parseInt(rightSlideInitMonth) - 1),
+                    rightSlideInitMonth,
+                    String(parseInt(rightSlideInitMonth) + 1),
+                ];
+
+                rightSlideInitYear = initYear;
+                rightSlideRenderYearArr = [
+                    rightSlideInitYear,
+                    rightSlideInitYear,
+                    rightSlideInitYear,
+                ];
+            } else if (initMonthAfterZero === '12') {
+                rightSlideInitMonth = '1';
+                rightSlideRenderMonthArr = [
+                    '12',
+                    rightSlideInitMonth,
+                    String(parseInt(rightSlideInitMonth) + 1),
+                ];
+
+                rightSlideInitYear = String(parseInt(initYear) + 1);
+                rightSlideRenderYearArr = [
+                    String(parseInt(rightSlideInitYear) - 1),
+                    rightSlideInitYear,
+                    rightSlideInitYear,
+                ];
+            } else if (initMonthAfterZero === '11') {
+                rightSlideInitMonth = '12';
+                rightSlideRenderMonthArr = [
+                    String(parseInt(rightSlideInitMonth) - 1),
+                    rightSlideInitMonth,
+                    '1',
+                ];
+                rightSlideInitYear = initYear;
+                rightSlideRenderYearArr = [
+                    rightSlideInitYear,
+                    rightSlideInitYear,
+                    String(parseInt(rightSlideInitYear) + 1),
+                ];
+            } else {
+                rightSlideInitMonth = String(parseInt(initMonthAfterZero) + 1);
+                rightSlideRenderMonthArr = [
+                    String(parseInt(rightSlideInitMonth) - 1),
+                    rightSlideInitMonth,
+                    String(parseInt(rightSlideInitMonth) + 1),
+                ];
+                rightSlideInitYear = initYear;
+                rightSlideRenderYearArr = [
+                    rightSlideInitYear,
+                    rightSlideInitYear,
+                    rightSlideInitYear,
+                ];
+            }
+            this.setState({
+                initMonthAfterZero: rightSlideInitMonth,
+                initYear: rightSlideInitYear,
+                // preInitMonth: rightSlidePreInitMonth,
+                // afterInitMonth: rightSlideAfterInitMonth,
+                renderMonthArr: rightSlideRenderMonthArr,
+                renderYearArr: rightSlideRenderYearArr,
             });
         }
     }
-
     // componentWillMount() {
     //     console.log('willMount');
     //     this.getData(this.props.path); // fetch data
@@ -271,12 +358,15 @@ class CalendarHead extends Component {
             travelDataHead,
             oldestMonth,
             newestMonth,
+            oldestYear,
+            newestYear,
             renderYearArr,
             renderMonthArr,
             initYear,
         } = this.state;
-        console.log('init Render');
-        console.log('bf if', travelDataHead);
+        // console.log('init Render');
+        // console.log('bf if', travelDataHead);
+
         // this.handleYearArr;
         // console.log('preInitMonth');
         // console.log(this.state.preInitMonth);
@@ -284,7 +374,15 @@ class CalendarHead extends Component {
             // console.log('initYearinitYear789', this.state.initYear);
 
             // console.log('initMonthAfterZero789', this.state.initMonthAfterZero);
-            console.log('999', this.state);
+            // console.log('999', this.state);
+            console.log('oldestYear');
+            console.log(oldestYear);
+            console.log('oldestMonth');
+            console.log(oldestMonth);
+            console.log('newestYear');
+            console.log(newestYear);
+            console.log('newestMonth');
+            console.log(newestMonth);
             // this.renderStateFunc();
             // console.log('render in if travelData');
             // console.log('this.state.unsortedArr');
@@ -351,7 +449,8 @@ className="active">
                             <li
                                 className="tophead__month"
                                 onClick={() => {
-                                    this.handleSlideClick('right').bind(this);
+                                    // this.handleSlideClick('right').bind(this);  // guess箭頭涵式已經包含this功能了
+                                    this.handleSlideClick('right');
                                 }}
                             >
                                 <a href="#">
