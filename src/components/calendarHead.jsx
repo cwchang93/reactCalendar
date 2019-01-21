@@ -42,7 +42,9 @@ class CalendarHead extends Component {
                         // }
                     },
                     () => {
+                        console.log('renderDataFunc was called in getData');
                         this.renderDataFunc(this.state.travelDataHead, 'date');
+                        this.collectInitYearMonth();
                         // this.limitYearMonthFunc();
                         console.log('hithere');
                     }
@@ -60,6 +62,7 @@ class CalendarHead extends Component {
         // this.handleRenderYearMonthArr();
         // this.limitYearMonthFunc();
         this.getData(this.props.path);
+        // this.renderDataFunc();
         this.collectInitYearMonth();
 
         // this.limitYearMonthFunc(); // 放在這會報錯  calendarHead.jsx:358 Uncaught ReferenceError: newestYearMonth is not defined
@@ -123,7 +126,15 @@ class CalendarHead extends Component {
 
     collectInitYearMonth() {
     // 把initYear跟Month切開
-        const {initYearMonth} = this.state;
+    // const {initYearMonth} = this.state;
+    // this.limitYearMonthFunc();
+
+        console.log('limitFunc was called in collectInitYearMonth');
+        let limitInitYearMonth;
+        const {initYearMonth, oldestYearMonth, newestYearMonth} = this.state;
+        console.log('oldestYearMonth999');
+        console.log(oldestYearMonth); // 這邊還吃不到
+
         const initYearMonthLen = initYearMonth.length;
         const initYear = initYearMonth.substr(0, 4);
         const initMonth = initYearMonth.substr(initYearMonthLen - 2, 2); // 只取後面兩個
@@ -367,24 +378,19 @@ class CalendarHead extends Component {
     //     this.getData(this.props.path); // fetch data
     // }
 
-    // limitYearMonthFunc() {
-    //     console.log('limitFunc was called');
-    //     let limitInitYearMonth;
-    //     const {
-    //         initYearMonth,
-    //         oldestYearMonth,
-    //         newestYearMonth,
-
-    //     } = this.state;
-    //     if (initYearMonth < oldestYearMonth) {
-    //         limitInitYearMonth = oldestYearMonth;
-    //     } else if (initYearMonth > newestYearMonth) {
-    //         limitInitYearMonth = newestYearMonth;
-    //     }
-    //     this.setState({
-    //         initYearMonth: limitInitYearMonth,
-    //     });
-    // }
+    limitYearMonthFunc() {
+        console.log('limitFunc was called');
+        let limitInitYearMonth;
+        const {initYearMonth, oldestYearMonth, newestYearMonth} = this.state;
+        if (initYearMonth < oldestYearMonth) {
+            limitInitYearMonth = oldestYearMonth;
+        } else if (initYearMonth > newestYearMonth) {
+            limitInitYearMonth = newestYearMonth;
+        }
+        this.setState({
+            initYearMonth: limitInitYearMonth,
+        });
+    }
 
     render() {
         const {
