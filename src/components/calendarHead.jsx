@@ -41,7 +41,15 @@ class CalendarHead extends Component {
                         this.renderDataFunc(this.state.travelDataHead, 'date');
                         this.collectInitYearMonth();
                         // this.limitYearMonthFunc();
-                        console.log('hithere');
+                        // console.log('hithere');
+                        console.log('initYear7788');
+                        console.log(this.state.initYear);
+                        console.log('initMonth7788');
+                        console.log(this.state.initMonthAfterZero);
+                        this.props.transferYearMonth(
+                            this.state.initYear,
+                            this.state.initMonthAfterZero
+                        );
                     }
                 )
             )
@@ -49,9 +57,16 @@ class CalendarHead extends Component {
     }
 
     componentDidMount() {
-        const { travelDataHead } = this.state;
+        const { travelDataHead, initYear, initMonthRender } = this.state;
         this.getData(this.props.path);
+        // console.log('9487 DidMount was called'); // 只有第一次會被摳
         this.collectInitYearMonth();
+        console.log('this.props in did mount');
+        // console.log(this.props);
+        // this.props.transferYearMonth(initYear, initMonthRender);
+
+    // this.props
+    // this.props
     }
 
     renderDataFunc(jsonData, jsonKey) {
@@ -352,10 +367,14 @@ class CalendarHead extends Component {
                     renderYearArr: leftSlideRenderYearArr,
                 },
                 () => {
-                    console.log('initMonthRender741');
-                    console.log(initMonthRender);
-                    console.log('initYear741');
+                    // console.log('initMonthRender741');
+                    // console.log(initMonthRender);
+                    // console.log('initYear741');
+                    // console.log(initYear);
+                    console.log('aaainitYear');
+                    console.log('aaainitMonthRender');
                     console.log(initYear);
+                    console.log(initMonthRender);
                 }
             );
         } else if (
@@ -433,29 +452,33 @@ class CalendarHead extends Component {
                     renderYearArr: rightSlideRenderYearArr,
                 },
                 () => {
-                    console.log('initMonthRender852');
-                    console.log(initMonthRender);
-                    console.log('initYear852');
+                    // console.log('initMonthRender852');
+                    // console.log(initMonthRender);
+                    // console.log('initYear852');
+                    // console.log(initYear);
+                    console.log('aaainitYear');
+                    console.log('aaainitMonthRender');
                     console.log(initYear);
+                    console.log(initMonthRender);
                 }
             );
         }
     }
 
-    limitYearMonthFunc() {
-    // 沒用到，改寫到裡面
-        console.log('limitFunc was called in limit func');
-        let limitInitYearMonth;
-        const { initYearMonth, oldestYearMonth, newestYearMonth } = this.state;
-        if (initYearMonth < oldestYearMonth) {
-            limitInitYearMonth = oldestYearMonth;
-        } else if (initYearMonth > newestYearMonth) {
-            limitInitYearMonth = newestYearMonth;
-        }
-        this.setState({
-            initYearMonth: limitInitYearMonth,
-        });
-    }
+    // limitYearMonthFunc() {
+    // // 沒用到，改寫到裡面
+    //     console.log('limitFunc was called in limit func');
+    //     let limitInitYearMonth;
+    //     const { initYearMonth, oldestYearMonth, newestYearMonth } = this.state;
+    //     if (initYearMonth < oldestYearMonth) {
+    //         limitInitYearMonth = oldestYearMonth;
+    //     } else if (initYearMonth > newestYearMonth) {
+    //         limitInitYearMonth = newestYearMonth;
+    //     }
+    //     this.setState({
+    //         initYearMonth: limitInitYearMonth,
+    //     });
+    // }
 
     render() {
         const {
@@ -475,20 +498,16 @@ class CalendarHead extends Component {
             initMonthRender,
         } = this.state;
         if (travelDataHead) {
-            console.log('initYearMonth777');
-            console.log(initYearMonth);
-            console.log('initYear777');
+            // console.log('initYearMonth777');
+            // console.log(initYearMonth);
+            // console.log('initYear777');
+            // console.log(initYear);
+            // console.log('initMonth777');
+            // console.log(initMonthRender);
+            console.log('aaainitYear');
+            console.log('aaainitMonthRender');
             console.log(initYear);
-            console.log('initMonth777');
             console.log(initMonthRender);
-            // console.log('initYearMonthRender789789');
-            // console.log(initYearMonthRender);
-            // console.log('oldestYearMonth');
-            // console.log(oldestYearMonth);
-            // console.log('newestYearMonth');
-            // console.log(newestYearMonth);
-            // console.log('this.state.oldestMonth in render');
-            // console.log(this.state.oldestMonth);
             return (
                 <React.Fragment>
                     <div>CalendarHead is Me!</div>

@@ -24,14 +24,24 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            nowDate: null,
-
+            nowYear: null,
+            nowMonth: null,
+            nowDate: null, // for testing
         };
     }
 
     selectedDate = (val) => {
         console.log('parent: ', val);
         this.setState({ nowDate: val });
+    }
+
+    transferYearMonth = (y, m ) => {
+        console.log('year: ', y);
+        console.log('month ', m);
+        this.setState({
+            nowYear: y,
+            nowMonth: m,
+        });
     }
 
     render() {
@@ -43,12 +53,14 @@ class App extends Component {
                     <CalendarHead path={this.props.dataSource}
                         initYearMonth= {this.props.initYearMonth}
                         selectedDate={this.selectedDate}
+                        transferYearMonth={this.transferYearMonth}
                     />
 
                     {/* <h1 className = 'text' > {this.props.text}</h1> */}
                     {/* <h2 className = 'test'>test2</h2> */}
                     <CalendarBody path={this.props.dataSource}
                         selectedDate={this.state.nowDate}
+                        // transferYearMonth={this.transferYearMonth}
                     />
                 </div>
             </React.Fragment>
