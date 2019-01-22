@@ -5,7 +5,13 @@ module.exports = {
         'linebreak-style': ['error', 'windows'],
         'require-jsdoc': 'off',
         'space-infix-ops':'error',
-
+        'no-invalid-this': 'off',
+        'max-len': 0,
+        'object-curly-newline': ['error',{
+            "ImportDeclaration": "never"
+        }
+        ],
+        'object-curly-spacing': ['error', 'always'],
         // react
         'react/jsx-uses-react': 'error',
         'react/jsx-uses-vars': 'error',
