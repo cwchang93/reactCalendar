@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 // import ReactDOM from 'react-dom';
 // 待處理，使用者亂輸入變數時的validation
 // testing 190120
@@ -49,13 +49,13 @@ class CalendarHead extends Component {
     }
 
     componentDidMount() {
-        const {travelDataHead} = this.state;
+        const { travelDataHead } = this.state;
         this.getData(this.props.path);
         this.collectInitYearMonth();
     }
 
     renderDataFunc(jsonData, jsonKey) {
-        const {initYearMonth, initYear, initMonthafterZero} = this.state;
+        const { initYearMonth, initYear, initMonthafterZero } = this.state;
         console.log('jsonKey');
         console.log(jsonKey);
         const newArr = [];
@@ -123,7 +123,7 @@ class CalendarHead extends Component {
     }
 
     combineCurrentYearMonth() {
-        const {initYear, initMonthRender} = this.state;
+        const { initYear, initMonthRender } = this.state;
         let addZeroInitMonthRender;
         let initYearMonthR;
         // 重新組裝 20181 => 201801
@@ -144,7 +144,7 @@ class CalendarHead extends Component {
 
         console.log('limitFunc was called in collectInitYearMonth');
         let limitInitYearMonth;
-        const {initYearMonth, oldestYearMonth, newestYearMonth} = this.state;
+        const { initYearMonth, oldestYearMonth, newestYearMonth } = this.state;
         console.log('oldestYearMonth999');
         console.log(oldestYearMonth); // 這邊還吃不到
 
@@ -176,7 +176,7 @@ class CalendarHead extends Component {
     }
 
     handleYearArr() {
-        const {initMonthAfterZero, initYear} = this.state;
+        const { initMonthAfterZero, initYear } = this.state;
         let preInitYear;
         let afterInitYear;
         if (initMonthAfterZero === '1') {
@@ -202,7 +202,7 @@ class CalendarHead extends Component {
     }
 
     handleMonthArr() {
-        const {initMonthAfterZero} = this.state;
+        const { initMonthAfterZero } = this.state;
         if (initMonthAfterZero) {
             console.log('initMonthAfterZero 555', initMonthAfterZero);
             let preInitMonth;
@@ -241,6 +241,9 @@ class CalendarHead extends Component {
 
             initMonthRender,
         } = this.state;
+
+        console.log('props: ', this.props);
+        this.props.selectedDate('123');
 
         // console.log('this is left');
 
@@ -443,7 +446,7 @@ class CalendarHead extends Component {
     // 沒用到，改寫到裡面
         console.log('limitFunc was called in limit func');
         let limitInitYearMonth;
-        const {initYearMonth, oldestYearMonth, newestYearMonth} = this.state;
+        const { initYearMonth, oldestYearMonth, newestYearMonth } = this.state;
         if (initYearMonth < oldestYearMonth) {
             limitInitYearMonth = oldestYearMonth;
         } else if (initYearMonth > newestYearMonth) {

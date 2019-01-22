@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 // import tripData from '../json/data1.json'; import for testing data
 
@@ -53,7 +53,7 @@ class CalendarBody extends Component {
   }
 
   render() {
-      const {travelData, weekDay} = this.state;
+      const { travelData, weekDay } = this.state;
       console.log(this.props.path);
       //   this.printTest(13);
       //   console.log(travelData);
@@ -65,12 +65,17 @@ class CalendarBody extends Component {
               <React.Fragment>
                   <div className="bodycalendar">
                       <div className="weekcontainer">
-                          {weekDay.map((wkDay) => {
-                              return <div> {wkDay} </div>;
+                          {weekDay.map((wkDay, i) => {
+                              return <div key={i}> {wkDay} </div>;
                           })}
                       </div>
                       <div className="daycontainer">
-                          <div className="day">
+                          <div
+                              className="day"
+                              onClick={() => {
+                                  console.log(this.props.selectedDate);
+                              }}
+                          >
                               <div className="generalinfo">
                                   <span className="daynum">12</span>
                                   <span className="guaranteed">成團</span>
