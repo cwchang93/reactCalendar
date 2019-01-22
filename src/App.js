@@ -45,6 +45,7 @@ class App extends Component {
     }
 
     render() {
+        const { nowDate } = this.state;
         return (
             <React.Fragment>
                 <div className="calendars">
@@ -59,8 +60,10 @@ class App extends Component {
                     {/* <h1 className = 'text' > {this.props.text}</h1> */}
                     {/* <h2 className = 'test'>test2</h2> */}
                     <CalendarBody path={this.props.dataSource}
-                        selectedDate={this.state.nowDate}
+                        selectedDate={nowDate}
                         // transferYearMonth={this.transferYearMonth}
+                        nowYear = {this.state.nowYear}
+                        nowMonth = {this.state.nowMonth}
                     />
                 </div>
             </React.Fragment>

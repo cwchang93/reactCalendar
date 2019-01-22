@@ -10,6 +10,7 @@ const jsonDate = {
     // 1. initYearMonth輸入13或非12的月份箭頭會可以多跑一格，需用regex加在前面  head
     // 2. 版面到底背景亮
     // 3. 綁點擊的箭頭
+    // 4. 頭尾兩邊的月份不能點
     // Body
     // 1.
 

@@ -41,12 +41,13 @@ class CalendarHead extends Component {
                         this.renderDataFunc(this.state.travelDataHead, 'date');
                         this.collectInitYearMonth();
                         // this.limitYearMonthFunc();
-                        // console.log('hithere');
-                        console.log('initYear7788');
-                        console.log(this.state.initYear);
-                        console.log('initMonth7788');
-                        console.log(this.state.initMonthAfterZero);
+                        // // console.log('hithere');
+                        // console.log('initYear7788');
+                        // console.log(this.state.initYear);
+                        // console.log('initMonth7788');
+                        // console.log(this.state.initMonthAfterZero);
                         this.props.transferYearMonth(
+                            // 把state的參數值(y,m)傳到父曾
                             this.state.initYear,
                             this.state.initMonthAfterZero
                         );
@@ -367,6 +368,11 @@ class CalendarHead extends Component {
                     renderYearArr: leftSlideRenderYearArr,
                 },
                 () => {
+                    this.props.transferYearMonth(
+                        // 把state的參數值(y,m)傳到父曾
+                        this.state.initYear,
+                        this.state.initMonthAfterZero
+                    );
                     // console.log('initMonthRender741');
                     // console.log(initMonthRender);
                     // console.log('initYear741');
@@ -452,6 +458,11 @@ class CalendarHead extends Component {
                     renderYearArr: rightSlideRenderYearArr,
                 },
                 () => {
+                    this.props.transferYearMonth(
+                        // 把state的參數值(y,m)傳到父曾
+                        this.state.initYear,
+                        this.state.initMonthAfterZero
+                    );
                     // console.log('initMonthRender852');
                     // console.log(initMonthRender);
                     // console.log('initYear852');
@@ -521,7 +532,7 @@ class CalendarHead extends Component {
                                     <li className="tophead__month">
                                         <a href="#">
                                             <span>
-                                                {initYear} {renderMonth}月
+                                                {initYear} {renderMonth}月 //  map 一次，另一個用index取arr的值
                                             </span>
                                         </a>
                                     </li>
