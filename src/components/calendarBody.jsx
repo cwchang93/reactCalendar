@@ -89,28 +89,35 @@ class CalendarBody extends Component {
         // this.countMonthLen(nowYear, nowMonth);
         //   console.log(weekDay);
 
-        const renderDayContent = this.renderRealDays().map((Arr, i) => {
-            return (
-                <div id={i + 1}
-className="day">
-                    <div className="generalinfo">
-                        <span className="daynum">{i + 1}</span>
-                        <span className="guaranteed">成團</span>
-                    </div>
-                    <div className="details">
-                        <span className="status">status</span>
-                        <span className="sell">sell</span>
-                        <span className="group">group</span>
-                        <span className="price">price</span>
-                    </div>
-                </div>
-            );
-        });
-
         if (travelData) {
-            console.log('typeof nowMonth');
-            console.log(typeof nowMonth);
-            console.log('9998DtripData', travelData);
+            // console.log('typeof nowMonth');
+            // console.log(typeof nowMonth);
+            // console.log('9998DtripData', travelData);
+            console.log('nowMonth.length');
+            console.log(nowMonth.length);
+
+            const renderDayContent = this.renderRealDays().map((Arr, i) => {
+                return (
+                    <div
+                        id={`${nowYear}/${nowMonth.length == 1 ? '0' : ''}${nowMonth}/${
+                            i + 1 < 10 ? '0' : ''
+                        }${i + 1}`}
+                        className="day"
+                    >
+                        <div className="generalinfo">
+                            <span className="daynum">{i + 1}</span>
+                            <span className="guaranteed">成團</span>
+                        </div>
+                        <div className="details">
+                            <span className="status">status</span>
+                            <span className="sell">sell</span>
+                            <span className="group">group</span>
+                            <span className="price">price</span>
+                        </div>
+                    </div>
+                );
+            });
+
             return (
                 <React.Fragment>
                     <div className="bodycalendar">
