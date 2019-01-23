@@ -16,8 +16,8 @@ class CalendarBody extends Component {
                 '星期五',
                 '星期六',
             ],
-            // nowYear: this.props.nowYear,   Q這邊無法傳到State再從state拿
-            // nowMonth: this.props.nowMonth,
+            // nowYear: props.nowYear, // Q這邊無法傳到State再從state拿
+            // nowMonth: props.nowMonth,
             // nowMonthLen: null, //  可設計當更改月份時就敲countMonthLen的function重新計算現在的MonthLen
         };
     }
@@ -26,6 +26,17 @@ class CalendarBody extends Component {
         this.getData(this.props.path);
     // this.countMonthLen(this.props.nowYear, this.props.nowMonth);
     }
+
+    // 解決取不到父值變數的func
+    // componentDidUpdate(prevProps, prevState) {
+    //     if (prevProps.nowYear !== this.props.nowYear) {
+    //         this.updateNowYear();
+    //     }
+    // }
+
+    // updateNowYear() {
+    //     this.setState({ nowYear: this.props.nowYear });
+    // }
 
     getData(path) {
         fetch(path)
@@ -102,7 +113,19 @@ class CalendarBody extends Component {
         // 2. 第二支: 比對相同日期可報名優先status
         const dateArrLen = dateArr.length; // 分開寫效能比較好
         console.log('dateArrLen', dateArrLen);
-        const newDataArr = [];
+        // const newDataArr = [];
+
+        // 先把不重複的拿出來;
+        const newArr = dateArr.filter((ele, i, dateArr) => {
+            return dateArr.map((item) => item.date).indexOf(ele.date) !== i;
+        });
+        const newDataArr = dateArr.filter(
+            (ele) => newArr.map((ele) => ele.date).indexOf(ele.date) === -1
+        );
+
+        // console.log('uniqueValArr');
+        // console.log(uniqueValArr);
+
         for (let j = 0; j < dateArrLen; j++) {
             for (let k = j + 1; k < dateArrLen; k++) {
                 if (dateArr[j].date === dateArr[k].date) {
@@ -142,7 +165,6 @@ class CalendarBody extends Component {
                     }
                 } else {
                     // 如果沒有重複的話再放進去
-
                     // let valueArr = newDateArr.map(
                     //     (item) => {
                     //         return item.date;
@@ -153,22 +175,30 @@ class CalendarBody extends Component {
                     //         return valueArr.indexOf(item) != idx
                     //     }
                     // })
-
                     // 如果newDataArr沒有重複的話 => 放進來
-                    if (newDataArr.includes(dateArr[k])) {
-                        newDataArr.push(dateArr[k]);
-                    }
+                    // if (newDataArr.includes(dateArr[k])) {
+                    // newDataArr.push(dateArr[k]);
+                    // }
                 }
             }
         }
         console.log('newDataArrLOL');
         console.log(newDataArr);
+
+        // 排序資料 依照日期
+
+        // 補上空值
+
+        // render 剩下的資料
+
         return newDataArr;
     }
 
     render() {
         const { travelData, weekDay } = this.state;
         const { nowYear, nowMonth } = this.props;
+        console.log('render: ', nowYear);
+        // const { nowYear, nowMonth } = this.state;
         // console.log(this.props.path);
         // console.log(weekDay);
         // console.log('55688');
