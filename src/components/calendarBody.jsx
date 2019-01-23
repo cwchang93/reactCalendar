@@ -76,6 +76,96 @@ class CalendarBody extends Component {
         return dayContent;
     }
 
+    // jsonArr
+    filterArrFunc(jsonArr) {
+        const { nowYear, nowMonth } = this.props;
+
+        const dateArr = [];
+        // 用regex篩選第一次=> 把當月資料篩選出來
+        const yearMonthSring = String(
+            `${nowYear}/${nowMonth.length == 1 ? '0' : ''}${nowMonth}/`
+        );
+        // const validateYearMonth = new RegExp(`${yearMonthSring}\d{2}`); // /2017\/06/
+        const validateYearMonth = new RegExp(`^${yearMonthSring}`); // /^2017\/06//
+
+        console.log('validateYearMonth5566');
+        console.log(validateYearMonth);
+        // 1. 第一支篩選出當年當月的資料
+        for (let i = 0; i < jsonArr.length; i++) {
+            if (validateYearMonth.test(jsonArr[i].date)) {
+                dateArr.push(jsonArr[i]);
+            }
+        }
+        console.log('fffdateArr');
+        console.log(dateArr);
+        // return dateArr;  // 此資料是有重複的date資料
+        // 2. 第二支: 比對相同日期可報名優先status
+        const dateArrLen = dateArr.length; // 分開寫效能比較好
+        console.log('dateArrLen', dateArrLen);
+        const newDataArr = [];
+        for (let j = 0; j < dateArrLen; j++) {
+            for (let k = j + 1; k < dateArrLen; k++) {
+                if (dateArr[j].date === dateArr[k].date) {
+                    // 日期相等時
+                    // A. 比對狀態是否為可報名
+                    if (dateArr[j].status !== '報名' && dateArr[k].status === '報名') {
+                        newDataArr.push(dateArr[k]);
+                    } else if (
+                        dateArr[j].status === '報名' &&
+            dateArr[k].status !== '報名'
+                    ) {
+                        newDataArr.push(dateArr[j]);
+                    } else {
+                        // B. 比對是否保證出團
+                        if (
+                            dateArr[j].guaranteed === true &&
+              dateArr[k].guaranteed === false
+                        ) {
+                            newDataArr.push(dateArr[j]);
+                        } else if (
+                            dateArr[j].guaranteed === false &&
+              dateArr[k].guaranteed === true
+                        ) {
+                            newDataArr.push(dateArr[k]);
+                        } else {
+                            // 是否出團如果都一樣  C. 比價格
+                            if (dateArr[j].price < dateArr[k].price) {
+                                newDataArr.push(dateArr[j]);
+                            } else {
+                                newDataArr.push(dateArr[k]);
+                            }
+                        }
+
+                        // if (dateArr[j].guaranteed || dateArr[k].guaranteed) {  // j false k true時
+                        //     newDataArr.push(dateArr[k]);
+                        // }
+                    }
+                } else {
+                    // 如果沒有重複的話再放進去
+
+                    // let valueArr = newDateArr.map(
+                    //     (item) => {
+                    //         return item.date;
+                    //     }
+                    //     );
+                    // let isDuplicate = valueArr.some(
+                    //     (item,idx) => {
+                    //         return valueArr.indexOf(item) != idx
+                    //     }
+                    // })
+
+                    // 如果newDataArr沒有重複的話 => 放進來
+                    if (newDataArr.includes(dateArr[k])) {
+                        newDataArr.push(dateArr[k]);
+                    }
+                }
+            }
+        }
+        console.log('newDataArrLOL');
+        console.log(newDataArr);
+        return newDataArr;
+    }
+
     render() {
         const { travelData, weekDay } = this.state;
         const { nowYear, nowMonth } = this.props;
@@ -93,6 +183,8 @@ class CalendarBody extends Component {
             // console.log('typeof nowMonth');
             // console.log(typeof nowMonth);
             // console.log('9998DtripData', travelData);
+            this.filterArrFunc(travelData);
+
             console.log('nowMonth.length');
             console.log(nowMonth.length);
 
