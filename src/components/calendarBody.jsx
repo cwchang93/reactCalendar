@@ -16,6 +16,7 @@ class CalendarBody extends Component {
                 '星期五',
                 '星期六',
             ],
+            newDataArr: null,
             // nowYear: props.nowYear, // Q這邊無法傳到State再從state拿
             // nowMonth: props.nowMonth,
             // nowMonthLen: null, //  可設計當更改月份時就敲countMonthLen的function重新計算現在的MonthLen
@@ -44,9 +45,14 @@ class CalendarBody extends Component {
                 return response.json();
             })
             .then((travelData) =>
-                this.setState({
-                    travelData: travelData,
-                })
+                this.setState(
+                    {
+                        travelData: travelData,
+                    },
+                    () => {
+                        this.filterArrFunc(travelData);
+                    }
+                )
             )
             .catch((error) => console.log('parsing failed', error));
     }
@@ -191,11 +197,67 @@ class CalendarBody extends Component {
 
         // render 剩下的資料
 
+        // this.setState({ newDataArr: newDataArr });
+
         return newDataArr;
     }
 
+    renderDayContent() {
+        const testarr = [];
+        for (let j = 0; j < 30; j++) {
+            // if (idDate === this.filterArrFunc[j].date) {
+            testarr.push(
+                <div className="day">
+                    <div className="generalinfo" />
+                    <span className="daynum">{j + 1} </span>
+
+                    <span className="guaranteed">成團</span>
+                    <div className="details">
+                        <span className="status">status</span>
+                        <span className="sell">可賣:</span>
+                        <span className="group">團位:</span>
+                        <span className="price">$</span>
+                    </div>
+                </div>
+            );
+            // }
+        }
+        //         const testarr = this.renderRealDays().map((Arr, i) => {
+        //             console.log('newDataArr7777777');
+        //             // const idDate = `${nowYear}/${
+        //             //     nowMonth.length == 1 ? '0' : ''
+        //             // }${nowMonth}/${
+        //             //     i + 1 < 10 ? '0' : '' // 個位數時加0
+        //             // }${i + 1}`;
+
+        //             for (let j = 0; j < this.filterArrFunc; j++) {
+        //                 if (idDate === this.filterArrFunc[j].date) {
+        //                     return (
+        //                         <div id={idDate}
+        // className="day">
+        //                             <div className="generalinfo" />
+        //                             <span className="daynum">{i + 1}</span>
+
+        //                             <span className="guaranteed">成團</span>
+        //                             <div className="details">
+        //                                 <span className="status">status</span>
+        //                                 <span className="sell">可賣:</span>
+        //                                 <span className="group">團位:</span>
+        //                                 <span className="price">$</span>
+        //                             </div>
+        //                         </div>
+        //                     );
+        //                 }
+        //             }
+
+        //             // newDataArr.map((ele) => console.log(ele.date));
+        //         });
+
+        return testarr;
+    }
+
     render() {
-        const { travelData, weekDay } = this.state;
+        const { travelData, weekDay, newDataArr } = this.state;
         const { nowYear, nowMonth } = this.props;
         console.log('render: ', nowYear);
         // const { nowYear, nowMonth } = this.state;
@@ -210,6 +272,8 @@ class CalendarBody extends Component {
         //   console.log(weekDay);
 
         if (travelData) {
+            console.log('this.state.newDataArr');
+            // console.log(newDataArr);
             // console.log('typeof nowMonth');
             // console.log(typeof nowMonth);
             // console.log('9998DtripData', travelData);
@@ -218,27 +282,46 @@ class CalendarBody extends Component {
             console.log('nowMonth.length');
             console.log(nowMonth.length);
 
-            const renderDayContent = this.renderRealDays().map((Arr, i) => {
-                return (
-                    <div
-                        id={`${nowYear}/${nowMonth.length == 1 ? '0' : ''}${nowMonth}/${
-                            i + 1 < 10 ? '0' : '' // 個位數時加0
-                        }${i + 1}`}
-                        className="day"
-                    >
-                        <div className="generalinfo">
-                            <span className="daynum">{i + 1}</span>
-                            <span className="guaranteed">成團</span>
-                        </div>
-                        <div className="details">
-                            <span className="status">status</span>
-                            <span className="sell">可賣:</span>
-                            <span className="group">團位:</span>
-                            <span className="price">$</span>
-                        </div>
-                    </div>
-                );
-            });
+            // const renderDayContent = this.renderRealDays().map((Arr, i) => {
+            //     console.log('newDataArr7777777');
+            //     console.log(newDataArr);
+            //     const idDate = `${nowYear}/${
+            //         nowMonth.length == 1 ? '0' : ''
+            //     }${nowMonth}/${
+            //         i + 1 < 10 ? '0' : '' // 個位數時加0
+            //     }${i + 1}`;
+
+            //     //                 for (let j = 0; j < newDataArr; j++) {
+            //     //                     if (idDate === newDataArr[j].date) {
+            //     //                         return (
+            //     //                             <div id={idDate}
+            //     // className="day">
+            //     //                                 <div className="generalinfo" />
+            //     //                                 <span className="daynum">{i + 1}</span>
+
+            //     //                                 <span className="guaranteed">成團</span>
+            //     //                                 <div className="details">
+            //     //                                     <span className="status">status</span>
+            //     //                                     <span className="sell">可賣:</span>
+            //     //                                     <span className="group">團位:</span>
+            //     //                                     <span className="price">$</span>
+            //     //                                 </div>
+            //     //                             </div>
+            //     //                         );
+            //     //                     }
+            //     //                 }
+
+            //     // newDataArr.map((ele) => console.log(ele.date));
+            // });
+
+            // const renderMatchDay = this.newDataArr.map
+            //             <span className="guaranteed">成團</span>
+            //             <div className="details">
+            //                 <span className="status">status</span>
+            //                 <span className="sell">可賣:</span>
+            //                 <span className="group">團位:</span>
+            //                 <span className="price">$</span>
+            //             </div>
 
             return (
                 <React.Fragment>
@@ -254,7 +337,7 @@ class CalendarBody extends Component {
                                 return <div key={i}
 className="day disabled" />;
                             })}
-                            {renderDayContent}
+                            {this.renderDayContent()}
                             {/* <div
                                 className="day"
                                 // onClick={() => {

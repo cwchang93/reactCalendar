@@ -130,28 +130,29 @@ $classname: "calendars";
           width: 100%;
           height: 20px;
           display: inline-block;
-
-          .daynum {
-            display: block;
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            color: #444;
-          }
-
-          .guaranteed {
-            padding: 0 3px;
-            /* width: 100%; */
-            height: 20px;
-            color: #fff;
-            /* text-align: right; */
-            position: absolute;
-            top: 3px;
-            right: 3px;
-            line-height: 20px;
-            background-color: #fe8400;
-          }
         }
+
+        .daynum {
+          display: block;
+          position: absolute;
+          top: 2px;
+          left: 2px;
+          color: #444;
+        }
+
+        .guaranteed {
+          padding: 0 3px;
+          /* width: 100%; */
+          height: 20px;
+          color: #fff;
+          /* text-align: right; */
+          position: absolute;
+          top: 3px;
+          right: 3px;
+          line-height: 20px;
+          background-color: #fe8400;
+        }
+
 
         .details {
           text-align: left;
