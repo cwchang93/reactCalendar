@@ -222,7 +222,7 @@ class CalendarBody extends Component {
                 return (
                     <div
                         id={`${nowYear}/${nowMonth.length == 1 ? '0' : ''}${nowMonth}/${
-                            i + 1 < 10 ? '0' : ''
+                            i + 1 < 10 ? '0' : '' // 個位數時加0
                         }${i + 1}`}
                         className="day"
                     >
@@ -232,9 +232,9 @@ class CalendarBody extends Component {
                         </div>
                         <div className="details">
                             <span className="status">status</span>
-                            <span className="sell">sell</span>
-                            <span className="group">group</span>
-                            <span className="price">price</span>
+                            <span className="sell">可賣:</span>
+                            <span className="group">團位:</span>
+                            <span className="price">$</span>
                         </div>
                     </div>
                 );
