@@ -46,9 +46,9 @@ class CalendarBody extends Component {
             })
             .then((travelData) =>
                 this.setState(
-                    {
+                    (prevState) => ({
                         travelData: travelData,
-                    },
+                    }),
                     () => {
                         this.filterArrFunc(travelData);
                     }
@@ -78,8 +78,8 @@ class CalendarBody extends Component {
         for (let i = 0; i < firstDay; i++) {
             emptyContent.push(i);
         }
-        console.log('firstDay', firstDay);
-        console.log('emptyContent', emptyContent);
+        // console.log('firstDay', firstDay);
+        // console.log('emptyContent', emptyContent);
         return emptyContent;
     }
 
@@ -98,6 +98,7 @@ class CalendarBody extends Component {
         const { nowYear, nowMonth } = this.props;
 
         const dateArr = [];
+        let newDataArr = [];
         // 用regex篩選第一次=> 把當月資料篩選出來
         const yearMonthSring = String(
             `${nowYear}/${nowMonth.length == 1 ? '0' : ''}${nowMonth}/`
@@ -105,153 +106,215 @@ class CalendarBody extends Component {
         // const validateYearMonth = new RegExp(`${yearMonthSring}\d{2}`); // /2017\/06/
         const validateYearMonth = new RegExp(`^${yearMonthSring}`); // /^2017\/06//
 
-        console.log('validateYearMonth5566');
-        console.log(validateYearMonth);
-        // 1. 第一支篩選出當年當月的資料
-        for (let i = 0; i < jsonArr.length; i++) {
-            if (validateYearMonth.test(jsonArr[i].date)) {
-                dateArr.push(jsonArr[i]);
-            }
-        }
-        console.log('fffdateArr');
-        console.log(dateArr);
-        // return dateArr;  // 此資料是有重複的date資料
-        // 2. 第二支: 比對相同日期可報名優先status
-        const dateArrLen = dateArr.length; // 分開寫效能比較好
-        console.log('dateArrLen', dateArrLen);
-        // const newDataArr = [];
-
-        // 先把不重複的拿出來;
-        const newArr = dateArr.filter((ele, i, dateArr) => {
-            return dateArr.map((item) => item.date).indexOf(ele.date) !== i;
-        });
-        const newDataArr = dateArr.filter(
-            (ele) => newArr.map((ele) => ele.date).indexOf(ele.date) === -1
-        );
-
-        // console.log('uniqueValArr');
-        // console.log(uniqueValArr);
-
-        for (let j = 0; j < dateArrLen; j++) {
-            for (let k = j + 1; k < dateArrLen; k++) {
-                if (dateArr[j].date === dateArr[k].date) {
-                    // 日期相等時
-                    // A. 比對狀態是否為可報名
-                    if (dateArr[j].status !== '報名' && dateArr[k].status === '報名') {
-                        newDataArr.push(dateArr[k]);
-                    } else if (
-                        dateArr[j].status === '報名' &&
-            dateArr[k].status !== '報名'
-                    ) {
-                        newDataArr.push(dateArr[j]);
-                    } else {
-                        // B. 比對是否保證出團
-                        if (
-                            dateArr[j].guaranteed === true &&
-              dateArr[k].guaranteed === false
-                        ) {
-                            newDataArr.push(dateArr[j]);
-                        } else if (
-                            dateArr[j].guaranteed === false &&
-              dateArr[k].guaranteed === true
-                        ) {
-                            newDataArr.push(dateArr[k]);
-                        } else {
-                            // 是否出團如果都一樣  C. 比價格
-                            if (dateArr[j].price < dateArr[k].price) {
-                                newDataArr.push(dateArr[j]);
-                            } else {
-                                newDataArr.push(dateArr[k]);
-                            }
-                        }
-
-                        // if (dateArr[j].guaranteed || dateArr[k].guaranteed) {  // j false k true時
-                        //     newDataArr.push(dateArr[k]);
-                        // }
-                    }
-                } else {
-                    // 如果沒有重複的話再放進去
-                    // let valueArr = newDateArr.map(
-                    //     (item) => {
-                    //         return item.date;
-                    //     }
-                    //     );
-                    // let isDuplicate = valueArr.some(
-                    //     (item,idx) => {
-                    //         return valueArr.indexOf(item) != idx
-                    //     }
-                    // })
-                    // 如果newDataArr沒有重複的話 => 放進來
-                    // if (newDataArr.includes(dateArr[k])) {
-                    // newDataArr.push(dateArr[k]);
-                    // }
+        // console.log('validateYearMonth5566');
+        // console.log(validateYearMonth);
+        if (jsonArr.length) {
+            // 1. 第一支篩選出當年當月的資料
+            for (let i = 0; i < jsonArr.length; i++) {
+                if (validateYearMonth.test(jsonArr[i].date)) {
+                    dateArr.push(jsonArr[i]);
                 }
             }
+            // console.log('fffdateArr');
+            // console.log(dateArr);
+            // return dateArr;  // 此資料是有重複的date資料
+            // 2. 第二支: 比對相同日期可報名優先status
+            const dateArrLen = dateArr.length; // 分開寫效能比較好
+            // console.log('dateArrLen', dateArrLen);
+            // const newDataArr = [];
+
+            // 先把不重複的拿出來;
+            const newArr = dateArr.filter((ele, i, dateArr) => {
+                return dateArr.map((item) => item.date).indexOf(ele.date) !== i;
+            });
+            newDataArr = dateArr.filter(
+                (ele) => newArr.map((ele) => ele.date).indexOf(ele.date) === -1
+            );
+
+            // console.log('uniqueValArr');
+            // console.log(uniqueValArr);
+
+            for (let j = 0; j < dateArrLen; j++) {
+                for (let k = j + 1; k < dateArrLen; k++) {
+                    if (dateArr[j].date === dateArr[k].date) {
+                        // 日期相等時
+                        // A. 比對狀態是否為可報名
+                        if (dateArr[j].status !== '報名' && dateArr[k].status === '報名') {
+                            newDataArr.push(dateArr[k]);
+                        } else if (
+                            dateArr[j].status === '報名' &&
+              dateArr[k].status !== '報名'
+                        ) {
+                            newDataArr.push(dateArr[j]);
+                        } else {
+                            // B. 比對是否保證出團
+                            if (
+                                dateArr[j].guaranteed === true &&
+                dateArr[k].guaranteed === false
+                            ) {
+                                newDataArr.push(dateArr[j]);
+                            } else if (
+                                dateArr[j].guaranteed === false &&
+                dateArr[k].guaranteed === true
+                            ) {
+                                newDataArr.push(dateArr[k]);
+                            } else {
+                                // 是否出團如果都一樣  C. 比價格
+                                if (dateArr[j].price < dateArr[k].price) {
+                                    newDataArr.push(dateArr[j]);
+                                } else {
+                                    newDataArr.push(dateArr[k]);
+                                }
+                            }
+
+                            // if (dateArr[j].guaranteed || dateArr[k].guaranteed) {  // j false k true時
+                            //     newDataArr.push(dateArr[k]);
+                            // }
+                        }
+                    } else {
+                        // 如果沒有重複的話再放進去
+                        // let valueArr = newDateArr.map(
+                        //     (item) => {
+                        //         return item.date;
+                        //     }
+                        //     );
+                        // let isDuplicate = valueArr.some(
+                        //     (item,idx) => {
+                        //         return valueArr.indexOf(item) != idx
+                        //     }
+                        // })
+                        // 如果newDataArr沒有重複的話 => 放進來
+                        // if (newDataArr.includes(dateArr[k])) {
+                        // newDataArr.push(dateArr[k]);
+                        // }
+                    }
+                }
+            }
+            // console.log('newDataArrLOL');
+            // console.log(newDataArr);
+
+            // 排序資料 依照日期
+
+            // 補上空值
+
+            // render 剩下的資料
+
+            // this.setState({ newDataArr: newDataArr });
         }
-        console.log('newDataArrLOL');
-        console.log(newDataArr);
-
-        // 排序資料 依照日期
-
-        // 補上空值
-
-        // render 剩下的資料
-
-        this.setState({ newDataArr: newDataArr });
-
-        return newDataArr;
+        const sortedDataArr = newDataArr.reverse(newDataArr.date);
+        return sortedDataArr;
     }
 
     renderDayContent() {
         const dayContentArr = [];
         const { nowYear, nowMonth } = this.props;
-        const { newDataArr } = this.state;
+        // const { newDataArr } = this.state;
         const nowMonthLen = new Date(nowYear, nowMonth, 0).getDate();
-        // const newDataArr = this.filterArrFunc(this.state.travelData);
-        console.log('newDtArr');
-        console.log(newDataArr);
-        for (let j = 0; j < nowMonthLen; j++) {
-            // if (idDate === this.filterArrFunc[j].date) {
-            console.log('newDataArrAAAA');
-            // console.log(newDataArr()[j].date);
-            const idDate = `${nowYear}/${
-                nowMonth.length == 1 ? '0' : ''
-            }${nowMonth}/${
-                j + 1 < 10 ? '0' : '' // 個位數時加0
-            }${j + 1}`;
-            console.log(idDate);
+        const newDataForCompare = this.filterArrFunc(this.state.travelData);
+        if (newDataForCompare.length) {
+            // console.log('RENDERDAYCON:newDtArr');
+            // console.log(newDataForCompare);
+            for (let j = 0; j < nowMonthLen; j++) {
+                // if (idDate === this.filterArrFunc[j].date) {
+                // console.log('newDataForCompare:789 ');
+                // console.log(newDataForCompare);
+                const idDate = `${nowYear}/${
+                    nowMonth.length == 1 ? '0' : ''
+                }${nowMonth}/${
+                    j + 1 < 10 ? '0' : '' // 個位數時加0
+                }${j + 1}`;
+                console.log(idDate);
 
-            dayContentArr.push(
-                <div className="day">
-                    <div className="generalinfo" />
-                    <span className="daynum"
+                dayContentArr.push(
+                    <div className="day">
+                        <div className="generalinfo" />
+                        <span className="daynum"
 id={idDate}>
-                        {j + 1}{' '}
-                    </span>
-
-                    <span className="guaranteed">
-                        {/* {{ idDate } == newDataArr[j].date ? newDataArr[j].guaranteed : ''} */}
-                    </span>
-                    <div className="details">
-                        <span
-                            className="status"
-                            id={newDataArr[j].price}
-                            // display={{ idDate } === newDataArr[j].date ? '' : 'none'}
-                        >
-                            {newDataArr[j].status}
+                            {j + 1}{' '}
                         </span>
-                        <span className="sell">可賣:</span>
-                        <span className="group">團位:</span>
-                        <span className="price">$</span>
-                    </div>
-                </div>
-                // console.log('newDataAAA', this.state.newDataArr);
-            );
-        }
 
+                        {this.aaa(idDate, newDataForCompare)}
+                    </div>
+                    // console.log('newDataAAA', this.state.newDataForCompare);
+                );
+
+                //   this.aaaa(idDate, dayContentArr)
+                // if (idDate !== newDataForCompare[j].date) {
+                // }
+                //                 for (let k = 0; k < newDataForCompare.length; k++) {
+                //                     //     this.aaaa(idDate, dayContentArr)
+                //                     if (idDate === newDataForCompare[k].date) {
+                //                         dayContentArr.push(
+                //                             <div className="day">
+                //                                 <div className="generalinfo" />
+                //                                 <span className="daynum"
+                // id={idDate}>
+                //                                     {j + 1}{' '}
+                //                                 </span>
+
+                //                                 <span
+                //                                     className="guaranteed"
+                //                                     display={
+                //                                         { idDate } === newDataForCompare[k].guaranteed ? '' : 'none'
+                //                                     }
+                //                                 />
+                //                                 <div className="details">
+                //                                     <span className="status">{newDataForCompare[k].status}</span>
+                //                                     <span className="sell">
+                //                     可賣: {newDataForCompare[k].availableVancancy}
+                //                                     </span>
+                //                                     <span className="group">
+                //                     團位: {newDataForCompare[k].totalVacnacy}
+                //                                     </span>
+                //                                     <span className="price">${newDataForCompare[k].price}</span>
+                //                                 </div>
+                //                             </div>
+                //                             // console.log('newDataAAA', this.state.newDataForCompare);
+                //                         );
+                //                     } else {
+                //                         dayContentArr.push(
+                //                             <div className="day">
+                //                                 <div className="generalinfo" />
+                //                                 <span className="daynum"
+                // id={idDate}>
+                //                                     {j + 1}{' '}
+                //                                 </span>
+                //                             </div>
+                //                         );
+                //                     }
+                //                 }
+            }
+        }
         return dayContentArr;
     }
-
+    aaa(idDate, compareData) {
+        const newDataContainer = [];
+        for (let k = 0; k < compareData.length; k++) {
+            // this.aaaa(idDate, dayContentArr);
+            if (idDate === compareData[k].date) {
+                // dayContentArr.push(
+                newDataContainer.push(
+                    <React.Fragment>
+                        <span
+                            className="guaranteed"
+                            display={{ idDate } === compareData[k].guaranteed ? '' : 'none'}
+                        />
+                        <div className="details">
+                            <span className="status">{compareData[k].status}</span>
+                            <span className="sell">
+                可賣: {compareData[k].availableVancancy}
+                            </span>
+                            <span className="group">團位: {compareData[k].totalVacnacy}</span>
+                            <span className="price">${compareData[k].price}</span>
+                        </div>
+                    </React.Fragment>
+                );
+                // console.log('newDataAAA', this.state.compareData);
+                // );
+            }
+        }
+        return newDataContainer;
+    }
     render() {
         const { travelData, weekDay, newDataArr } = this.state;
         const { nowYear, nowMonth } = this.props;
