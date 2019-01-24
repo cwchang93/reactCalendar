@@ -201,7 +201,20 @@ class CalendarBody extends Component {
 
             // this.setState({ newDataArr: newDataArr });
         }
-        const sortedDataArr = newDataArr.reverse(newDataArr.date);
+        // const sortedDataArr = newDataArr.reverse(newDataArr.date);
+        function reverseByKey(array, key) {
+            return array.reverse(function(a, b) {
+                const x = a[key];
+                const y = b[key];
+                return x < y ? -1 : x > y ? 1 : 0;
+            });
+        }
+
+        const sortedDataArr = reverseByKey(newDataArr, 'date');
+
+        console.log('sortedDataArr');
+        console.log(sortedDataArr);
+
         return sortedDataArr;
     }
 
@@ -212,8 +225,8 @@ class CalendarBody extends Component {
         const nowMonthLen = new Date(nowYear, nowMonth, 0).getDate();
         const newDataForCompare = this.filterArrFunc(this.state.travelData);
         if (newDataForCompare.length) {
-            // console.log('RENDERDAYCON:newDtArr');
-            // console.log(newDataForCompare);
+            console.log('RENDERDAYCON:newDtArr');
+            console.log(newDataForCompare);
             for (let j = 0; j < nowMonthLen; j++) {
                 // if (idDate === this.filterArrFunc[j].date) {
                 // console.log('newDataForCompare:789 ');
@@ -233,12 +246,11 @@ id={idDate}>
                             {j + 1}{' '}
                         </span>
 
-                        {this.aaa(idDate, newDataForCompare)}
+                        {this.matchDay(idDate, newDataForCompare)}
                     </div>
-                    // console.log('newDataAAA', this.state.newDataForCompare);
                 );
 
-                //   this.aaaa(idDate, dayContentArr)
+                //   this.matchDaya(idDate, dayContentArr)
                 // if (idDate !== newDataForCompare[j].date) {
                 // }
                 //                 for (let k = 0; k < newDataForCompare.length; k++) {
@@ -287,7 +299,7 @@ id={idDate}>
         }
         return dayContentArr;
     }
-    aaa(idDate, compareData) {
+    matchDay(idDate, compareData) {
         const newDataContainer = [];
         for (let k = 0; k < compareData.length; k++) {
             // this.aaaa(idDate, dayContentArr);
@@ -298,7 +310,9 @@ id={idDate}>
                         <span
                             className="guaranteed"
                             display={{ idDate } === compareData[k].guaranteed ? '' : 'none'}
-                        />
+                        >
+              成團
+                        </span>
                         <div className="details">
                             <span className="status">{compareData[k].status}</span>
                             <span className="sell">
@@ -309,10 +323,11 @@ id={idDate}>
                         </div>
                     </React.Fragment>
                 );
-                // console.log('newDataAAA', this.state.compareData);
+                // console.log('newDatmatchDayA', this.state.compareData);
                 // );
             }
         }
+
         return newDataContainer;
     }
     render() {
