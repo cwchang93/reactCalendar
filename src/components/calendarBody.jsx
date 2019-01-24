@@ -137,9 +137,12 @@ class CalendarBody extends Component {
             const dateArrLen = dateArr.length; // 分開寫效能比較好
             for (let j = 0; j < dateArrLen; j++) {
                 for (let k = j + 1; k < dateArrLen; k++) {
+                    const dateRecordArr = [];
                     if (dateArr[j].date === dateArr[k].date) {
                         // 日期相等時
                         // A. 比對狀態是否為可報名
+
+                        dateRecordArr.push(dateArr[k].date);
                         if (dateArr[j].status !== '報名' && dateArr[k].status === '報名') {
                             newDataArr.push(dateArr[k]);
                         } else if (
@@ -174,20 +177,6 @@ class CalendarBody extends Component {
                         }
                     } else {
                         // 如果沒有重複的話再放進去
-                        // let valueArr = newDateArr.map(
-                        //     (item) => {
-                        //         return item.date;
-                        //     }
-                        //     );
-                        // let isDuplicate = valueArr.some(
-                        //     (item,idx) => {
-                        //         return valueArr.indexOf(item) != idx
-                        //     }
-                        // })
-                        // 如果newDataArr沒有重複的話 => 放進來
-                        // if (newDataArr.includes(dateArr[k])) {
-                        // newDataArr.push(dateArr[k]);
-                        // }
                     }
                 }
             }
@@ -220,13 +209,13 @@ class CalendarBody extends Component {
     // return newDataArr;
     }
 
-    reverseByKey(array, key) {
-        return array.reverse(function(a, b) {
-            const x = a[key];
-            const y = b[key];
-            return x < y ? -1 : x > y ? 1 : 0;
-        });
-    }
+    // reverseByKey(array, key) {
+    //     return array.reverse(function(a, b) {
+    //         const x = a[key];
+    //         const y = b[key];
+    //         return x < y ? -1 : x > y ? 1 : 0;
+    //     });
+    // }
 
     renderDayContent() {
         const dayContentArr = [];
@@ -246,7 +235,7 @@ class CalendarBody extends Component {
                 }${nowMonth}/${
                     j + 1 < 10 ? '0' : '' // 個位數時加0
                 }${j + 1}`;
-                console.log(idDate);
+                // console.log(idDate);
 
                 dayContentArr.push(
                     <div className="day">
