@@ -202,20 +202,47 @@ class CalendarBody extends Component {
             // this.setState({ newDataArr: newDataArr });
         }
         // const sortedDataArr = newDataArr.reverse(newDataArr.date);
-        function reverseByKey(array, key) {
-            return array.reverse(function(a, b) {
-                const x = a[key];
-                const y = b[key];
-                return x < y ? -1 : x > y ? 1 : 0;
-            });
-        }
+        // const sortedDataArr = this.reverseByKey(newDataArr, 'date');
+        // const sortedDataArr = this.reverseDate(newDataArr, 'date');
+        // console.log(this.reverseDate());
+        // console.log(sortedDataArr);
 
-        const sortedDataArr = reverseByKey(newDataArr, 'date');
+        // function reverseByKey(array, key) {
+        //     return array.reverse(function(a, b) {
+        //         const x = a[key];
+        //         const y = b[key];
+        //         return x < y ? -1 : x > y ? 1 : 0;
+        //     });
+        // }
 
-        console.log('sortedDataArr');
+        const sortedDataArr = newDataArr.sort((a, b) => {
+            return Date.parse(a.date) - Date.parse(b.date);
+        });
+
+        // const sortedDataArr = reverseByKey(newDataArr, 'date');
+        console.log('newDataArrCC');
+        console.log(newDataArr);
+        console.log('sortedDataArr777');
         console.log(sortedDataArr);
 
         return sortedDataArr;
+    // console.log(newDataArr);
+    // return newDataArr;
+    }
+
+    // reverseDate(arr, key) {
+    //     const newArr = [];
+    //     console.log(arr, key);
+
+    //     return arrr.reverse();
+    // }
+
+    reverseByKey(array, key) {
+        return array.reverse(function(a, b) {
+            const x = a[key];
+            const y = b[key];
+            return x < y ? -1 : x > y ? 1 : 0;
+        });
     }
 
     renderDayContent() {
