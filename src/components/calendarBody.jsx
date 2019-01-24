@@ -98,7 +98,8 @@ class CalendarBody extends Component {
         const { nowYear, nowMonth } = this.props;
 
         const dateArr = [];
-        let newDataArr = [];
+        const newDataArr = [];
+        // const uniqueDataArr = [];
         // 用regex篩選第一次=> 把當月資料篩選出來
         const yearMonthSring = String(
             `${nowYear}/${nowMonth.length == 1 ? '0' : ''}${nowMonth}/`
@@ -115,11 +116,8 @@ class CalendarBody extends Component {
                     dateArr.push(jsonArr[i]);
                 }
             }
-            // console.log('fffdateArr');
-            // console.log(dateArr);
             // return dateArr;  // 此資料是有重複的date資料
             // 2. 第二支: 比對相同日期可報名優先status
-            const dateArrLen = dateArr.length; // 分開寫效能比較好
             // console.log('dateArrLen', dateArrLen);
             // const newDataArr = [];
 
@@ -127,13 +125,16 @@ class CalendarBody extends Component {
             const newArr = dateArr.filter((ele, i, dateArr) => {
                 return dateArr.map((item) => item.date).indexOf(ele.date) !== i;
             });
-            newDataArr = dateArr.filter(
+
+            // 這邊的let uniqueDataArr 會被自動改成 const;
+            const uniqueDataArr = dateArr.filter(
                 (ele) => newArr.map((ele) => ele.date).indexOf(ele.date) === -1
             );
 
-            // console.log('uniqueValArr');
-            // console.log(uniqueValArr);
+            console.log('完全不重複的資料:uniqueDataArr');
+            console.log(uniqueDataArr);
 
+            const dateArrLen = dateArr.length; // 分開寫效能比較好
             for (let j = 0; j < dateArrLen; j++) {
                 for (let k = j + 1; k < dateArrLen; k++) {
                     if (dateArr[j].date === dateArr[k].date) {
@@ -201,19 +202,8 @@ class CalendarBody extends Component {
 
             // this.setState({ newDataArr: newDataArr });
         }
-        // const sortedDataArr = newDataArr.reverse(newDataArr.date);
-        // const sortedDataArr = this.reverseByKey(newDataArr, 'date');
-        // const sortedDataArr = this.reverseDate(newDataArr, 'date');
-        // console.log(this.reverseDate());
-        // console.log(sortedDataArr);
-
-        // function reverseByKey(array, key) {
-        //     return array.reverse(function(a, b) {
-        //         const x = a[key];
-        //         const y = b[key];
-        //         return x < y ? -1 : x > y ? 1 : 0;
-        //     });
-        // }
+        console.log('有重複的資料 newDataArr');
+        console.log(newDataArr);
 
         const sortedDataArr = newDataArr.sort((a, b) => {
             return Date.parse(a.date) - Date.parse(b.date);
@@ -229,13 +219,6 @@ class CalendarBody extends Component {
     // console.log(newDataArr);
     // return newDataArr;
     }
-
-    // reverseDate(arr, key) {
-    //     const newArr = [];
-    //     console.log(arr, key);
-
-    //     return arrr.reverse();
-    // }
 
     reverseByKey(array, key) {
         return array.reverse(function(a, b) {
@@ -276,52 +259,6 @@ id={idDate}>
                         {this.matchDay(idDate, newDataForCompare)}
                     </div>
                 );
-
-                //   this.matchDaya(idDate, dayContentArr)
-                // if (idDate !== newDataForCompare[j].date) {
-                // }
-                //                 for (let k = 0; k < newDataForCompare.length; k++) {
-                //                     //     this.aaaa(idDate, dayContentArr)
-                //                     if (idDate === newDataForCompare[k].date) {
-                //                         dayContentArr.push(
-                //                             <div className="day">
-                //                                 <div className="generalinfo" />
-                //                                 <span className="daynum"
-                // id={idDate}>
-                //                                     {j + 1}{' '}
-                //                                 </span>
-
-                //                                 <span
-                //                                     className="guaranteed"
-                //                                     display={
-                //                                         { idDate } === newDataForCompare[k].guaranteed ? '' : 'none'
-                //                                     }
-                //                                 />
-                //                                 <div className="details">
-                //                                     <span className="status">{newDataForCompare[k].status}</span>
-                //                                     <span className="sell">
-                //                     可賣: {newDataForCompare[k].availableVancancy}
-                //                                     </span>
-                //                                     <span className="group">
-                //                     團位: {newDataForCompare[k].totalVacnacy}
-                //                                     </span>
-                //                                     <span className="price">${newDataForCompare[k].price}</span>
-                //                                 </div>
-                //                             </div>
-                //                             // console.log('newDataAAA', this.state.newDataForCompare);
-                //                         );
-                //                     } else {
-                //                         dayContentArr.push(
-                //                             <div className="day">
-                //                                 <div className="generalinfo" />
-                //                                 <span className="daynum"
-                // id={idDate}>
-                //                                     {j + 1}{' '}
-                //                                 </span>
-                //                             </div>
-                //                         );
-                //                     }
-                //                 }
             }
         }
         return dayContentArr;
@@ -361,69 +298,8 @@ id={idDate}>
         const { travelData, weekDay, newDataArr } = this.state;
         const { nowYear, nowMonth } = this.props;
         console.log('render: ', nowYear);
-        // const { nowYear, nowMonth } = this.state;
-        // console.log(this.props.path);
-        // console.log(weekDay);
-        // console.log('55688');
-        // console.log('this.props.nowYear8D');
-        // console.log(this.props.nowYear);
-        // console.log('this.props.nowMonth8D');
-        // console.log(this.props.nowMonth);
-        // this.countMonthLen(nowYear, nowMonth);
-        //   console.log(weekDay);
 
         if (travelData) {
-            console.log('this.state.newDataArr');
-            // console.log(newDataArr);
-            // console.log('typeof nowMonth');
-            // console.log(typeof nowMonth);
-            // console.log('9998DtripData', travelData);
-            // this.filterArrFunc(travelData);
-
-            console.log('nowMonth.length');
-            console.log(nowMonth.length);
-
-            // const renderDayContent = this.renderRealDays().map((Arr, i) => {
-            //     console.log('newDataArr7777777');
-            //     console.log(newDataArr);
-            //     const idDate = `${nowYear}/${
-            //         nowMonth.length == 1 ? '0' : ''
-            //     }${nowMonth}/${
-            //         i + 1 < 10 ? '0' : '' // 個位數時加0
-            //     }${i + 1}`;
-
-            //     //                 for (let j = 0; j < newDataArr; j++) {
-            //     //                     if (idDate === newDataArr[j].date) {
-            //     //                         return (
-            //     //                             <div id={idDate}
-            //     // className="day">
-            //     //                                 <div className="generalinfo" />
-            //     //                                 <span className="daynum">{i + 1}</span>
-
-            //     //                                 <span className="guaranteed">成團</span>
-            //     //                                 <div className="details">
-            //     //                                     <span className="status">status</span>
-            //     //                                     <span className="sell">可賣:</span>
-            //     //                                     <span className="group">團位:</span>
-            //     //                                     <span className="price">$</span>
-            //     //                                 </div>
-            //     //                             </div>
-            //     //                         );
-            //     //                     }
-            //     //                 }
-
-            //     // newDataArr.map((ele) => console.log(ele.date));
-            // });
-
-            // const renderMatchDay = this.newDataArr.map
-            //             <span className="guaranteed">成團</span>
-            //             <div className="details">
-            //                 <span className="status">status</span>
-            //                 <span className="sell">可賣:</span>
-            //                 <span className="group">團位:</span>
-            //                 <span className="price">$</span>
-            //             </div>
-
             return (
                 <React.Fragment>
                     <div className="bodycalendar">
@@ -439,30 +315,6 @@ id={idDate}>
 className="day disabled" />;
                             })}
                             {this.renderDayContent()}
-                            {/* <div
-                                className="day"
-                                // onClick={() => {
-                                //     console.log(this.props.selectedDate);
-                                // }}
-                            >
-                                <div className="generalinfo">
-                                    <span className="daynum">12</span>
-                                    <span className="guaranteed">成團</span>
-                                </div>
-                                <div className="details">
-                                    <span className="status">status</span>
-                                    <span className="sell">sell</span>
-                                    <span className="group">group</span>
-                                    <span className="price">price</span>
-                                </div>
-                            </div> */}
-                            {/* <div className="day">hithere2</div>
-                            <div className="day">hithere3</div>
-                            <div className="day">hithere4</div>
-                            <div className="day">hithere5</div>
-                            <div className="day">hithere6</div>
-                            <div className="day">hithere7</div>
-                            <div className="day">hithere8</div> */}
                         </div>
                     </div>
                 </React.Fragment>
