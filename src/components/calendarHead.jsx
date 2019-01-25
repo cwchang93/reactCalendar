@@ -562,9 +562,9 @@ class CalendarHead extends Component {
         // console.log(renderInitYearMonth);
         if ( renderInitYearMonth > oldestYearMonth && renderInitYearMonth < newestYearMonth ) {
             return true;
-        } else {
-            return false;
         }
+        return false;
+
         //     // 如果render的年月不等於最底的年月 =>  return true
         //     return true;
         // } else {
@@ -660,7 +660,7 @@ class CalendarHead extends Component {
                                 }}
                             >
                                 <a href="#"
-                                    // className = { isActive ? '' : 'active'}
+                                    className = { isActive ? '' : 'active'}
                                 >
                                     <span className="arrow_wrap_right"
                                         onClick={() => {

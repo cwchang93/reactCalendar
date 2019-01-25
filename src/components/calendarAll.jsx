@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import '../App.scss';
 import CalendarHead from './calendarHead.jsx';
 import CalendarBody from './calendarBody.jsx';
+import '../App.scss';
 
 // webpack 這邊需要加jsx才能找得到
 

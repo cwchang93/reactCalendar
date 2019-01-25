@@ -342,23 +342,21 @@ class CalendarBody extends Component {
 
         if (travelData) {
             return (
-                <React.Fragment>
-                    <div className="bodycalendar">
-                        <div className="weekcontainer">
-                            {weekDay.map((wkDay, i) => {
-                                return <div key={i}> {wkDay} </div>;
-                            })}
-                        </div>
-                        <div className="daycontainer">
-                            {/* {this.renderEmptyDays()} */}
-                            {this.renderEmptyDays().map((arr, i) => {
-                                return <div key={i}
-                                    className="day disabled" />;
-                            })}
-                            {this.renderDayContent()}
-                        </div>
+                <div className="bodycalendar">
+                    <div className="weekcontainer">
+                        {weekDay.map((wkDay, i) => {
+                            return <div key={i}> {wkDay} </div>;
+                        })}
                     </div>
-                </React.Fragment>
+                    <div className="daycontainer">
+                        {/* {this.renderEmptyDays()} */}
+                        {this.renderEmptyDays().map((arr, i) => {
+                            return <div key={i}
+                                className="day disabled" />;
+                        })}
+                        {this.renderDayContent()}
+                    </div>
+                </div>
             );
         } else {
             return <div> Nothing</div>;
