@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './App.scss';
-// import CalendarHead from './components/calendarHead.jsx';
-// import CalendarBody from './components/calendarBody.jsx';
-import CalendarAll from './components/calendarAll.jsx';
+import '../App.scss';
+import CalendarHead from './calendarHead.jsx';
+import CalendarBody from './calendarBody.jsx';
+
 // webpack 這邊需要加jsx才能找得到
 
 
-class App extends Component {
+class CalendarAll extends Component {
     // 只要用到props就要指定型別
     static propTypes = {
         text: PropTypes.string,
@@ -46,17 +46,31 @@ class App extends Component {
     }
 
     render() {
+        const { nowDate } = this.state;
         return (
             <React.Fragment>
-
-                <CalendarAll path={this.props.dataSource}
-                    initYearMonth= {this.props.initYearMonth}/>
+                <div className="calendars">
 
 
+                    <CalendarHead path={this.props.path}
+                        initYearMonth= {this.props.initYearMonth}
+                        selectedDate={this.selectedDate}
+                        transferYearMonth={this.transferYearMonth}
+                    />
+
+                    {/* <h1 className = 'text' > {this.props.text}</h1> */}
+                    {/* <h2 className = 'test'>test2</h2> */}
+                    <CalendarBody path={this.props.path}
+                        selectedDate={nowDate}
+                        // transferYearMonth={this.transferYearMonth}
+                        nowYear = {this.state.nowYear}
+                        nowMonth = {this.state.nowMonth}
+                    />
+                </div>
             </React.Fragment>
 
         );
     }
 }
 
-export default App;
+export default CalendarAll;
