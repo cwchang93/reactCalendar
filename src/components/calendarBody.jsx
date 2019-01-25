@@ -135,6 +135,7 @@ class CalendarBody extends Component {
             console.log(uniqueDataArr);
 
             const dateArrLen = dateArr.length; // 分開寫效能比較好
+            //   function compareData() {
             for (let j = 0; j < dateArrLen; j++) {
                 for (let k = j + 1; k < dateArrLen; k++) {
                     const dateRecordArr = [];
@@ -142,14 +143,11 @@ class CalendarBody extends Component {
                         // 日期相等時
                         // A. 比對狀態是否為可報名
 
-                        dateRecordArr.push(dateArr[k].date);
+                        // dateRecordArr.push(dateArr[k].date);
                         if (dateArr[j].status !== '報名' && dateArr[k].status === '報名') {
+                            console.log('if 報名');
                             newDataArr.push(dateArr[k]);
-                        } else if (
-                            dateArr[j].status === '報名' &&
-              dateArr[k].status !== '報名'
-                        ) {
-                            newDataArr.push(dateArr[j]);
+                            //   dateArr[j].date = "123";
                         } else {
                             // B. 比對是否保證出團
                             if (
@@ -157,17 +155,14 @@ class CalendarBody extends Component {
                 dateArr[k].guaranteed === false
                             ) {
                                 newDataArr.push(dateArr[j]);
-                            } else if (
-                                dateArr[j].guaranteed === false &&
-                dateArr[k].guaranteed === true
-                            ) {
-                                newDataArr.push(dateArr[k]);
+                                console.log('if 出團');
+                                // dateArr[k].date = "123";
                             } else {
                                 // 是否出團如果都一樣  C. 比價格
                                 if (dateArr[j].price < dateArr[k].price) {
                                     newDataArr.push(dateArr[j]);
-                                } else {
-                                    newDataArr.push(dateArr[k]);
+                                    console.log('if price');
+                                    //   dateArr[k].date = "123";
                                 }
                             }
 
@@ -180,6 +175,20 @@ class CalendarBody extends Component {
                     }
                 }
             }
+            //   }
+            //   compareData();
+
+            //   let valueArr = newDataArr.map(function(item) {
+            //     return item.date;
+            //   });
+            //   let isDuplicate = valueArr.some(function(item, idx) {
+            //     console.log("heyduplicate", valueArr.indexOf(item) != idx);
+            //     return valueArr.indexOf(item) != idx;
+            //   });
+            //   if (isDuplicate) {
+            //     console.log("isDuplicate Was Call");
+            //     compareData();
+            //   }
             // console.log('newDataArrLOL');
             // console.log(newDataArr);
 
@@ -192,9 +201,12 @@ class CalendarBody extends Component {
             // this.setState({ newDataArr: newDataArr });
         }
         console.log('有重複的資料 newDataArr');
-        console.log(newDataArr);
+        const filterNewDataArr = newDataArr.filter(function(element, index, arr) {
+            return arr.indexOf(element) === index;
+        });
+        console.log(filterNewDataArr);
 
-        const sortedDataArr = newDataArr.sort((a, b) => {
+        const sortedDataArr = filterNewDataArr.sort((a, b) => {
             return Date.parse(a.date) - Date.parse(b.date);
         });
 
