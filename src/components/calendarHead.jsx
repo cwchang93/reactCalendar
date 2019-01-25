@@ -17,7 +17,7 @@ class CalendarHead extends Component {
             renderYearArr: ['2000', '2000', '2000'], // 畫面上要render的年 Arr [String, String, String ]
             renderMonthArr: null, // 畫面上要render的月 Arr [String, String, String ]
 
-            initMonthRender: null, // 目前在檯面上中間Render的月份
+            initMonthRender: '01', // 目前在檯面上中間Render的月份
 
             initYearMonthRender: null,
 
@@ -60,6 +60,11 @@ class CalendarHead extends Component {
     componentDidMount() {
         const { travelDataHead, initYear, initMonthRender } = this.state;
         this.getData(this.props.path);
+        this.props.transferYearMonth(
+            // 把state的參數值(y,m)傳到父曾
+            this.state.initYear,
+            this.state.initMonthAfterZero
+        );
         // console.log('9487 DidMount was called'); // 只有第一次會被摳
         this.collectInitYearMonth();
         console.log('this.props in did mount');
@@ -255,6 +260,12 @@ class CalendarHead extends Component {
             oldestYearMonth,
             newestYearMonth,
 
+            oldestYear,
+            oldestMonth,
+            newestYear,
+            newestMonth,
+
+
             initMonthRender,
         } = this.state;
 
@@ -279,7 +290,7 @@ class CalendarHead extends Component {
 
         if (
             leftOrRight == 'left' &&
-      slideYearMonth > String(parseInt(oldestYearMonth) + 1) // VIP 這邊因為下面減的時候會有一格誤差，因此把他加回來
+      slideYearMonth > String(parseInt(oldestYearMonth)) // VIP 這邊因為下面減的時候會有一格誤差，因此把他加回來
         ) {
             console.log('slideYearMonth in Left');
             console.log(slideYearMonth);
@@ -357,6 +368,40 @@ class CalendarHead extends Component {
                 ];
             }
 
+            if (leftSlideInitMonth === oldestMonth && leftSlideInitYear === oldestYear) {
+                // leftSlideInitMonth = oldestMonth;
+                if (leftSlideInitMonth === '11' ) {
+                    leftSlideRenderYearArr = [
+                        leftSlideInitYear,
+                        leftSlideInitYear,
+                        String(parseInt(leftSlideInitYear) + 1),
+                    ];
+                    leftSlideRenderMonthArr = [
+                        '11', '12', '1',
+                    ];
+                } else if (leftSlideInitMonth === '12') {
+                    leftSlideRenderYearArr = [
+                        leftSlideInitYear,
+                        String(parseInt(leftSlideInitYear) + 1),
+                        String(parseInt(leftSlideInitYear) + 1),
+                    ];
+                    leftSlideRenderMonthArr = [
+                        '12', '1', '2',
+                    ];
+                } else {
+                    leftSlideRenderYearArr = [
+                        leftSlideInitYear,
+                        leftSlideInitYear,
+                        leftSlideInitYear,
+                    ];
+                    leftSlideRenderMonthArr = [
+                        leftSlideInitMonth,
+                        String(parseInt(leftSlideInitMonth) + 1 ),
+                        String(parseInt(leftSlideInitMonth) + 2 ),
+                    ];
+                }
+            }
+
             this.setState(
                 {
                     initMonthAfterZero: leftSlideInitMonth,
@@ -385,13 +430,17 @@ class CalendarHead extends Component {
             );
         } else if (
             leftOrRight == 'right' &&
-      slideYearMonth < String(parseInt(newestYearMonth) - 1)
+      slideYearMonth < String(parseInt(newestYearMonth))
         ) {
             let rightSlideInitMonth; // 點右邊箭頭後中間的呈現的值
             let rightSlideRenderMonthArr;
             // NOTE: const 不能在外面宣告 -> 改let
             let rightSlideInitYear;
             let rightSlideRenderYearArr;
+
+            console.log('rightSlideInitMonth, rightclick');
+            console.log(rightSlideInitMonth);
+
             if (initMonthAfterZero === '1') {
                 rightSlideInitMonth = '2';
                 rightSlideRenderMonthArr = [
@@ -447,12 +496,30 @@ class CalendarHead extends Component {
                     rightSlideInitYear,
                 ];
             }
+            console.log('rightSlideInitYear');
+            console.log(rightSlideInitYear);
+            console.log('rightSlideInitMonth');
+            console.log(rightSlideInitMonth);
+
+            // 如果超出右邊範圍時
+            if (rightSlideInitMonth === newestMonth && rightSlideInitYear === newestYear) {
+                rightSlideInitMonth = newestMonth;
+                rightSlideRenderYearArr = [
+                    rightSlideInitYear,
+                    rightSlideInitYear,
+                    rightSlideInitYear,
+                ];
+                rightSlideRenderMonthArr = [
+                    String(parseInt(rightSlideInitMonth) - 2),
+                    String(parseInt(rightSlideInitMonth) - 1),
+                    rightSlideInitMonth,
+                ];
+            }
+
             this.setState(
                 {
                     initMonthAfterZero: rightSlideInitMonth,
                     initYear: rightSlideInitYear,
-                    // preInitMonth: rightSlidePreInitMonth,
-                    // afterInitMonth: rightSlideAfterInitMonth,
                     initMonthRender: rightSlideInitMonth, // not sure
                     renderMonthArr: rightSlideRenderMonthArr,
                     renderYearArr: rightSlideRenderYearArr,
@@ -463,14 +530,6 @@ class CalendarHead extends Component {
                         this.state.initYear,
                         this.state.initMonthAfterZero
                     );
-                    // console.log('initMonthRender852');
-                    // console.log(initMonthRender);
-                    // console.log('initYear852');
-                    // console.log(initYear);
-                    console.log('aaainitYear');
-                    console.log('aaainitMonthRender');
-                    console.log(initYear);
-                    console.log(initMonthRender);
                 }
             );
         }
@@ -491,6 +550,29 @@ class CalendarHead extends Component {
     //     });
     // }
 
+    handleBackgroundFunc() {
+        const { initYear, initMonthRender, oldestYear, oldestMonth, newestYear, newestMonth,
+            oldestYearMonth, newestYearMonth } = this.state;
+        const renderInitYearMonth = `${initYear}${initMonthRender.length === 1 ? 0 : ''}${initMonthRender}`;
+        console.log('renderInitYearMonthfinal');
+        // console.log( initYear, initMonthRender, renderInitYearMonth);
+        // console.log(renderInitYearMonth);
+
+
+        // console.log(renderInitYearMonth);
+        if ( renderInitYearMonth > oldestYearMonth && renderInitYearMonth < newestYearMonth ) {
+            return true;
+        } else {
+            return false;
+        }
+        //     // 如果render的年月不等於最底的年月 =>  return true
+        //     return true;
+        // } else {
+        //     return false;
+        // }
+    }
+
+
     render() {
         const {
             travelDataHead,
@@ -505,27 +587,24 @@ class CalendarHead extends Component {
             oldestYearMonth,
             newestYearMonth,
             initYearMonthRender,
-
             initMonthRender,
         } = this.state;
+
+
         if (travelDataHead) {
-            // console.log('initYearMonth777');
-            // console.log(initYearMonth);
-            // console.log('initYear777');
-            // console.log(initYear);
-            // console.log('initMonth777');
-            // console.log(initMonthRender);
-            console.log('aaainitYear');
-            console.log('aaainitMonthRender');
-            console.log(initYear);
-            console.log(initMonthRender);
+            // const isActive = this.handleBackgroundFunc();
+            // if (initMonthRender.length !== 0) {
+            const isActive = this.handleBackgroundFunc();
+            console.log('isActive');
+            console.log(isActive);
+            // }
+            // console.log('isActive');
+            // console.log(isActive);
             return (
                 <React.Fragment>
                     <div>CalendarHead is Me!</div>
 
                     <div className="calendars_tabWrap">
-                        {/* <a href="#"
-                            className="prev"></a> */}
                         <ul className="tophead">
                             {/* {renderMonthArr.map((renderMonth) => {   // 用map推測會造成日後分成兩個arr的問題
                                 return (
@@ -543,14 +622,17 @@ class CalendarHead extends Component {
                   this.handleSlideClick('left');
               } } > */}
 
-                            {/* 因為有分左右兩邊所以要分三個寫 */}
+                            {/* 因為有分左右兩邊點擊所以要分三個寫 */}
                             <li
                                 className="tophead__month"
                                 onClick={() => {
                                     this.handleSlideClick('left');
                                 }}
                             >
-                                <a href="#">
+                                <a href="#"
+                                    // className= {initYear }
+                                    className = { isActive ? '' : 'active'}
+                                >
                                     <span className="arrow_wrap_left"></span>
                                     <span>
                                         {renderYearArr[0]} {renderMonthArr[0]}月
@@ -560,7 +642,11 @@ class CalendarHead extends Component {
 
                             <li className="tophead__month">
                                 <a href="#"
-                                    className="active">
+                                    // className={ initYear !== oldestYear && initMonthRender !== oldestMonth && initYear !== newestYear && initMonthRender !== newestMonth ? 'active' : ''}
+                                    className = { isActive ? 'active' : ''}
+
+                                    // className='active'
+                                >
                                     <span>
                                         {renderYearArr[1]} {renderMonthArr[1]}月
                                     </span>
@@ -569,15 +655,17 @@ class CalendarHead extends Component {
                             <li
                                 className="tophead__month"
                                 onClick={() => {
-                                    // this.handleSlideClick('right').bind(this);  // guess箭頭涵式已經包含this功能了
+                                    // this.handleSlideClick('right').bind(this);  // guess箭頭涵式已經包含bind功能了
                                     this.handleSlideClick('right');
                                 }}
                             >
-                                <a href="#">
+                                <a href="#"
+                                    // className = { isActive ? '' : 'active'}
+                                >
                                     <span className="arrow_wrap_right"
-onClick={() => {
-                                    this.handleSlideClick('left');
-                                }}></span>
+                                        onClick={() => {
+                                            this.handleSlideClick('left');
+                                        }}></span>
                                     <span>
                                         {renderYearArr[2]} {renderMonthArr[2]}月
                                     </span>
