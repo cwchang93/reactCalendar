@@ -109,97 +109,98 @@ class CalendarBody extends Component {
 
         // console.log('validateYearMonth5566');
         // console.log(validateYearMonth);
-        if (jsonArr.length) {
-            // 1. 第一支篩選出當年當月的資料
-            for (let i = 0; i < jsonArr.length; i++) {
-                if (validateYearMonth.test(jsonArr[i].date)) {
-                    dateArr.push(jsonArr[i]);
-                }
+        // if (jsonArr.length) {
+        // 1. 第一支篩選出當年當月的資料
+        for (let i = 0; i < jsonArr.length; i++) {
+            if (validateYearMonth.test(jsonArr[i].date)) {
+                dateArr.push(jsonArr[i]);
             }
-            // return dateArr;  // 此資料是有重複的date資料
-            // 2. 第二支: 比對相同日期可報名優先status
-            // console.log('dateArrLen', dateArrLen);
-            // const newDataArr = [];
-
-            // 先把不重複的拿出來;
-            const newArr = dateArr.filter((ele, i, dateArr) => {
-                return dateArr.map((item) => item.date).indexOf(ele.date) !== i;
-            });
-
-            // 這邊的let uniqueDataArr 會被自動改成 const;
-            const uniqueDataArr = dateArr.filter(
-                (ele) => newArr.map((ele) => ele.date).indexOf(ele.date) === -1
-            );
-
-            console.log('完全不重複的資料:uniqueDataArr');
-            console.log(uniqueDataArr);
-
-            const dateArrLen = dateArr.length; // 分開寫效能比較好
-            //   function compareData() {
-            for (let j = 0; j < dateArrLen; j++) {
-                for (let k = j + 1; k < dateArrLen; k++) {
-                    const dateRecordArr = [];
-                    if (dateArr[j].date === dateArr[k].date) {
-                        // 日期相等時
-                        // A. 比對狀態是否為可報名
-
-                        // dateRecordArr.push(dateArr[k].date);
-                        if (dateArr[j].status !== '報名' && dateArr[k].status === '報名') {
-                            console.log('if 報名');
-                            newDataArr.push(dateArr[k]);
-                            //   dateArr[j].date = "123";
-                        } else {
-                            // B. 比對是否保證出團
-                            if (
-                                dateArr[j].guaranteed === true &&
-                dateArr[k].guaranteed === false
-                            ) {
-                                newDataArr.push(dateArr[j]);
-                                console.log('if 出團');
-                                // dateArr[k].date = "123";
-                            } else {
-                                // 是否出團如果都一樣  C. 比價格
-                                if (dateArr[j].price < dateArr[k].price) {
-                                    newDataArr.push(dateArr[j]);
-                                    console.log('if price');
-                                    //   dateArr[k].date = "123";
-                                }
-                            }
-
-                            // if (dateArr[j].guaranteed || dateArr[k].guaranteed) {  // j false k true時
-                            //     newDataArr.push(dateArr[k]);
-                            // }
-                        }
-                    } else {
-                        // 如果沒有重複的話再放進去
-                    }
-                }
-            }
-            //   }
-            //   compareData();
-
-            //   let valueArr = newDataArr.map(function(item) {
-            //     return item.date;
-            //   });
-            //   let isDuplicate = valueArr.some(function(item, idx) {
-            //     console.log("heyduplicate", valueArr.indexOf(item) != idx);
-            //     return valueArr.indexOf(item) != idx;
-            //   });
-            //   if (isDuplicate) {
-            //     console.log("isDuplicate Was Call");
-            //     compareData();
-            //   }
-            // console.log('newDataArrLOL');
-            // console.log(newDataArr);
-
-            // 排序資料 依照日期
-
-            // 補上空值
-
-            // render 剩下的資料
-
-            // this.setState({ newDataArr: newDataArr });
         }
+        // return dateArr;  // 此資料是有重複的date資料
+        // 2. 第二支: 比對相同日期可報名優先status
+        // console.log('dateArrLen', dateArrLen);
+        // const newDataArr = [];
+
+        // 先把不重複的拿出來;
+        const newArr = dateArr.filter((ele, i, dateArr) => {
+            return dateArr.map((item) => item.date).indexOf(ele.date) !== i;
+        });
+
+        // 這邊的let uniqueDataArr 會被自動改成 const;
+        const uniqueDataArr = dateArr.filter(
+            (ele) => newArr.map((ele) => ele.date).indexOf(ele.date) === -1
+        );
+
+        console.log('完全不重複的資料:uniqueDataArr');
+        console.log(uniqueDataArr);
+
+        const dateArrLen = dateArr.length; // 分開寫效能比較好
+
+        //   function compareData() {
+        for (let j = 0; j < dateArrLen; j++) {
+            for (let k = j + 1; k < dateArrLen; k++) {
+                const dateRecordArr = [];
+                if (dateArr[j].date === dateArr[k].date) {
+                    // 日期相等時
+                    // A. 比對狀態是否為可報名
+
+                    // dateRecordArr.push(dateArr[k].date);
+                    if (dateArr[j].status !== '報名' && dateArr[k].status === '報名') {
+                        console.log('if 報名');
+                        newDataArr.push(dateArr[k]);
+                        //   dateArr[j].date = "123";
+                    } else {
+                        // B. 比對是否保證出團
+                        if (
+                            dateArr[j].guaranteed === true &&
+              dateArr[k].guaranteed === false
+                        ) {
+                            newDataArr.push(dateArr[j]);
+                            console.log('if 出團');
+                            // dateArr[k].date = "123";
+                        } else {
+                            // 是否出團如果都一樣  C. 比價格
+                            if (dateArr[j].price < dateArr[k].price) {
+                                newDataArr.push(dateArr[j]);
+                                console.log('if price');
+                                //   dateArr[k].date = "123";
+                            }
+                        }
+
+                        // if (dateArr[j].guaranteed || dateArr[k].guaranteed) {  // j false k true時
+                        //     newDataArr.push(dateArr[k]);
+                        // }
+                    }
+                } else {
+                    // 如果沒有重複的話再放進去
+                }
+            }
+        }
+        //   }
+        //   compareData();
+
+        //   let valueArr = newDataArr.map(function(item) {
+        //     return item.date;
+        //   });
+        //   let isDuplicate = valueArr.some(function(item, idx) {
+        //     console.log("heyduplicate", valueArr.indexOf(item) != idx);
+        //     return valueArr.indexOf(item) != idx;
+        //   });
+        //   if (isDuplicate) {
+        //     console.log("isDuplicate Was Call");
+        //     compareData();
+        //   }
+        // console.log('newDataArrLOL');
+        // console.log(newDataArr);
+
+        // 排序資料 依照日期
+
+        // 補上空值
+
+        // render 剩下的資料
+
+        // this.setState({ newDataArr: newDataArr });
+        // }
         console.log('有重複的資料 newDataArr');
         const filterNewDataArr = newDataArr.filter(function(element, index, arr) {
             return arr.indexOf(element) === index;
@@ -216,7 +217,14 @@ class CalendarBody extends Component {
         console.log('sortedDataArr777');
         console.log(sortedDataArr);
 
-        return sortedDataArr;
+        console.log('完全不重複的資料2:uniqueDataArr');
+        console.log(uniqueDataArr);
+
+        const finalSortedArr = uniqueDataArr.concat(sortedDataArr);
+        // return sortedDataArr;
+        console.log('最終篩選: finalSortedArr');
+        console.log(finalSortedArr);
+        return finalSortedArr;
     // console.log(newDataArr);
     // return newDataArr;
     }
@@ -274,7 +282,9 @@ id={idDate}>
                     <React.Fragment>
                         <span
                             className="guaranteed"
-                            display={{ idDate } === compareData[k].guaranteed ? '' : 'none'}
+                            style={{
+                                display: compareData[k].guaranteed === true ? '' : 'none',
+                            }}
                         >
               成團
                         </span>
