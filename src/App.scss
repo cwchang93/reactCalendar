@@ -19,6 +19,37 @@ $classname: "calendars";
 
     padding-inline-start: 0px; // 解決一開始預設40px的問題
 
+    // 包住箭頭以解決箭頭不能點的問題
+    .arrow_wrap_left {
+      height: 25px;
+      width: 15px;
+      position: absolute;
+      top: 15px;
+      color: transparent;
+    }
+    
+    .arrow_wrap_right {
+      // height: 25px;
+      // width: 15px;
+      // position: absolute;
+      // top: 15px;
+      // right:0px;
+      // color: transparent;
+      // content: "";
+      cursor: pointer;
+      height: 0;
+      position: absolute;
+      transform: translateY(-50%);
+      top: 50%;
+      vertical-align: center;
+      right: 6px;
+      border-style: solid;
+      border-width: 7px 0px 7px 7px;
+      border-color: transparent transparent transparent #e10500;
+      // #e10500
+
+    }
+
     &::before {
       content: "";
       cursor: pointer;
@@ -33,19 +64,19 @@ $classname: "calendars";
       border-color: transparent #e10500 transparent transparent;
     }
 
-    &::after {
-      content: "";
-      cursor: pointer;
-      height: 0;
-      position: absolute;
-      transform: translateY(-50%);
-      top: 50%;
-      vertical-align: center;
-      right: 6px;
-      border-style: solid;
-      border-width: 7px 0px 7px 7px;
-      border-color: transparent transparent transparent #e10500;
-    }
+    // &::after {
+    //   content: "";
+    //   cursor: pointer;
+    //   height: 0;
+    //   position: absolute;
+    //   transform: translateY(-50%);
+    //   top: 50%;
+    //   vertical-align: center;
+    //   right: 6px;
+    //   border-style: solid;
+    //   border-width: 7px 0px 7px 7px;
+    //   border-color: transparent transparent transparent #e10500;
+    // }
 
     a {
       display: table;

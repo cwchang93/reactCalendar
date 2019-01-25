@@ -36,6 +36,8 @@ class CalendarAll extends Component {
         this.setState({ nowDate: val });
     }
 
+    // 把子組件傳到父組件的call back function
+
     transferYearMonth = (y, m ) => {
         console.log('year: ', y);
         console.log('month ', m);

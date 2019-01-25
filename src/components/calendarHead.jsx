@@ -542,6 +542,8 @@ class CalendarHead extends Component {
                             {/* <li className="tophead__month" onClick ={ ('left') =>{
                   this.handleSlideClick('left');
               } } > */}
+
+                            {/* 因為有分左右兩邊所以要分三個寫 */}
                             <li
                                 className="tophead__month"
                                 onClick={() => {
@@ -549,6 +551,7 @@ class CalendarHead extends Component {
                                 }}
                             >
                                 <a href="#">
+                                    <span className="arrow_wrap_left"></span>
                                     <span>
                                         {renderYearArr[0]} {renderMonthArr[0]}月
                                     </span>
@@ -557,7 +560,7 @@ class CalendarHead extends Component {
 
                             <li className="tophead__month">
                                 <a href="#"
-className="active">
+                                    className="active">
                                     <span>
                                         {renderYearArr[1]} {renderMonthArr[1]}月
                                     </span>
@@ -571,6 +574,10 @@ className="active">
                                 }}
                             >
                                 <a href="#">
+                                    <span className="arrow_wrap_right"
+onClick={() => {
+                                    this.handleSlideClick('left');
+                                }}></span>
                                     <span>
                                         {renderYearArr[2]} {renderMonthArr[2]}月
                                     </span>
