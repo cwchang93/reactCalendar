@@ -137,33 +137,63 @@ class CalendarBody extends Component {
         const dateArrLen = dateArr.length; // 分開寫效能比較好
 
         //   function compareData() {
+        console.log('000newDataArr', newDataArr);
         for (let j = 0; j < dateArrLen; j++) {
             for (let k = j + 1; k < dateArrLen; k++) {
                 const dateRecordArr = [];
                 if (dateArr[j].date === dateArr[k].date) {
                     // 日期相等時
                     // A. 比對狀態是否為可報名
-
+                    // key: push要固定push k的或j的
                     // dateRecordArr.push(dateArr[k].date);
+                    console.log('0newDataArr報名');
+                    console.log(newDataArr);
+                    let recordStatus;
+                    let recordGuaranteed;
                     if (dateArr[j].status !== '報名' && dateArr[k].status === '報名') {
                         console.log('if 報名');
+                        // if (dateArr[k].compared === undefined) {
+                        // if (dateArr[k].status === '報名') {
                         newDataArr.push(dateArr[k]);
+                        recordStatus = dateArr[k].status;
+                        // recordGuaranteed =
+                        // }
+                        // dateArr[k].compared = true;
                         //   dateArr[j].date = "123";
+                        console.log('PUSH: recordStatus');
+                        console.log(recordStatus);
+                        console.log('1newDataArr報名');
+                        console.log(newDataArr);
+                        console.log('1: dateArr報名');
+                        console.log(dateArr);
+                        // }
                     } else {
                         // B. 比對是否保證出團
                         if (
                             dateArr[j].guaranteed === true &&
-              dateArr[k].guaranteed === false
+                            dateArr[k].guaranteed === false
+                            && dateArr[k].status === recordStatus
                         ) {
+                            // if (dateArr[k].compared === undefined) {
+                            // dateArr[k].compared = true;
                             newDataArr.push(dateArr[j]);
                             console.log('if 出團');
                             // dateArr[k].date = "123";
+                            // }
                         } else {
                             // 是否出團如果都一樣  C. 比價格
-                            if (dateArr[j].price < dateArr[k].price) {
-                                newDataArr.push(dateArr[j]);
+                            if (dateArr[j].price > dateArr[k].price && dateArr[k].status === recordStatus
+                                && recordGuaranteed === dateArr[k].guaranteed
+                            ) {
+                                // && dateArr[k].status === '報名'
+                                // if (dateArr[k].compared === undefined) {
+                                // dateArr[k].compared = true;
+                                newDataArr.push(dateArr[k]);
                                 console.log('if price');
-                                //   dateArr[k].date = "123";
+                                // dateArr[k].date = '123';
+                                // }
+                            } else {
+                                // newDataArr.push(dateArr[k]);
                             }
                         }
 
@@ -261,7 +291,7 @@ class CalendarBody extends Component {
                     <div className="day">
                         <div className="generalinfo" />
                         <span className="daynum"
-id={idDate}>
+                            id={idDate}>
                             {j + 1}{' '}
                         </span>
 
@@ -323,7 +353,7 @@ id={idDate}>
                             {/* {this.renderEmptyDays()} */}
                             {this.renderEmptyDays().map((arr, i) => {
                                 return <div key={i}
-className="day disabled" />;
+                                    className="day disabled" />;
                             })}
                             {this.renderDayContent()}
                         </div>
