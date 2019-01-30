@@ -37,6 +37,7 @@ class App extends Component {
     }
 
     transferYearMonth = (y, m ) => {
+        console.log('transferYMFunc');
         console.log('year: ', y);
         console.log('month ', m);
         this.setState({
