@@ -13,7 +13,7 @@ class App extends Component {
         text: PropTypes.string,
         dataSource: PropTypes.string,
         initYearMonth: PropTypes.string,
-
+        dataKeySetting: PropTypes.object,
 
     };
     static defaultProps = {
@@ -46,11 +46,17 @@ class App extends Component {
     }
 
     render() {
+        console.log('dataKeySetting, app.js');
+        console.log(this.props.dataKeySetting);
+
         return (
             <React.Fragment>
 
                 <CalendarAll path={this.props.dataSource}
-                    initYearMonth= {this.props.initYearMonth}/>
+                    initYearMonth= {this.props.initYearMonth}
+                    dataKeySetting= {this.props.dataKeySetting}
+
+                />
 
 
             </React.Fragment>

@@ -67,6 +67,7 @@ class CalendarAll extends Component {
                         // transferYearMonth={this.transferYearMonth}
                         nowYear = {this.state.nowYear}
                         nowMonth = {this.state.nowMonth}
+                        dataKeySetting= {this.props.dataKeySetting}
                     />
                 </div>
             </React.Fragment>

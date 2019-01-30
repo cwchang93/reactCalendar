@@ -336,6 +336,8 @@ class CalendarBody extends Component {
         return newDataContainer;
     }
     render() {
+        console.log('dataKeySetting in Body');
+        console.log(this.props.dataKeySetting);
         const { travelData, weekDay, newDataArr } = this.state;
         const { nowYear, nowMonth } = this.props;
         console.log('render: ', nowYear);
