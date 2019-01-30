@@ -640,7 +640,10 @@ class CalendarHead extends Component {
                                     // className= {initYear }
                                     className = { isActiveArr[0]}
                                 >
-                                    <span className="arrow_wrap_left"></span>
+                                    <div className="wrap_left">
+
+                                        <span className="arrow_wrap_left"></span>
+                                    </div>
                                     <span>
                                         {renderYearArr[0]} {renderMonthArr[0]}月
                                     </span>
@@ -669,10 +672,14 @@ class CalendarHead extends Component {
                                 <a href="#"
                                     className = { isActiveArr[2]}
                                 >
-                                    <span className="arrow_wrap_right"
-                                        onClick={() => {
-                                            this.handleSlideClick('left');
-                                        }}></span>
+                                    <div className="wrap_right">
+
+                                        <span className="arrow_wrap_right"
+                                            onClick={() => {
+                                                this.handleSlideClick('left');
+                                            }}></span>
+
+                                    </div>
                                     <span>
                                         {renderYearArr[2]} {renderMonthArr[2]}月
                                     </span>

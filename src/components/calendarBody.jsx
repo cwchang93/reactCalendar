@@ -316,6 +316,8 @@ class CalendarBody extends Component {
         }
         return dayContentArr;
     }
+
+
     matchDay(idDate, compareData) {
         const newDataContainer = [];
         const { guaranteed, status, available, price, total } = this.props.dataKeySetting;
@@ -325,9 +327,17 @@ class CalendarBody extends Component {
             console.log(compareData);
             console.log('this.props.dataKeySetting in matchDay');
             console.log(this.props.dataKeySetting.guaranteed);
-            const guaranteed = this.props.dataKeySetting.guaranteed;
             if (idDate === compareData[k].date) {
                 // dayContentArr.push(
+                // 依照狀態判斷並變更status的的className
+                let classStatus = '';
+                if (compareData[k][status] === '報名' || compareData[k][status] === '預定' || compareData[k][status] === '後補') {
+                // if (compareData[k][status] === '報名' || '預定' || '後補' ) {
+                    classStatus = 'status1';
+                } else {
+                    classStatus = 'status2';
+                }
+
                 newDataContainer.push(
                     <React.Fragment>
                         <span
@@ -339,12 +349,13 @@ class CalendarBody extends Component {
               成團
                         </span>
                         <div className="details">
-                            <span className="status">{compareData[k][status]}</span>
+                            {/* <span className={`status${ compareData[k][status] === '預定' ? '1' : '2'}`}>{compareData[k][status]}</span> */}
+                            <span className={classStatus}>{compareData[k][status]}</span>
                             <span className="sell">
                 可賣: {compareData[k][available]}
                             </span>
                             <span className="group">團位: {compareData[k][total]}</span>
-                            <span className="price">${compareData[k][price]}</span>
+                            <span className="price">${compareData[k][price].toLocaleString('en-IN')}</span>
                         </div>
                     </React.Fragment>
                 );
