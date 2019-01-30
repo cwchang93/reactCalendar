@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 const jsonDate = {
     // dataSource: './json/data.json',
-    dataSource: './src/json/data1.json',
+    dataSource: './src/json/data3.json',
     initYearMonth: '201908', // 一開始的月份
     // 待辦:
     // Head

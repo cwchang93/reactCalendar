@@ -38,7 +38,7 @@ class CalendarAll extends Component {
 
     // 把子組件傳到父組件的call back function
 
-    transferYearMonth = (y, m, ) => {
+    transferYearMonth = (y, m) => {
         const initYearMonth = this.props;
         console.log('transferYMFunc');
         console.log('year: ', y);
@@ -46,10 +46,17 @@ class CalendarAll extends Component {
         console.log('initYearMonth in transferYearMonth');
         // console.log(this.props.initYearMonth);
         if (m) { // 避免第一次render時沒有資料，須設定m存在時
-            const nowYearMonth = `${y}${ m.length === 1 ? '0' : '' }${m}`;
+            let nowYearMonth;
+            nowYearMonth = `${y}${ m.length === 1 ? '0' : '' }${m}`;
             console.log('nowYearMonthintransferYearMonth');
             console.log(nowYearMonth);
-            // if (initYearMonth > )
+            if (nowYearMonth > '201812') {
+                y = '2018';
+                m = '12';
+            } else if (nowYearMonth < '201611') {
+                y = '2016';
+                m = '11';
+            }
         }
 
         this.setState({

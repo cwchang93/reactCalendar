@@ -551,21 +551,22 @@ class CalendarHead extends Component {
     // }
 
     handleBackgroundFunc() {
-        const { initYear, initMonthRender,
+        const { initYear, initMonthRender, initMonthAfterZero,
             oldestYearMonth, newestYearMonth } = this.state;
-        const renderInitYearMonth = `${initYear}${initMonthRender.length === 1 ? 0 : ''}${initMonthRender}`;
+        const renderInitYearMonth = `${initYear}${initMonthAfterZero.length === 1 ? 0 : ''}${initMonthAfterZero}`;
         console.log('renderInitYearMonthfinal');
         // console.log( initYear, initMonthRender, renderInitYearMonth);
         // console.log(renderInitYearMonth);
 
         let backgroundArr = [];
         // 這邊不能用const因為const不能變更
-        // console.log(renderInitYearMonth);
+        console.log('renderInitYearMonth741741');
+        console.log(renderInitYearMonth);
         if ( renderInitYearMonth > oldestYearMonth && renderInitYearMonth < newestYearMonth ) {
             backgroundArr = ['', 'active', ''];
-        } else if ( renderInitYearMonth === oldestYearMonth ) {
+        } else if ( renderInitYearMonth <= oldestYearMonth ) {
             backgroundArr = ['active', '', ''];
-        } else {
+        } else if ( renderInitYearMonth >= oldestYearMonth ) {
             backgroundArr = ['', '', 'active'];
         }
 
