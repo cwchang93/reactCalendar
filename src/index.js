@@ -14,15 +14,23 @@ const jsonDate = {
     // Body
     // 1.
 
+    // "certain": false,
+    // "date": "2017/08/26",
+    // "price": 909,
+    // "onsell": 87,
+    // "total": 497,
+    // "state": "報名"
+
+
     dataKeySetting: {
         // 保證出團
-        guaranteed: 'guaranteed',
+        guaranteed: 'guaranteed', // 'certain',
         // 狀態
-        status: 'status',
+        status: 'status', // 'state',
         // 可賣團位
-        available: 'availableVancancy',
+        available: 'availableVancancy', // 'onsell',
         // 團位
-        total: 'totalVacnacy',
+        total: 'totalVacnacy', // 'total', //
         // 價格
         price: 'price',
 

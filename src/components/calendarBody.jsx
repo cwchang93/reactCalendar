@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 // import tripData from '../json/data1.json'; import for testing data
 
@@ -22,6 +23,20 @@ class CalendarBody extends Component {
             // nowMonthLen: null, //  可設計當更改月份時就敲countMonthLen的function重新計算現在的MonthLen
         };
     }
+
+    static propTypes = {
+        text: PropTypes.string,
+        dataSource: PropTypes.string,
+        initYearMonth: PropTypes.string,
+        dataKeySetting: PropTypes.object,
+        guaranteed: PropTypes.string,
+        status: PropTypes.string,
+        price: PropTypes.string,
+        nowYear: PropTypes.string,
+        nowMonth: PropTypes.string,
+        path: PropTypes.string,
+    };
+
 
     componentDidMount() {
         this.getData(this.props.path);
@@ -96,7 +111,7 @@ class CalendarBody extends Component {
     // jsonArr
     filterArrFunc(jsonArr) {
         const { nowYear, nowMonth } = this.props;
-
+        const { guaranteed, status, price } = this.props.dataKeySetting;
         const dateArr = [];
         const newDataArr = [];
         // const uniqueDataArr = [];
@@ -140,7 +155,6 @@ class CalendarBody extends Component {
         console.log('000newDataArr', newDataArr);
         for (let j = 0; j < dateArrLen; j++) {
             for (let k = j + 1; k < dateArrLen; k++) {
-                const dateRecordArr = [];
                 if (dateArr[j].date === dateArr[k].date) {
                     // 日期相等時
                     // A. 比對狀態是否為可報名
@@ -304,8 +318,14 @@ class CalendarBody extends Component {
     }
     matchDay(idDate, compareData) {
         const newDataContainer = [];
+        const { guaranteed, status, available, price, total } = this.props.dataKeySetting;
         for (let k = 0; k < compareData.length; k++) {
             // this.aaaa(idDate, dayContentArr);
+            console.log('compareData matchDay');
+            console.log(compareData);
+            console.log('this.props.dataKeySetting in matchDay');
+            console.log(this.props.dataKeySetting.guaranteed);
+            const guaranteed = this.props.dataKeySetting.guaranteed;
             if (idDate === compareData[k].date) {
                 // dayContentArr.push(
                 newDataContainer.push(
@@ -313,18 +333,18 @@ class CalendarBody extends Component {
                         <span
                             className="guaranteed"
                             style={{
-                                display: compareData[k].guaranteed === true ? '' : 'none',
+                                display: compareData[k][guaranteed] === true ? '' : 'none',
                             }}
                         >
               成團
                         </span>
                         <div className="details">
-                            <span className="status">{compareData[k].status}</span>
+                            <span className="status">{compareData[k][status]}</span>
                             <span className="sell">
-                可賣: {compareData[k].availableVancancy}
+                可賣: {compareData[k][available]}
                             </span>
-                            <span className="group">團位: {compareData[k].totalVacnacy}</span>
-                            <span className="price">${compareData[k].price}</span>
+                            <span className="group">團位: {compareData[k][total]}</span>
+                            <span className="price">${compareData[k][price]}</span>
                         </div>
                     </React.Fragment>
                 );
@@ -336,8 +356,11 @@ class CalendarBody extends Component {
         return newDataContainer;
     }
     render() {
-        console.log('dataKeySetting in Body');
-        console.log(this.props.dataKeySetting);
+        // const { guaranteed } = this.props.dataKeySetting;
+        // console.log('guaranteed in body');
+        // console.log(guaranteed);
+        // console.log('dataKeySetting in Body');
+        // console.log(this.props.dataKeySetting);
         const { travelData, weekDay, newDataArr } = this.state;
         const { nowYear, nowMonth } = this.props;
         console.log('render: ', nowYear);

@@ -551,19 +551,25 @@ class CalendarHead extends Component {
     // }
 
     handleBackgroundFunc() {
-        const { initYear, initMonthRender, oldestYear, oldestMonth, newestYear, newestMonth,
+        const { initYear, initMonthRender,
             oldestYearMonth, newestYearMonth } = this.state;
         const renderInitYearMonth = `${initYear}${initMonthRender.length === 1 ? 0 : ''}${initMonthRender}`;
         console.log('renderInitYearMonthfinal');
         // console.log( initYear, initMonthRender, renderInitYearMonth);
         // console.log(renderInitYearMonth);
 
-
+        let backgroundArr = [];
+        // 這邊不能用const因為const不能變更
         // console.log(renderInitYearMonth);
         if ( renderInitYearMonth > oldestYearMonth && renderInitYearMonth < newestYearMonth ) {
-            return true;
+            backgroundArr = ['', 'active', ''];
+        } else if ( renderInitYearMonth === oldestYearMonth ) {
+            backgroundArr = ['active', '', ''];
+        } else {
+            backgroundArr = ['', '', 'active'];
         }
-        return false;
+
+        return backgroundArr;
 
         //     // 如果render的年月不等於最底的年月 =>  return true
         //     return true;
@@ -594,9 +600,9 @@ class CalendarHead extends Component {
         if (travelDataHead) {
             // const isActive = this.handleBackgroundFunc();
             // if (initMonthRender.length !== 0) {
-            const isActive = this.handleBackgroundFunc();
-            console.log('isActive');
-            console.log(isActive);
+            const isActiveArr = this.handleBackgroundFunc();
+            console.log('isActiveArr');
+            console.log(isActiveArr);
             // }
             // console.log('isActive');
             // console.log(isActive);
@@ -631,7 +637,7 @@ class CalendarHead extends Component {
                             >
                                 <a href="#"
                                     // className= {initYear }
-                                    className = { isActive ? '' : 'active'}
+                                    className = { isActiveArr[0]}
                                 >
                                     <span className="arrow_wrap_left"></span>
                                     <span>
@@ -643,7 +649,7 @@ class CalendarHead extends Component {
                             <li className="tophead__month">
                                 <a href="#"
                                     // className={ initYear !== oldestYear && initMonthRender !== oldestMonth && initYear !== newestYear && initMonthRender !== newestMonth ? 'active' : ''}
-                                    className = { isActive ? 'active' : ''}
+                                    className = { isActiveArr[1]}
 
                                     // className='active'
                                 >
@@ -660,7 +666,7 @@ class CalendarHead extends Component {
                                 }}
                             >
                                 <a href="#"
-                                    className = { isActive ? '' : 'active'}
+                                    className = { isActiveArr[2]}
                                 >
                                     <span className="arrow_wrap_right"
                                         onClick={() => {
