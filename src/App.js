@@ -30,6 +30,7 @@ class App extends Component {
             nowYear: null,
             nowMonth: null,
             nowDate: null, // for testing
+            isLoad: null,
         };
     }
 

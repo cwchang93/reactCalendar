@@ -609,6 +609,8 @@ class CalendarHead extends Component {
 
 
         if (travelDataHead) {
+            console.log('this.state.initYearMonth0131');
+            console.log(this.state.initYearMonth);
             // const isActive = this.handleBackgroundFunc();
             // if (initMonthRender.length !== 0) {
             const isActiveArr = this.handleBackgroundFunc();
