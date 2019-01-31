@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 const jsonDate = {
     // dataSource: './json/data.json',
-    dataSource: './src/json/data2.json',
+    dataSource: './src/json/data3.json',
     initYearMonth: '201711', // 一開始的月份
     // writable: true,
     // 待辦:
@@ -33,25 +33,6 @@ const jsonDate = {
     //     newData:
     //     newYear:
     // },
-
-    changePropsData(dataPath, newYear) {
-        // let propsDataSource;
-        // propsDataSource = window.myCalendar.props.dataSource;
-        // propsDataSource = `./src/json/${data}.json`;
-        // console.log(propsDataSource);
-        // // console.log('this.props');
-        // // console.log(this);
-        // console.log(this);
-        // console.log(jsonDate['dataSource']);
-        // // jsonDate['dataSource'] = propsDataSource;
-        const propsArr = [dataPath, newYear];
-        return propsArr;
-        // console.log(propsArr);
-        // this.initYearMonth = newYear;
-        // this.dataSource = dataPath;
-
-        // return newObj;
-    },
 
 
     dataKeySetting: {
@@ -90,15 +71,7 @@ const jsonDate = {
 //     jsonDate.initYearMonth = '201712';
 // }
 
-window.myCalendar = ReactDOM.render( < App {...jsonDate}
-    test = {jsonDate}
-    // changeFunction={() => jsonDate.changePropsData('./src/json/data4.json', '201801')}
-    changeFunction={jsonDate.changePropsData('./src/json/data4.json', '201802')}
-    // newChangeFunction = {(dataPath, newYear)=> {
-    //     const propsArr = [dataPath, newYear];
-    //     return propsArr;
-    // }}
-></App>, document.getElementById('root'),
+window.myCalendar = ReactDOM.render( < App {...jsonDate}/>, document.getElementById('root'),
     // jsonDate.changePropsData('./src/json/data2.json', '201801')
 
 );

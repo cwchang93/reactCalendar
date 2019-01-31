@@ -33,6 +33,15 @@ class App extends Component {
         };
     }
 
+    componentDidMount() {
+        this.setState({ initYearMonth: this.props.initYearMonth, isLoad: true });
+    }
+
+
+    change = (date) => {
+        this.setState({ initYearMonth: date });
+    }
+
     selectedDate = (val) => {
         console.log('parent: ', val);
         this.setState({ nowDate: val });
@@ -48,22 +57,39 @@ class App extends Component {
         });
     }
 
-    render() {
-        console.log('dataKeySetting, app.js');
-        console.log(this.props.dataKeySetting);
-        console.log('changeFunc');
-        console.log(this.props.changeFunction[1]);
-        console.log('this.props.test');
-        console.log(this.props.test);
+    changePropsData(dataPath, newYear) {
+        this.setState({
 
+        });
+        // let propsDataSource;
+        // propsDataSource = window.myCalendar.props.dataSource;
+        // propsDataSource = `./src/json/${data}.json`;
+        // console.log(propsDataSource);
+        // // console.log('this.props');
+        // // console.log(this);
+        // console.log(this);
+        // console.log(jsonDate['dataSource']);
+        // // jsonDate['dataSource'] = propsDataSource;
+        // const propsArr = [dataPath, newYear];
+        // return propsArr;
+        // console.log(propsArr);
+        // this.initYearMonth = newYear;
+        // this.dataSource = dataPath;
+
+        // return newObj;
+    }
+
+    render() {
         return (
             <React.Fragment>
+                {this.state.isLoad &&
+                    <CalendarAll
+                        path={this.props.dataSource}
+                        initYearMonth= {this.state.initYearMonth}
+                        dataKeySetting= {this.props.dataKeySetting}
 
-                <CalendarAll path={this.props.changeFunction[0] || this.props.dataSource}
-                    initYearMonth= {this.props.changeFunction[1] || this.props.initYearMonth}
-                    dataKeySetting= {this.props.dataKeySetting}
-
-                />
+                    />
+                }
 
 
             </React.Fragment>

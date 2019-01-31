@@ -6,7 +6,7 @@ class CalendarHead extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            initYearMonth: this.props.initYearMonth,
+            initYearMonth: props.initYearMonth,
             travelDataHead: null,
             oldestMonth: '', // 左邊到底的月
             oldestYear: '', // 左邊到底的年
@@ -26,12 +26,22 @@ class CalendarHead extends Component {
         };
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.initYearMonth !== this.props.initYearMonth) {
+            this.getData(this.props.path);
+            this.handleYearArr();
+            this.handleMonthArr();
+            this.combineCurrentYearMonth();
+        }
+    }
+
     getData(path) {
         fetch(path)
             .then((response) => {
                 return response.json();
             })
             .then((travelDataHead) =>
+            // return 變數
                 this.setState(
                     {
                         travelDataHead: travelDataHead,
