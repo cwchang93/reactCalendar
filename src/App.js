@@ -14,6 +14,8 @@ class App extends Component {
         dataSource: PropTypes.string,
         initYearMonth: PropTypes.string,
         dataKeySetting: PropTypes.object,
+        test: PropTypes.string,
+        changeFunction: PropTypes.func,
 
     };
     static defaultProps = {
@@ -49,12 +51,16 @@ class App extends Component {
     render() {
         console.log('dataKeySetting, app.js');
         console.log(this.props.dataKeySetting);
+        console.log('changeFunc');
+        console.log(this.props.changeFunction[1]);
+        console.log('this.props.test');
+        console.log(this.props.test);
 
         return (
             <React.Fragment>
 
-                <CalendarAll path={this.props.dataSource}
-                    initYearMonth= {this.props.initYearMonth}
+                <CalendarAll path={this.props.changeFunction[0] || this.props.dataSource}
+                    initYearMonth= {this.props.changeFunction[1] || this.props.initYearMonth}
                     dataKeySetting= {this.props.dataKeySetting}
 
                 />

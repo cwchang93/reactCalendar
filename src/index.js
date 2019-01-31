@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import App from './App';
 const jsonDate = {
     // dataSource: './json/data.json',
-    dataSource: './src/json/data3.json',
-    initYearMonth: '201611', // 一開始的月份
+    dataSource: './src/json/data2.json',
+    initYearMonth: '201711', // 一開始的月份
+    // writable: true,
     // 待辦:
     // Head
     // 1. ok initYearMonth輸入13或非12的月份箭頭會可以多跑一格，需用regex加在前面  head
@@ -21,16 +22,47 @@ const jsonDate = {
     // "total": 497,
     // "state": "報名"
 
+    // constructor() {
+    //     // super();
+    //     this.state = {
+    //         test: null
+    //     };
+    // }
+
+    // newJsonData: {
+    //     newData:
+    //     newYear:
+    // },
+
+    changePropsData(dataPath, newYear) {
+        // let propsDataSource;
+        // propsDataSource = window.myCalendar.props.dataSource;
+        // propsDataSource = `./src/json/${data}.json`;
+        // console.log(propsDataSource);
+        // // console.log('this.props');
+        // // console.log(this);
+        // console.log(this);
+        // console.log(jsonDate['dataSource']);
+        // // jsonDate['dataSource'] = propsDataSource;
+        const propsArr = [dataPath, newYear];
+        return propsArr;
+        // console.log(propsArr);
+        // this.initYearMonth = newYear;
+        // this.dataSource = dataPath;
+
+        // return newObj;
+    },
+
 
     dataKeySetting: {
         // 保證出團
-        guaranteed: 'guaranteed', // 'certain',
+        guaranteed: 'guaranteed',
         // 狀態
-        status: 'status', // 'state',
+        status: 'status',
         // 可賣團位
-        available: 'availableVancancy', // 'onsell',
+        available: 'availableVancancy',
         // 團位
-        total: 'totalVacnacy', // 'total', //
+        total: 'totalVacnacy',
         // 價格
         price: 'price',
 
@@ -39,5 +71,34 @@ const jsonDate = {
         // total           // 團位 : 40
         // price           // $40,999
     },
+    // dataKeySetting: {
+    //     // 保證出團
+    //     guaranteed: 'certain', // 'guaranteed', // ,
+    //     // 狀態
+    //     status: 'state', // 'status', // ,
+    //     // 可賣團位
+    //     available: 'onsell', // 'availableVancancy', // ,
+    //     // 團位
+    //     total: 'total', // 'totalVacnacy', // 'total', //
+    //     // 價格
+    //     price: 'price',
+    // },
 };
-ReactDOM.render( < App {...jsonDate}/>, document.getElementById('root'));
+
+// function change() {
+//     alert();
+//     jsonDate.initYearMonth = '201712';
+// }
+
+window.myCalendar = ReactDOM.render( < App {...jsonDate}
+    test = {jsonDate}
+    // changeFunction={() => jsonDate.changePropsData('./src/json/data4.json', '201801')}
+    changeFunction={jsonDate.changePropsData('./src/json/data4.json', '201802')}
+    // newChangeFunction = {(dataPath, newYear)=> {
+    //     const propsArr = [dataPath, newYear];
+    //     return propsArr;
+    // }}
+></App>, document.getElementById('root'),
+    // jsonDate.changePropsData('./src/json/data2.json', '201801')
+
+);

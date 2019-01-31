@@ -143,6 +143,7 @@ $classname: "calendars";
   //calendarBodycomponent
 
   .bodycalendar {
+    
     .weekcontainer {
       // list-style-type: none;
       display: flex;
@@ -153,7 +154,7 @@ $classname: "calendars";
         width: (100% / 7);
         text-align: center;
         color: #666;
-        font-size: 12px;
+        font-size: 14px;
         padding: 12px;
         font-weight: bold;
       }

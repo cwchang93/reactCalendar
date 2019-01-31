@@ -67,6 +67,8 @@ class CalendarAll extends Component {
 
     render() {
         const { nowDate } = this.state;
+        console.log('appjsPath');
+        console.log(this.props.path);
         return (
             <React.Fragment>
                 <div className="calendars">
