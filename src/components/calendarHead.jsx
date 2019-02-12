@@ -71,18 +71,10 @@ class CalendarHead extends Component {
         const { travelDataHead, initYear, initMonthRender } = this.state;
         this.getData(this.props.path);
         this.props.transferYearMonth(
-            // 把state的參數值(y,m)傳到父曾
             this.state.initYear,
             this.state.initMonthAfterZero
         );
-        // console.log('9487 DidMount was called'); // 只有第一次會被摳
         this.collectInitYearMonth();
-        console.log('this.props in did mount');
-        // console.log(this.props);
-        // this.props.transferYearMonth(initYear, initMonthRender);
-
-    // this.props
-    // this.props
     }
 
     renderDataFunc(jsonData, jsonKey) {
@@ -134,8 +126,6 @@ class CalendarHead extends Component {
                 initMonthRender: initMonthInRenderFunc,
             },
             () => {
-                console.log('this.initYearMonth123123');
-                console.log(initYearMonth);
                 this.collectInitYearMonth(); // 這邊是關鍵!!  setState的callbackFunc
                 this.combineCurrentYearMonth();
             }
@@ -498,7 +488,7 @@ class CalendarHead extends Component {
     //     });
     // }
 
-    handleBackgroundFunc() {
+    handleBackgroundFunc() { // 光箱
         const { initYear, initMonthRender, initMonthAfterZero,
             oldestYearMonth, newestYearMonth } = this.state;
         const renderInitYearMonth = `${initYear}${initMonthAfterZero.length === 1 ? 0 : ''}${initMonthAfterZero}`;
@@ -541,7 +531,7 @@ class CalendarHead extends Component {
             const isActiveArr = this.handleBackgroundFunc();
             return (
                 <React.Fragment>
-                    <div>CalendarHead is Me!</div>
+                    {/* <div>React Calendar</div> */}
 
                     <div className="calendars_tabWrap">
                         <ul className="tophead">
