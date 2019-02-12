@@ -158,6 +158,10 @@ $classname: "calendars";
           cursor: auto;
         }
 
+        &.addborder {
+          border: solid green 1px;
+        }
+
         .generalinfo {
           width: 100%;
           height: 20px;

@@ -268,21 +268,25 @@ class CalendarBody extends Component {
 
                 newDataContainer.push(
                     <React.Fragment>
-                        <span
-                            className="guaranteed"
-                            style={{
-                                display: compareData[k][guaranteed] === true ? '' : 'none',
-                            }}
-                        >
+                        {/* <div onClick={this.addBorder}> */}
+                        {/* <div onClick={ }> */}
+
+                            <span
+                                className="guaranteed"
+                                style={{
+                                    display: compareData[k][guaranteed] === true ? '' : 'none',
+                                }}
+                            >
               成團
-                        </span>
-                        <div className="details">
-                            <span className={classStatus}>{compareData[k][status]}</span>
-                            <span className="sell">
-                可賣: {compareData[k][available]}
                             </span>
-                            <span className="group">團位: {compareData[k][total]}</span>
-                            <span className="price">${compareData[k][price].toLocaleString('en-IN')}</span>
+                            <div className="details">
+                                <span className={classStatus}>{compareData[k][status]}</span>
+                                <span className="sell">
+                可賣: {compareData[k][available]}
+                                </span>
+                                <span className="group">團位: {compareData[k][total]}</span>
+                                <span className="price">${compareData[k][price].toLocaleString('en-IN')}</span>
+                            </div>
                         </div>
 
 
@@ -293,6 +297,11 @@ class CalendarBody extends Component {
 
         return newDataContainer;
     }
+
+    addBorder = () => {
+        console.log('addBorderWas called');
+    }
+
     render() {
         const { travelData, weekDay, newDataArr } = this.state;
         const { nowYear, nowMonth } = this.props;
