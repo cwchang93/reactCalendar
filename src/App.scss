@@ -9,6 +9,21 @@ $classname: "calendars";
   max-width: 600px;
   margin: auto;
 
+  .underLine{
+    // position: absolute;
+    display: block;
+    // top:-22px;
+    margin-left: 500px;
+    font-size:15px;
+    // right:0;
+    color:rgb(30, 135, 188);
+    cursor: pointer;
+    width:95px;
+    height: 17px;
+    border-bottom:dashed 1px rgb(227, 227, 277);
+     
+ }  
+
   .tophead {
     display: flex;
     margin: 0px;
