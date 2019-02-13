@@ -25,6 +25,9 @@ $classname: "calendars";
      
  }  
 
+ .activeText {
+  color: #e10500 !important;
+}
   .tophead {
     display: flex;
     margin: 0px;
@@ -338,9 +341,9 @@ $classname: "calendars";
         .daynum {
           font-weight: bold;
           display: block;
-          position: absolute;
-          top: 2px;
-          left: 22px;
+          // position: absolute;
+          // top: 2px;
+          // left: 22px;
           font-size: 24px;
           color: #666;
         }
@@ -424,15 +427,26 @@ $classname: "calendars";
             top: 35px;
             right: -520px;
           }
+
         }
             .wkDayList{
               font-size: 16px;
-              position: absolute;
-              left: 10px;
+              
+              // position: absolute;
+              // left: 10px;
               color: #666666;
-              top: 31px;
+              // top: 31px;
             }
 
+            .dayweekblock{
+              text-align: left;
+              line-height: 1.2;
+              position: absolute;
+              top: 3px;
+              left: 10px;
+            }
+
+            
 
       }
     }

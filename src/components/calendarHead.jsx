@@ -508,6 +508,29 @@ class CalendarHead extends Component {
         return backgroundArr;
     }
 
+    handleLightBoxText() { // span字的顏色
+        const { initYear, initMonthRender, initMonthAfterZero,
+            oldestYearMonth, newestYearMonth } = this.state;
+        const renderInitYearMonth = `${initYear}${initMonthAfterZero.length === 1 ? 0 : ''}${initMonthAfterZero}`;
+
+        let boxTextArr = [];
+        // 這邊不能用const因為const不能變更
+        console.log('renderInitYearMonth741741');
+        console.log(renderInitYearMonth);
+        if ( renderInitYearMonth > oldestYearMonth && renderInitYearMonth < newestYearMonth ) {
+            boxTextArr = ['', 'activeText', ''];
+        } else if ( renderInitYearMonth <= oldestYearMonth ) {
+            boxTextArr = ['activeText', '', ''];
+        } else if ( renderInitYearMonth >= oldestYearMonth ) {
+            boxTextArr = ['', '', 'activeText'];
+        }
+
+        return boxTextArr;
+    }
+
+
+    //    +span的文字變紅
+
 
     render() {
         const {
@@ -529,6 +552,7 @@ class CalendarHead extends Component {
 
         if (travelDataHead) {
             const isActiveArr = this.handleBackgroundFunc();
+            const activeTextArr = this.handleLightBoxText();
             return (
                 <React.Fragment>
                     {/* <div>React Calendar</div> */}
@@ -550,7 +574,7 @@ class CalendarHead extends Component {
 
                                         <span className="arrow_wrap_left"></span>
                                     </div>
-                                    <span>
+                                    <span className= {activeTextArr[0]}>
                                         {renderYearArr[0]} {renderMonthArr[0]}月
                                     </span>
                                 </a>
@@ -561,7 +585,7 @@ class CalendarHead extends Component {
                                     className = { isActiveArr[1]}
 
                                 >
-                                    <span>
+                                    <span className= {activeTextArr[1]}>
                                         {renderYearArr[1]} {renderMonthArr[1]}月
                                     </span>
                                 </a>
@@ -583,7 +607,7 @@ class CalendarHead extends Component {
                                             }}></span>
 
                                     </div>
-                                    <span>
+                                    <span className= {activeTextArr[2]}>
                                         {renderYearArr[2]} {renderMonthArr[2]}月
                                     </span>
                                 </a>

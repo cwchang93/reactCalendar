@@ -395,11 +395,13 @@ class CalendarBody extends Component {
                             onClick={this.wasClicked}>
 
                             <div className="generalinfo" />
-                            <span className="daynum"
-                                id={idDate}>
-                                {j + 1}{' '}
-                            </span>
-                            <span className="wkDayList">{this.renderWeekDay(idDate)}</span>
+                            <div className="dayweekblock">
+                                <span className="daynum"
+                                    id={idDate}>
+                                    {j + 1}{' '}
+                                </span>
+                                <span className="wkDayList">{this.renderWeekDay(idDate)}</span>
+                            </div>
 
                             <span
                                 className="guaranteed"
