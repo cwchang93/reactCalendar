@@ -20,6 +20,7 @@ class CalendarBody extends Component {
             newDataArr: null,
             clickClass: null,
             toggleId: null,
+
             // nowYear: props.nowYear, // Q這邊無法傳到State再從state拿
             // nowMonth: props.nowMonth,
             // nowMonthLen: null, //  可設計當更改月份時就敲countMonthLen的function重新計算現在的MonthLen
@@ -222,7 +223,7 @@ class CalendarBody extends Component {
     renderDayContent() {
         const addBorder = this.state.clickClass;
         const dayContentArr = [];
-        const { nowYear, nowMonth } = this.props;
+        const { nowYear, nowMonth, mode } = this.props;
         const { toggleId } = this.state;
         const nowMonthLen = new Date(nowYear, nowMonth, 0).getDate();
         const newDataForCompare = this.filterArrFunc(this.state.travelData);
@@ -236,20 +237,32 @@ class CalendarBody extends Component {
                     j + 1 < 10 ? '0' : '' // 個位數時加0
                 }${j + 1}`;
 
-                dayContentArr.push(
-                    <div className={ j + 1 == toggleId ? ' day clicked' : 'day'}
-                        id={j + 1}
-                        onClick={this.wasClicked}>
+                if (mode === 'bodycalendar_month_mode') {
+                    console.log('MonthCalendarArr');
+                    dayContentArr.push(
+                        <div className={ j + 1 == toggleId ? ' day clicked' : 'day'}
+                            id={j + 1}
+                            onClick={this.wasClicked}>
 
-                        <div className="generalinfo" />
-                        <span className="daynum"
-                            id={idDate}>
-                            {j + 1}{' '}
-                        </span>
+                            <div className="generalinfo" />
+                            <span className="daynum"
+                                id={idDate}>
+                                {j + 1}{' '}
+                            </span>
 
-                        {this.matchDay(idDate, newDataForCompare)}
-                    </div>
-                );
+                            {this.matchDay(idDate, newDataForCompare)}
+                        </div>
+                    );
+                } else {
+                    console.log('ListCalendarwas called');
+                    dayContentArr.push(
+                        <React.Fragment>
+
+                            {this.matchDayListMode(idDate, newDataForCompare, j)}
+                        </React.Fragment>
+
+                    );
+                }
             }
         }
         return dayContentArr;
@@ -307,6 +320,66 @@ class CalendarBody extends Component {
         return newDataContainer;
     }
 
+    // listMode
+    matchDayListMode(idDate, compareData, j) {
+        const newDataContainer = [];
+        const { guaranteed, status, available, price, total } = this.props.dataKeySetting;
+        const { toggleId, nowYear, nowMonth } = this.state;
+        for (let k = 0; k < compareData.length; k++) {
+            if (idDate === compareData[k].date) {
+                // 依照狀態判斷並變更status的的className
+                let classStatus = '';
+                if (compareData[k][status] === '報名' || compareData[k][status] === '預定' || compareData[k][status] === '後補') {
+                    classStatus = 'status1';
+                } else {
+                    classStatus = 'status2';
+                }
+
+                // const weekDayRender = {
+                //     let
+                // }
+
+                newDataContainer.push(
+                    <React.Fragment>
+                        <div className={ j + 1 == toggleId ? ' day clicked' : 'day'}
+                        // <div className={ 'day'}
+                            id={j + 1}
+                            onClick={this.wasClicked}>
+
+                            <div className="generalinfo" />
+                            <span className="daynum"
+                                id={idDate}>
+                                {j + 1}{' '}
+                            </span>
+                            <span className="wkDayList">{idDate}</span>
+
+                            <span
+                                className="guaranteed"
+                                style={{
+                                    display: compareData[k][guaranteed] === true ? '' : 'none',
+                                }}
+                            >
+              成團
+                            </span>
+                            <div className="details">
+                                <span className={classStatus}>{compareData[k][status]}</span>
+                                <span className="sell">
+                可賣: {compareData[k][available]}
+                                </span>
+                                <span className="group">團位: {compareData[k][total]}</span>
+                                <span className="price">${compareData[k][price].toLocaleString('en-IN')}</span>
+                            </div>
+                        </div>
+
+
+                    </React.Fragment>
+                );
+            }
+        }
+
+        return newDataContainer;
+    }
+
     wasClicked = (e) => {
         // console.log(e.currentTarget.getAttribute('id'));
         console.log(e.currentTarget.getAttribute('id'));
@@ -322,13 +395,14 @@ class CalendarBody extends Component {
         console.log(this.state.toggleId);
     }
 
+
     render() {
         const { travelData, weekDay, newDataArr } = this.state;
         const { nowYear, nowMonth } = this.props;
 
         if (travelData) {
             return (
-                <div className="bodycalendar">
+                <div className={this.props.mode}>
                     <div className="weekcontainer">
                         {weekDay.map((wkDay, i) => {
                             return <div key={i}> {wkDay} </div>;

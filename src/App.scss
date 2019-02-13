@@ -116,7 +116,7 @@ $classname: "calendars";
 
   //calendarBodycomponent
 
-  .bodycalendar {
+  .bodycalendar_month_mode {
     
     .weekcontainer {
       // list-style-type: none;
@@ -255,4 +255,173 @@ $classname: "calendars";
       }
     }
   }
+
+  .bodycalendar_list_mode {
+    
+    .weekcontainer {
+      // list-style-type: none;
+      display: none;
+      border: 1px solid #f4f4f4;
+
+      >div {
+        // weekcontainer中的div，因為不想再重新寫className(有太多個)
+        width: (100% / 7);
+        text-align: center;
+        color: #666;
+        font-size: 14px;
+        padding: 12px;
+        font-weight: bold;
+      }
+    }
+
+    .daycontainer {
+      display: flex;
+      box-sizing: border-box;
+      border: 1px solid #f4f4f4;
+      border-top: none;
+      border-right: none;
+      flex-wrap: wrap;
+
+
+      .day {
+        * {
+          font-size: 12px;
+          box-sizing: border-box;
+        }
+        cursor: pointer;
+        
+        &:hover {
+          background-color: #fff9e3;
+        }
+        
+        &.clicked {
+          border: 1px solid  #66bb3c;
+          background-color: #fff9e3;
+          box-sizing: border-box;
+        }
+
+
+        box-sizing: border-box;
+        border: 1px solid #f4f4f4;
+        border-left: none;
+        border-top: none;
+        height: 100px;
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 60px;
+        &.disabled {
+          display: none;
+          background-color: #f8f8f8;
+          cursor: auto;
+        }
+
+        // &.addborder {
+        //   border: solid green 1px;
+        // }
+
+        .generalinfo {
+          width: 100%;
+          height: 20px;
+          display: inline-block;
+        }
+
+        .daynum {
+          font-weight: bold;
+          display: block;
+          position: absolute;
+          top: 2px;
+          left: 2px;
+          font-size: 24px;
+          color: #666;
+        }
+
+        .guaranteed {
+          // padding: 0 3px;
+          /* width: 100%; */
+          font-size: 14px;
+          z-index: 1;
+          width: 40px;
+          height: 20px;
+          color: #fff;
+          /* text-align: right; */
+          // font-weight: bold;
+          position: absolute;
+          top: 33px;
+          left: 70px;
+          line-height: 20px;
+          background-color: #66bb3c;
+        }
+
+
+        .details {
+          text-align: left;
+          display: inline-block;
+          width: 100%;
+
+          >span {
+            display: block;
+            width: 100%;
+            height: 16px;
+            text-align: left;
+          }
+
+          .status1 {  
+            color: #24a07c;
+            // 報名(#24a07c) | 後補(#24a07c) | 預定(#24a07c) | 
+            // color: #ff7800;
+            font-size: 16px;
+            font-weight: 400;
+            position: absolute;
+            top: 7px;
+            right: -550px;
+          }
+          .status2 {  
+            // 截止(#ff7800) | 額滿(#ff7800) | 關團(#ff7800)
+            color: #ff7800;
+            font-size: 16px;
+            font-weight: 400;
+            position: absolute;
+            top: 7px;
+            right: -550px;
+          }
+
+
+          .sell {
+            position: absolute;
+            font-size: 14px;
+            color: #666666;
+            top: 7px;
+            left: 70px;
+            width:auto;
+          }
+
+          .group {
+            position: absolute;
+            top: 7px;
+            left: 140px;
+            font-size: 14px;
+            color: #666666;
+          }
+
+          .price {
+            display: inline-block;
+            width: 100%;
+            color: #e10500;
+            // font-size: 12px;
+            font-weight: bold;
+            position: absolute;
+            font-size: 16px;
+            top: 35px;
+            right: -520px;
+          }
+          .wkDayList{
+            
+          }
+        }
+      }
+    }
+  }
+
+
 }

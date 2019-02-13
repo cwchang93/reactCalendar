@@ -28,6 +28,7 @@ class CalendarAll extends Component {
             nowYear: null,
             nowMonth: null,
             nowDate: null, // for testing
+            mode: 'bodycalendar_month_mode',
         };
     }
 
@@ -65,6 +66,20 @@ class CalendarAll extends Component {
         });
     }
 
+    changeModeFunc = () => {
+        const { mode } = this.state;
+        if (mode === 'bodycalendar_month_mode') {
+            this.setState({
+                mode: 'bodycalendar_list_mode',
+            });
+        } else {
+            this.setState({
+                mode: 'bodycalendar_month_mode',
+            });
+        }
+    }
+
+
     render() {
         const { nowDate } = this.state;
         console.log('appjsPath');
@@ -73,8 +88,9 @@ class CalendarAll extends Component {
             <React.Fragment>
                 <div className="calendars">
 
-                    <div className="underLine">
-                        切換列表顯示
+                    <div className="underLine"
+                        onClick={this.changeModeFunc}>
+                        切換{ this.state.mode === 'bodycalendar_month_mode' ? '列表' : '月曆'}顯示
                     </div>
 
                     <CalendarHead path={this.props.path}
@@ -91,6 +107,7 @@ class CalendarAll extends Component {
                         nowYear = {this.state.nowYear}
                         nowMonth = {this.state.nowMonth}
                         dataKeySetting= {this.props.dataKeySetting}
+                        mode={this.state.mode}
                     />
                 </div>
             </React.Fragment>
