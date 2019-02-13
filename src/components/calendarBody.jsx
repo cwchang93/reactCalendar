@@ -18,6 +18,7 @@ class CalendarBody extends Component {
                 '星期六',
             ],
             newDataArr: null,
+            clickClass: null,
             // nowYear: props.nowYear, // Q這邊無法傳到State再從state拿
             // nowMonth: props.nowMonth,
             // nowMonthLen: null, //  可設計當更改月份時就敲countMonthLen的function重新計算現在的MonthLen
@@ -269,24 +270,24 @@ class CalendarBody extends Component {
                 newDataContainer.push(
                     <React.Fragment>
                         {/* <div onClick={this.addBorder}> */}
-                        {/* <div onClick={ }> */}
+                        {/* <div onClick={this.wasClicked}> */}
 
-                            <span
-                                className="guaranteed"
-                                style={{
-                                    display: compareData[k][guaranteed] === true ? '' : 'none',
-                                }}
-                            >
+                        <span
+                            className="guaranteed"
+                            style={{
+                                display: compareData[k][guaranteed] === true ? '' : 'none',
+                            }}
+                        >
               成團
-                            </span>
-                            <div className="details">
-                                <span className={classStatus}>{compareData[k][status]}</span>
-                                <span className="sell">
+                        </span>
+                        <div className="details">
+                            <span className={classStatus}>{compareData[k][status]}</span>
+                            <span className="sell">
                 可賣: {compareData[k][available]}
-                                </span>
-                                <span className="group">團位: {compareData[k][total]}</span>
-                                <span className="price">${compareData[k][price].toLocaleString('en-IN')}</span>
-                            </div>
+                            </span>
+                            <span className="group">團位: {compareData[k][total]}</span>
+                            <span className="price">${compareData[k][price].toLocaleString('en-IN')}</span>
+                            {/* </div> */}
                         </div>
 
 
@@ -298,8 +299,10 @@ class CalendarBody extends Component {
         return newDataContainer;
     }
 
-    addBorder = () => {
-        console.log('addBorderWas called');
+    wasClicked = () => {
+        this.setState({
+            clickClass: 'clicked',
+        });
     }
 
     render() {
