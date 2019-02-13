@@ -320,6 +320,57 @@ class CalendarBody extends Component {
         return newDataContainer;
     }
 
+
+    renderWeekDay = (idDate) => { // ListMonde裡面render星期的function
+        // const { nowYear, nowMonth } = this.state;
+        const renderDate = idDate.substr(idDate.length - 2, 2);
+        console.log('dateinrender');
+        console.log(renderDate);
+        // console.log('idDate in renderWeekDay');
+        // console.log(idDate);
+        // console.log('nowYearinrender');
+        // console.log(nowYear);
+        // console.log('nowMonthinrender');
+        // console.log(nowMonth);
+        // if (nowYear) {
+        const renderYear = idDate.substr(0, 4);
+        const renderMonth = idDate.substr(5, 2);
+        // console.log('renderYear999');
+        // console.log(renderYear);
+        // console.log('renderMonth999');
+        // console.log(renderMonth);
+        // console.log(typeof(renderMonth));
+        const renderWDay = new Date(renderYear, parseInt(renderMonth) - 1, renderDate );
+        // console.log('renderWDay was called');
+        console.log('renderWDay.getDay()8787');
+        console.log(renderWDay.getDay());
+        const renderNewDay = renderWDay.getDay();
+
+        let renderFinalWeekDay;
+        if (renderNewDay == 1) {
+            renderFinalWeekDay = '星期一';
+        } else if (renderNewDay == 2) {
+            renderFinalWeekDay = '星期二';
+        } else if (renderNewDay == 3) {
+            renderFinalWeekDay = '星期三';
+        } else if (renderNewDay == 4) {
+            renderFinalWeekDay = '星期四';
+        } else if (renderNewDay == 5) {
+            renderFinalWeekDay = '星期五';
+        } else if (renderNewDay == 6) {
+            renderFinalWeekDay = '星期六';
+        } else {
+            renderFinalWeekDay = '星期日';
+        }
+        return renderFinalWeekDay;
+    }
+
+    showWeekDay= () => {
+        const showDay = this.renderWeekDay();
+        console.log('showDay was called');
+        console.log(showDay);
+    }
+
     // listMode
     matchDayListMode(idDate, compareData, j) {
         const newDataContainer = [];
@@ -335,9 +386,6 @@ class CalendarBody extends Component {
                     classStatus = 'status2';
                 }
 
-                // const weekDayRender = {
-                //     let
-                // }
 
                 newDataContainer.push(
                     <React.Fragment>
@@ -351,7 +399,7 @@ class CalendarBody extends Component {
                                 id={idDate}>
                                 {j + 1}{' '}
                             </span>
-                            <span className="wkDayList">{idDate}</span>
+                            <span className="wkDayList">{this.renderWeekDay(idDate)}</span>
 
                             <span
                                 className="guaranteed"

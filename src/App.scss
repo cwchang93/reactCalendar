@@ -252,6 +252,14 @@ $classname: "calendars";
             
           }
         }
+        .wkDayList{
+          display: none;
+          font-size: 16px;
+          position: absolute;
+          left: 10px;
+          color: #666666;
+          top: 31px;
+        }
       }
     }
   }
@@ -331,7 +339,7 @@ $classname: "calendars";
           display: block;
           position: absolute;
           top: 2px;
-          left: 2px;
+          left: 22px;
           font-size: 24px;
           color: #666;
         }
@@ -415,10 +423,16 @@ $classname: "calendars";
             top: 35px;
             right: -520px;
           }
-          .wkDayList{
-            
-          }
         }
+            .wkDayList{
+              font-size: 16px;
+              position: absolute;
+              left: 10px;
+              color: #666666;
+              top: 31px;
+            }
+
+
       }
     }
   }
