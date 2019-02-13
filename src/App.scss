@@ -84,6 +84,7 @@ $classname: "calendars";
 
     .active {
       background-color: #fff;
+      color: #e10500;
     }
 
     .tophead__month {
@@ -128,9 +129,16 @@ $classname: "calendars";
 
       // outline: 1px solid red;
 
+      // .clicked {
+      //   border: 1px solid  #66bb3c;
+      //   background-color: #fff9e3;
+      //   box-sizing: border-box;
+      // }
+
       .day {
         * {
           font-size: 12px;
+          box-sizing: border-box;
         }
         cursor: pointer;
         

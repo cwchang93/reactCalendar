@@ -19,6 +19,7 @@ class CalendarBody extends Component {
             ],
             newDataArr: null,
             clickClass: null,
+            toggleId: null,
             // nowYear: props.nowYear, // Q這邊無法傳到State再從state拿
             // nowMonth: props.nowMonth,
             // nowMonthLen: null, //  可設計當更改月份時就敲countMonthLen的function重新計算現在的MonthLen
@@ -219,8 +220,10 @@ class CalendarBody extends Component {
 
 
     renderDayContent() {
+        const addBorder = this.state.clickClass;
         const dayContentArr = [];
         const { nowYear, nowMonth } = this.props;
+        const { toggleId } = this.state;
         const nowMonthLen = new Date(nowYear, nowMonth, 0).getDate();
         const newDataForCompare = this.filterArrFunc(this.state.travelData);
         if (newDataForCompare.length) {
@@ -234,7 +237,10 @@ class CalendarBody extends Component {
                 }${j + 1}`;
 
                 dayContentArr.push(
-                    <div className="day">
+                    <div className={ j + 1 == toggleId ? ' day clicked' : 'day'}
+                        id={j + 1}
+                        onClick={this.wasClicked}>
+
                         <div className="generalinfo" />
                         <span className="daynum"
                             id={idDate}>
@@ -253,6 +259,7 @@ class CalendarBody extends Component {
     matchDay(idDate, compareData) {
         const newDataContainer = [];
         const { guaranteed, status, available, price, total } = this.props.dataKeySetting;
+        const { clickClass } = this.state;
         for (let k = 0; k < compareData.length; k++) {
             // console.log('compareData matchDay');
             // console.log(compareData);
@@ -270,7 +277,8 @@ class CalendarBody extends Component {
                 newDataContainer.push(
                     <React.Fragment>
                         {/* <div onClick={this.addBorder}> */}
-                        {/* <div onClick={this.wasClicked}> */}
+                        {/* <div onClick={this.wasClicked} */}
+                        {/* className={clickClass}> */}
 
                         <span
                             className="guaranteed"
@@ -287,8 +295,8 @@ class CalendarBody extends Component {
                             </span>
                             <span className="group">團位: {compareData[k][total]}</span>
                             <span className="price">${compareData[k][price].toLocaleString('en-IN')}</span>
-                            {/* </div> */}
                         </div>
+                        {/* </div> */}
 
 
                     </React.Fragment>
@@ -299,10 +307,19 @@ class CalendarBody extends Component {
         return newDataContainer;
     }
 
-    wasClicked = () => {
+    wasClicked = (e) => {
+        // console.log(e.currentTarget.getAttribute('id'));
+        console.log(e.currentTarget.getAttribute('id'));
+        // if (e.currentTarget)
         this.setState({
-            clickClass: 'clicked',
-        });
+            toggleId: e.currentTarget.getAttribute('id'),
+        },
+        );
+    }
+
+    printToggleId = () => {
+        console.log('toggleIdWasCalled');
+        console.log(this.state.toggleId);
     }
 
     render() {
