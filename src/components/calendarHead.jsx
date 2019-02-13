@@ -178,24 +178,39 @@ class CalendarHead extends Component {
         );
     }
 
+
     handleYearArr() {
-        const { initMonthAfterZero, initYear } = this.state;
+        const { initMonthAfterZero } = this.state;
+        const { initYearMonth } = this.props;
         let preInitYear;
         let afterInitYear;
-        if (initMonthAfterZero === '1') {
-            console.log('initMonthAfterZero===1');
-            preInitYear = String(parseInt(initYear) - 1);
-            afterInitYear = initYear;
-            console.log(preInitYear);
-        } else if (initMonthAfterZero === '12') {
-            preInitYear = initYear;
-            afterInitYear = String(parseInt(initYear) + 1);
+
+        let parseMonth;
+
+
+        if (initYearMonth[4] == '0') {
+            parseMonth = initYearMonth.substr(initYearMonth.length - 1, 1);
         } else {
-            preInitYear = initYear;
-            afterInitYear = initYear;
+            parseMonth = initYearMonth.substr(initYearMonth.length - 2, 2);
         }
 
-        const renderYearArr = [preInitYear, initYear, afterInitYear];
+        // VIP 要加regex判斷
+        const parseYear = initYearMonth.substr(0, 4);
+
+        if ( parseMonth === '1') {
+            console.log(' parseMonth===1');
+            preInitYear = String(parseInt(parseYear) - 1);
+            afterInitYear = parseYear;
+            console.log(preInitYear);
+        } else if ( parseMonth === '12') {
+            preInitYear = parseYear;
+            afterInitYear = String(parseInt(parseYear) + 1);
+        } else {
+            preInitYear = parseYear;
+            afterInitYear = parseYear;
+        }
+
+        const renderYearArr = [preInitYear, parseYear, afterInitYear];
         this.setState({
             preInitYear: preInitYear,
             afterInitYear: afterInitYear,
@@ -203,32 +218,106 @@ class CalendarHead extends Component {
             // initYear: initYear,
         });
     }
+    // 190213重構前
+    // handleYearArr() {
+    //     const { initMonthAfterZero, initYear } = this.state;
+    //     let preInitYear;
+    //     let afterInitYear;
 
+    //     if (initMonthAfterZero === '1') {
+    //         console.log('initMonthAfterZero===1');
+    //         preInitYear = String(parseInt(initYear) - 1);
+    //         afterInitYear = initYear;
+    //         console.log(preInitYear);
+    //     } else if (initMonthAfterZero === '12') {
+    //         preInitYear = initYear;
+    //         afterInitYear = String(parseInt(initYear) + 1);
+    //     } else {
+    //         preInitYear = initYear;
+    //         afterInitYear = initYear;
+    //     }
+
+    //     const renderYearArr = [preInitYear, initYear, afterInitYear];
+    //     this.setState({
+    //         preInitYear: preInitYear,
+    //         afterInitYear: afterInitYear,
+    //         renderYearArr: renderYearArr,
+    //         // initYear: initYear,
+    //     });
+    // }
+
+    // 看起來OK 190213 RC
     handleMonthArr() {
         const { initMonthAfterZero } = this.state;
-        if (initMonthAfterZero) {
-            let preInitMonth;
-            if (initMonthAfterZero === '1') {
-                preInitMonth = '12';
-            } else {
-                preInitMonth = String(parseInt(initMonthAfterZero) - 1);
-            }
+        // if (initMonthAfterZero) {
+        const { initYearMonth } = this.props;
+        let preInitMonth;
 
-            let afterInitMonth;
-            if (initMonthAfterZero === '12') {
-                afterInitMonth = '1';
-            } else {
-                afterInitMonth = String(parseInt(initMonthAfterZero) + 1);
-            }
+        // VIP 加入regex判斷來alert
 
-            const renderMonthArr = [preInitMonth, initMonthAfterZero, afterInitMonth];
-            this.setState({
-                preInitMonth: preInitMonth,
-                afterInitMonth: afterInitMonth,
-                renderMonthArr: renderMonthArr,
-            });
+        const parseYear = initYearMonth.substr(0, 4);
+        // let parseMonth = initYearMonth[0] == '0' ? initYearMonth.substr(initYearMonth.length -1 ,1) : initYearMonth.substr(initYearMonth.length -2 ,2);
+        let parseMonth;
+        console.log('initYearMonthQQQ');
+        console.log(initYearMonth);
+        if (initYearMonth[4] == '0') {
+            console.log('parseMonth if');
+            console.log(parseMonth);
+            parseMonth = initYearMonth.substr(initYearMonth.length - 1, 1);
+        } else {
+            console.log('parseMonth else');
+            console.log(parseMonth);
+            parseMonth = initYearMonth.substr(initYearMonth.length - 2, 2);
         }
+
+
+        if (parseMonth === '1') {
+            preInitMonth = '12';
+        } else {
+            preInitMonth = String(parseInt(parseMonth) - 1);
+        }
+
+        let afterInitMonth;
+        if (parseMonth === '12') {
+            afterInitMonth = '1';
+        } else {
+            afterInitMonth = String(parseInt(parseMonth) + 1);
+        }
+
+        const renderMonthArr = [preInitMonth, parseMonth, afterInitMonth];
+        this.setState({
+            preInitMonth: preInitMonth,
+            afterInitMonth: afterInitMonth,
+            renderMonthArr: renderMonthArr,
+        });
+        // }
     }
+    // 190213 重構前
+    // handleMonthArr() {
+    //     const { initMonthAfterZero } = this.state;
+    //     if (initMonthAfterZero) {
+    //         let preInitMonth;
+    //         if (initMonthAfterZero === '1') {
+    //             preInitMonth = '12';
+    //         } else {
+    //             preInitMonth = String(parseInt(initMonthAfterZero) - 1);
+    //         }
+
+    //         let afterInitMonth;
+    //         if (initMonthAfterZero === '12') {
+    //             afterInitMonth = '1';
+    //         } else {
+    //             afterInitMonth = String(parseInt(initMonthAfterZero) + 1);
+    //         }
+
+    //         const renderMonthArr = [preInitMonth, initMonthAfterZero, afterInitMonth];
+    //         this.setState({
+    //             preInitMonth: preInitMonth,
+    //             afterInitMonth: afterInitMonth,
+    //             renderMonthArr: renderMonthArr,
+    //         });
+    //     }
+    // }
 
     handleSlideClick(leftOrRight) {
         const {
