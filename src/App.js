@@ -121,6 +121,9 @@ class App extends Component {
         this.calendarAllRef.current.changeModeFunc();
     }
 
+    input = (newData) => {
+        this.calendarAllRef.current.calendarAllInput(newData);
+    }
 
     selectedDate = (val) => {
         // console.log('parent: ', val);

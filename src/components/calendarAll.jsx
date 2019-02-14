@@ -24,6 +24,7 @@ class CalendarAll extends Component {
 
     constructor(props) {
         super(props);
+        this.calendarBodyRef = React.createRef();
         this.state = {
             calendarData: null,
             nowYear: null,
@@ -128,6 +129,10 @@ class CalendarAll extends Component {
         }
     }
 
+    calendarAllInput = (newData) => {
+        console.log('calendarAllPrint Was called');
+        this.calendarBodyRef.current.calendarBodyInput(newData);
+    }
 
     render() {
         const { nowDate } = this.state;
@@ -161,6 +166,7 @@ class CalendarAll extends Component {
                         nowMonth = {this.state.nowMonth}
                         dataKeySetting= {this.props.dataKeySetting}
                         mode={this.state.mode}
+                        ref = {this.calendarBodyRef}
                     />
                 </div>
             </React.Fragment>

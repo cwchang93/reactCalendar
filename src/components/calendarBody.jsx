@@ -220,6 +220,39 @@ class CalendarBody extends Component {
     }
 
 
+    // 190214 inputData
+
+    calendarBodyInput = (newData) => {
+        const { travelData } = this.state;
+        console.log('newData印出來了', newData);
+        console.log(typeof(newData));
+        console.log('originaltripData', travelData );
+        // const processingTravelData = travelData;
+        const newTravelData = travelData;
+        for ( let i = 0; i < newData.length; i++ ) {
+            console.log('newData[i]');
+            console.log(newData[i]);
+            newTravelData.unshift(newData[i]); // 這邊不能另外賦值，否則會變數字
+            console.log('newTravelData', newTravelData);
+        }
+
+        this.setState({
+            travelData: newTravelData,
+        }, ()=> {
+            // this.resetDataBody();
+        });
+    }
+
+    resetDataBody= () => {
+        const { travelData } = this.state;
+        console.log('new travelData');
+        console.log(travelData);
+        console.log('typeof travelData');
+        console.log(typeof travelData);
+        this.filterArrFunc(travelData);
+    }
+
+
     renderDayContent() {
         const addBorder = this.state.clickClass;
         const dayContentArr = [];
