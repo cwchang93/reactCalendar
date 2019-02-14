@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { S_IFREG } from 'constants';
 // import ReactDOM from 'react-dom';
 // 待處理，使用者亂輸入變數時的validation
 // testing 190120
@@ -26,6 +27,18 @@ class CalendarHead extends Component {
         };
     }
 
+    componentDidMount() {
+        const { travelDataHead, initYear, initMonthRender } = this.state;
+        this.getData(this.props.path);
+        this.props.transferYearMonth(
+            this.state.initYear,
+            this.state.initMonthAfterZero
+        );
+        this.collectInitYearMonth();
+
+        console.log('123123213: ', this.props.maxYearMonth);
+    }
+
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.initYearMonth !== this.props.initYearMonth) {
             this.getData(this.props.path);
@@ -50,12 +63,6 @@ class CalendarHead extends Component {
                         console.log('renderDataFunc was called in getData');
                         this.renderDataFunc(this.state.travelDataHead, 'date');
                         this.collectInitYearMonth();
-                        // this.limitYearMonthFunc();
-                        // // console.log('hithere');
-                        // console.log('initYear7788');
-                        // console.log(this.state.initYear);
-                        // console.log('initMonth7788');
-                        // console.log(this.state.initMonthAfterZero);
                         this.props.transferYearMonth(
                             // 把state的參數值(y,m)傳到父曾
                             this.state.initYear,
@@ -67,18 +74,9 @@ class CalendarHead extends Component {
             .catch((error) => console.log('parsing failed', error));
     }
 
-    componentDidMount() {
-        const { travelDataHead, initYear, initMonthRender } = this.state;
-        this.getData(this.props.path);
-        this.props.transferYearMonth(
-            this.state.initYear,
-            this.state.initMonthAfterZero
-        );
-        this.collectInitYearMonth();
-    }
-
+    // duplicate 待會整理 190214
     renderDataFunc(jsonData, jsonKey) {
-        const { initYearMonth, initYear, initMonthafterZero } = this.state;
+        const { initYearMonth, initYear, initMonthafterZero } = this.props;
         console.log('jsonKey');
         console.log(jsonKey);
         const newArr = [];
@@ -96,11 +94,7 @@ class CalendarHead extends Component {
         const oldestYearMonth = oldestYear + oldestMonth; // string
         const newestYearMonth = newestYear + newestMonth; // string
 
-        console.log('initYear111');
-        console.log(initYear);
-        console.log('initMonthafterZero111');
-        console.log(initMonthafterZero);
-        let limitInitYearMonth; // 設定限制範圍(一開始rende時)
+        let limitInitYearMonth; // 設定限制範圍(一開始render時)
         if (initYearMonth < oldestYearMonth) {
             // 超出左邊極限
             limitInitYearMonth = String(parseInt(oldestYearMonth) + 1);
@@ -179,26 +173,28 @@ class CalendarHead extends Component {
     }
 
 
-    handleYearArr() {
+    handleYearArr() { // renderYear的function
         const { initMonthAfterZero, oldestYearMonth } = this.state;
-        const { initYearMonth } = this.props;
+        const { initYearMonth, maxYearMonth } = this.props;
         let preInitYear;
         let afterInitYear;
 
         let parseMonth;
-
+        // maxYearMonth
         // const regexYearMonth = ''
 
         // VIP 要加regex判斷  避免201813之類不符合的規範
         const validateYearMonth = /^[1|2][0-9]{3}([0][1-9]|10|11|12)/;
 
         if (validateYearMonth.test(initYearMonth)) {
-            console.log('oldest1993');
-            // if ( parseInt(initYearMonth) > 201812 ) {
+            // console.log('oldest1993');
+            // console.log('maxYearMonth in head');
+            // console.log(maxYearMonth); // bug 這裡一開始抓不到
+            if ( parseInt(initYearMonth) == '201812' ) {
             //     initYearMonth = '201812';
             //     // bug 當輸入201912之類的可以符合規範，但無法直接改變initYearMonth的值
             //     console.log('initYearMont>newest called');
-            // }
+            }
 
             if (initYearMonth[4] == '0') {
                 parseMonth = initYearMonth.substr(initYearMonth.length - 1, 1);
@@ -275,6 +271,13 @@ class CalendarHead extends Component {
             let parseMonth;
             console.log('initYearMonthQQQ');
             console.log(initYearMonth);
+            // if (initYearMonth == '201812') {
+            //     parseMonth = 11;
+            // } else if (initYearMonth == '201611') {
+            //     parseMonth = 10;
+            // }
+
+
             if (initYearMonth[4] == '0') {
                 console.log('parseMonth if');
                 console.log(parseMonth);

@@ -25,11 +25,60 @@ class CalendarAll extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            calendarData: null,
             nowYear: null,
             nowMonth: null,
             nowDate: null, // for testing
             mode: 'bodycalendar_month_mode',
+            minYearMonth: '',
+            maxYearMonth: '',
+            isLoadedData: false,
         };
+    }
+
+    componentDidMount() {
+        const { calendarData } = this.props;
+        this.getFirstData(this.props.path);
+        // this.findBorderYearMonthFunc(calendarData, 'date');
+    }
+
+    getFirstData(path) {
+        fetch(path)
+            .then((response) => {
+                return response.json();
+            })
+            .then((calendarData) =>
+            // return 變數
+                this.setState(
+                    {
+                        calendarData: calendarData,
+                    },
+                    () => {
+                        this.findBorderYearMonthFunc(calendarData, 'date');
+                    }
+                )
+            )
+            .catch((error) => console.log('parsing failed', error));
+    }
+
+    findBorderYearMonthFunc(jsonData, jsonKey) { // 原本為renderDataFunc
+        const newArr = [];
+        for (let i = 0; i < jsonData.length; i++) {
+            newArr.push(jsonData[i][jsonKey]);
+        }
+        const sortedArr = newArr.sort();
+        const minYear = sortedArr[0].substr(0, 4); // 找出整理後array的第一個的年
+        const minMonth = sortedArr[0].substr(5, 2); // 找出整理後array的第一個的月
+        const maxMonth = sortedArr[sortedArr.length - 1].substr(5, 2); // 找出整理後array的第一個月
+        const maxYear = sortedArr[sortedArr.length - 1].substr(0, 4); // 找出整理後array的第一個年
+
+        const minYearMonth = minYear + minMonth; // string
+        const maxYearMonth = maxYear + maxMonth; // string
+
+        this.setState({
+            minYearMonth: minYearMonth,
+            maxYearMonth: maxYearMonth,
+        });
     }
 
     selectedDate = (val) => {
@@ -82,8 +131,12 @@ class CalendarAll extends Component {
 
     render() {
         const { nowDate } = this.state;
-        console.log('appjsPath');
-        console.log(this.props.path);
+        // if (minYearMonth) {
+        const { minYearMonth } = this.props;
+        // console.log('minYearMonth123123');
+        // console.log(minYearMonth);
+        // console.log('maxYearMonth456456');
+        // console.log(maxYearMonth);
         return (
             <React.Fragment>
                 <div className="calendars">
@@ -92,13 +145,13 @@ class CalendarAll extends Component {
                         onClick={this.changeModeFunc}>
                         切換{ this.state.mode === 'bodycalendar_month_mode' ? '列表' : '月曆'}顯示
                     </div>
-
                     <CalendarHead path={this.props.path}
                         initYearMonth= {this.props.initYearMonth}
                         selectedDate={this.selectedDate}
                         transferYearMonth={this.transferYearMonth}
+                        maxYearMonth={this.state.maxYearMonth}
+                        minYearMonth={this.state.minYearMonth}
                     />
-
                     {/* <h1 className = 'text' > {this.props.text}</h1> */}
                     {/* <h2 className = 'test'>test2</h2> */}
                     <CalendarBody path={this.props.path}
@@ -113,6 +166,11 @@ class CalendarAll extends Component {
             </React.Fragment>
 
         );
+        // } else {
+        //     <div>
+        //         Nothing
+        //     </div>;
+        // }
     }
 }
 
