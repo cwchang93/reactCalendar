@@ -180,43 +180,57 @@ class CalendarHead extends Component {
 
 
     handleYearArr() {
-        const { initMonthAfterZero } = this.state;
+        const { initMonthAfterZero, oldestYearMonth } = this.state;
         const { initYearMonth } = this.props;
         let preInitYear;
         let afterInitYear;
 
         let parseMonth;
 
+        // const regexYearMonth = ''
 
-        if (initYearMonth[4] == '0') {
-            parseMonth = initYearMonth.substr(initYearMonth.length - 1, 1);
+        // VIP 要加regex判斷  避免201813之類不符合的規範
+        const validateYearMonth = /^[1|2][0-9]{3}([0][1-9]|10|11|12)/;
+
+        if (validateYearMonth.test(initYearMonth)) {
+            console.log('oldest1993');
+            // if ( parseInt(initYearMonth) > 201812 ) {
+            //     initYearMonth = '201812';
+            //     // bug 當輸入201912之類的可以符合規範，但無法直接改變initYearMonth的值
+            //     console.log('initYearMont>newest called');
+            // }
+
+            if (initYearMonth[4] == '0') {
+                parseMonth = initYearMonth.substr(initYearMonth.length - 1, 1);
+            } else {
+                parseMonth = initYearMonth.substr(initYearMonth.length - 2, 2);
+            }
+
+            const parseYear = initYearMonth.substr(0, 4);
+
+            if ( parseMonth === '1') {
+                console.log(' parseMonth===1');
+                preInitYear = String(parseInt(parseYear) - 1);
+                afterInitYear = parseYear;
+                console.log(preInitYear);
+            } else if ( parseMonth === '12') {
+                preInitYear = parseYear;
+                afterInitYear = String(parseInt(parseYear) + 1);
+            } else {
+                preInitYear = parseYear;
+                afterInitYear = parseYear;
+            }
+
+            const renderYearArr = [preInitYear, parseYear, afterInitYear];
+            this.setState({
+                preInitYear: preInitYear,
+                afterInitYear: afterInitYear,
+                renderYearArr: renderYearArr,
+                // initYear: initYear,
+            });
         } else {
-            parseMonth = initYearMonth.substr(initYearMonth.length - 2, 2);
+            alert('Wrong format type!');
         }
-
-        // VIP 要加regex判斷
-        const parseYear = initYearMonth.substr(0, 4);
-
-        if ( parseMonth === '1') {
-            console.log(' parseMonth===1');
-            preInitYear = String(parseInt(parseYear) - 1);
-            afterInitYear = parseYear;
-            console.log(preInitYear);
-        } else if ( parseMonth === '12') {
-            preInitYear = parseYear;
-            afterInitYear = String(parseInt(parseYear) + 1);
-        } else {
-            preInitYear = parseYear;
-            afterInitYear = parseYear;
-        }
-
-        const renderYearArr = [preInitYear, parseYear, afterInitYear];
-        this.setState({
-            preInitYear: preInitYear,
-            afterInitYear: afterInitYear,
-            renderYearArr: renderYearArr,
-            // initYear: initYear,
-        });
     }
     // 190213重構前
     // handleYearArr() {
@@ -250,46 +264,50 @@ class CalendarHead extends Component {
     handleMonthArr() {
         const { initMonthAfterZero } = this.state;
         // if (initMonthAfterZero) {
+        // let parseMonth = initYearMonth[0] == '0' ? initYearMonth.substr(initYearMonth.length -1 ,1) : initYearMonth.substr(initYearMonth.length -2 ,2);
         const { initYearMonth } = this.props;
         let preInitMonth;
 
         // VIP 加入regex判斷來alert
 
-        const parseYear = initYearMonth.substr(0, 4);
-        // let parseMonth = initYearMonth[0] == '0' ? initYearMonth.substr(initYearMonth.length -1 ,1) : initYearMonth.substr(initYearMonth.length -2 ,2);
-        let parseMonth;
-        console.log('initYearMonthQQQ');
-        console.log(initYearMonth);
-        if (initYearMonth[4] == '0') {
-            console.log('parseMonth if');
-            console.log(parseMonth);
-            parseMonth = initYearMonth.substr(initYearMonth.length - 1, 1);
+        const validateYearMonth = /^[1|2][0-9]{3}([0][1-9]|10|11|12)/;
+        if (validateYearMonth.test(initYearMonth)) {
+            let parseMonth;
+            console.log('initYearMonthQQQ');
+            console.log(initYearMonth);
+            if (initYearMonth[4] == '0') {
+                console.log('parseMonth if');
+                console.log(parseMonth);
+                parseMonth = initYearMonth.substr(initYearMonth.length - 1, 1);
+            } else {
+                console.log('parseMonth else');
+                console.log(parseMonth);
+                parseMonth = initYearMonth.substr(initYearMonth.length - 2, 2);
+            }
+
+
+            if (parseMonth === '1') {
+                preInitMonth = '12';
+            } else {
+                preInitMonth = String(parseInt(parseMonth) - 1);
+            }
+
+            let afterInitMonth;
+            if (parseMonth === '12') {
+                afterInitMonth = '1';
+            } else {
+                afterInitMonth = String(parseInt(parseMonth) + 1);
+            }
+
+            const renderMonthArr = [preInitMonth, parseMonth, afterInitMonth];
+            this.setState({
+                preInitMonth: preInitMonth,
+                afterInitMonth: afterInitMonth,
+                renderMonthArr: renderMonthArr,
+            });
         } else {
-            console.log('parseMonth else');
-            console.log(parseMonth);
-            parseMonth = initYearMonth.substr(initYearMonth.length - 2, 2);
+            alert('Wrong format type!');
         }
-
-
-        if (parseMonth === '1') {
-            preInitMonth = '12';
-        } else {
-            preInitMonth = String(parseInt(parseMonth) - 1);
-        }
-
-        let afterInitMonth;
-        if (parseMonth === '12') {
-            afterInitMonth = '1';
-        } else {
-            afterInitMonth = String(parseInt(parseMonth) + 1);
-        }
-
-        const renderMonthArr = [preInitMonth, parseMonth, afterInitMonth];
-        this.setState({
-            preInitMonth: preInitMonth,
-            afterInitMonth: afterInitMonth,
-            renderMonthArr: renderMonthArr,
-        });
         // }
     }
     // 190213 重構前
