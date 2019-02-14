@@ -8,6 +8,7 @@ class CalendarBody extends Component {
         super(props);
         this.state = {
             travelData: null,
+            travelDataInput: null,
             weekDay: [
                 '星期日',
                 '星期一',
@@ -237,19 +238,19 @@ class CalendarBody extends Component {
         }
 
         this.setState({
-            travelData: newTravelData,
+            travelDataInput: newTravelData,
         }, ()=> {
-            // this.resetDataBody();
+            // this.calendarBodyReset();
         });
     }
 
-    resetDataBody= () => {
+    calendarBodyReset= () => {
         const { travelData } = this.state;
         console.log('new travelData');
         console.log(travelData);
         console.log('typeof travelData');
         console.log(typeof travelData);
-        this.filterArrFunc(travelData);
+        // this.filterArrFunc(travelData);
     }
 
 

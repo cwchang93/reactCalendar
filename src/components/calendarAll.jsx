@@ -134,6 +134,10 @@ class CalendarAll extends Component {
         this.calendarBodyRef.current.calendarBodyInput(newData);
     }
 
+    calendarAllReset() {
+        this.calendarBodyRef.current.calendarBodyReset();
+    }
+
     render() {
         const { nowDate } = this.state;
         // if (minYearMonth) {
