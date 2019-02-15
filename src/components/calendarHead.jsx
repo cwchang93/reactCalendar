@@ -6,6 +6,8 @@ import { S_IFREG } from 'constants';
 class CalendarHead extends Component {
     constructor(props) {
         super(props);
+        this.rightClickRef = React.createRef();
+        this.leftClickRef = React.createRef();
         this.state = {
             initYearMonth: props.initYearMonth,
             travelDataHead: null,
@@ -36,7 +38,7 @@ class CalendarHead extends Component {
         );
         this.collectInitYearMonth();
 
-        console.log('123123213: ', this.props.maxYearMonth);
+        // console.log('123123213: ', this.props.maxYearMonth);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -60,7 +62,7 @@ class CalendarHead extends Component {
                         travelDataHead: travelDataHead,
                     },
                     () => {
-                        console.log('renderDataFunc was called in getData');
+                        // console.log('renderDataFunc was called in getData');
                         this.renderDataFunc(this.state.travelDataHead, 'date');
                         this.collectInitYearMonth();
                         this.props.transferYearMonth(
@@ -77,13 +79,13 @@ class CalendarHead extends Component {
     // duplicate 待會整理 190214
     renderDataFunc(jsonData, jsonKey) {
         const { initYearMonth, initYear, initMonthafterZero } = this.props;
-        console.log('jsonKey');
-        console.log(jsonKey);
+        // console.log('jsonKey');
+        // console.log(jsonKey);
         const newArr = [];
         for (let i = 0; i < jsonData.length; i++) {
             newArr.push(jsonData[i][jsonKey]);
         }
-        console.log(newArr);
+        // console.log(newArr);
 
         const sortedArr = newArr.sort();
         const oldestYear = sortedArr[0].substr(0, 4); // 找出整理後array的第一個的年
@@ -269,8 +271,6 @@ class CalendarHead extends Component {
         const validateYearMonth = /^[1|2][0-9]{3}([0][1-9]|10|11|12)/;
         if (validateYearMonth.test(initYearMonth)) {
             let parseMonth;
-            console.log('initYearMonthQQQ');
-            console.log(initYearMonth);
             // if (initYearMonth == '201812') {
             //     parseMonth = 11;
             // } else if (initYearMonth == '201611') {
@@ -279,8 +279,8 @@ class CalendarHead extends Component {
 
 
             if (initYearMonth[4] == '0') {
-                console.log('parseMonth if');
-                console.log(parseMonth);
+                // console.log('parseMonth if');
+                // console.log(parseMonth);
                 parseMonth = initYearMonth.substr(initYearMonth.length - 1, 1);
             } else {
                 console.log('parseMonth else');
@@ -341,6 +341,9 @@ class CalendarHead extends Component {
     // }
 
     handleSlideClick(leftOrRight) {
+        // 印出modle
+
+
         const {
             initYear,
             initMonthAfterZero,
@@ -374,6 +377,7 @@ class CalendarHead extends Component {
             leftOrRight == 'left' &&
       slideYearMonth > String(parseInt(oldestYearMonth))
         ) {
+            // console.log(this.leftClickRef.current);
             let leftSlideInitMonth; // 點左邊箭頭後中間的呈現的值
             let leftSlideRenderMonthArr;
             let leftSlideInitYear;
@@ -484,14 +488,15 @@ class CalendarHead extends Component {
             leftOrRight == 'right' &&
       slideYearMonth < String(parseInt(newestYearMonth))
         ) {
+            // console.log(this.rightClickRef.current);
             let rightSlideInitMonth; // 點右邊箭頭後中間的呈現的值
             let rightSlideRenderMonthArr;
             // NOTE: const 不能在外面宣告 -> 改let
             let rightSlideInitYear;
             let rightSlideRenderYearArr;
 
-            console.log('rightSlideInitMonth, rightclick');
-            console.log(rightSlideInitMonth);
+            // console.log('rightSlideInitMonth, rightclick');
+            // console.log(rightSlideInitMonth);
 
             if (initMonthAfterZero === '1') {
                 rightSlideInitMonth = '2';
@@ -605,8 +610,8 @@ class CalendarHead extends Component {
 
         let backgroundArr = [];
         // 這邊不能用const因為const不能變更
-        console.log('renderInitYearMonth741741');
-        console.log(renderInitYearMonth);
+        // console.log('renderInitYearMonth741741');
+        // console.log(renderInitYearMonth);
         if ( renderInitYearMonth > oldestYearMonth && renderInitYearMonth < newestYearMonth ) {
             backgroundArr = ['', 'active', ''];
         } else if ( renderInitYearMonth <= oldestYearMonth ) {
@@ -625,8 +630,8 @@ class CalendarHead extends Component {
 
         let boxTextArr = [];
         // 這邊不能用const因為const不能變更
-        console.log('renderInitYearMonth741741');
-        console.log(renderInitYearMonth);
+        // console.log('renderInitYearMonth741741');
+        // console.log(renderInitYearMonth);
         if ( renderInitYearMonth > oldestYearMonth && renderInitYearMonth < newestYearMonth ) {
             boxTextArr = ['', 'activeText', ''];
         } else if ( renderInitYearMonth <= oldestYearMonth ) {
@@ -673,8 +678,11 @@ class CalendarHead extends Component {
                             {/* 因為有分左右兩邊點擊所以要分三個寫 */}
                             <li
                                 className="tophead__month"
-                                onClick={() => {
+                                ref={this.leftClickRef}
+                                onClick={(e) => {
                                     this.handleSlideClick('left');
+                                    this.props.printModule();
+                                    console.log(e.currentTarget);
                                 }}
                             >
                                 <a href="#"
@@ -702,8 +710,11 @@ class CalendarHead extends Component {
                             </li>
                             <li
                                 className="tophead__month"
-                                onClick={() => {
+                                ref={this.rightClickRef}
+                                onClick={(e) => {
                                     this.handleSlideClick('right');
+                                    this.props.printModule();
+                                    console.log(e.currentTarget);
                                 }}
                             >
                                 <a href="#"
@@ -712,8 +723,9 @@ class CalendarHead extends Component {
                                     <div className="wrap_right">
 
                                         <span className="arrow_wrap_right"
+
                                             onClick={() => {
-                                                this.handleSlideClick('left');
+                                                this.handleSlideClick('right');
                                             }}></span>
 
                                     </div>

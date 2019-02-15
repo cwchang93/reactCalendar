@@ -54,9 +54,9 @@ class App extends Component {
                 initYearMonth: '201706',
             });
         }
-        console.log('Date.parse(initYearMonth)');
-        console.log(Date.parse(initYearMonth));
-        console.log(Date.parse(maxYearMonth));
+        // console.log('Date.parse(initYearMonth)');
+        // console.log(Date.parse(initYearMonth));
+        // console.log(Date.parse(maxYearMonth));
         if (Date.parse(initYearMonth) > Date.parse(maxYearMonth)) {
             alert('Hey 哥(姐)，太超過摟!!!  將設定到最後一頁');
             this.setState({
@@ -186,6 +186,25 @@ class App extends Component {
         });
     }
 
+    printModule = () => {
+        console.log(this);
+    }
+
+    nextMonth = () => {
+        this.calendarAllRef.current.calendarAllNextMonth();
+        console.log(this);
+    }
+
+    prevMonth = () => {
+        this.calendarAllRef.current.calendarAllPrevMonth();
+        console.log(this);
+    }
+
+    destroy() {
+        console.log('destroy was called');
+        this.calendarAllRef.current.componentWillUnmount();
+    }
+
     render() {
         // const { minYearMonth, maxYearMonth } = this.state;
         // console.log('安安');
@@ -200,6 +219,7 @@ class App extends Component {
                         path={this.props.dataSource}
                         initYearMonth= {this.state.initYearMonth}
                         dataKeySetting= {this.props.dataKeySetting}
+                        printModule = {this.printModule}
                     />
                 }
 

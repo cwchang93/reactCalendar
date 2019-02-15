@@ -25,6 +25,7 @@ class CalendarAll extends Component {
     constructor(props) {
         super(props);
         this.calendarBodyRef = React.createRef();
+        this.calendarHeadRef = React.createRef();
         this.state = {
             calendarData: null,
             nowYear: null,
@@ -41,6 +42,11 @@ class CalendarAll extends Component {
         const { calendarData } = this.props;
         this.getFirstData(this.props.path);
         // this.findBorderYearMonthFunc(calendarData, 'date');
+    }
+
+    componentWillUnmount() {
+        console.log('Say Good Bye in calendarAll');
+        this.getFirstData(this.props.path);
     }
 
     getFirstData(path) {
@@ -91,16 +97,16 @@ class CalendarAll extends Component {
 
     transferYearMonth = (y, m) => {
         const initYearMonth = this.props;
-        console.log('transferYMFunc');
-        console.log('year: ', y);
-        console.log('month ', m);
-        console.log('initYearMonth in transferYearMonth');
+        // console.log('transferYMFunc');
+        // console.log('year: ', y);
+        // console.log('month ', m);
+        // console.log('initYearMonth in transferYearMonth');
         // console.log(this.props.initYearMonth);
         if (m) { // 避免第一次render時沒有資料，須設定m存在時
             let nowYearMonth;
             nowYearMonth = `${y}${ m.length === 1 ? '0' : '' }${m}`;
-            console.log('nowYearMonthintransferYearMonth');
-            console.log(nowYearMonth);
+            // console.log('nowYearMonthintransferYearMonth');
+            // console.log(nowYearMonth);
             if (nowYearMonth > '201812') {
                 y = '2018';
                 m = '12';
@@ -138,6 +144,25 @@ class CalendarAll extends Component {
         this.calendarBodyRef.current.calendarBodyReset(resetData);
     }
 
+    calendarAllNextMonth = () => {
+        this.calendarHeadRef.current.handleSlideClick('right');
+        // console.log('ALL');
+        this.calendarBodyRef.current.printNextMonthData(); // 其實是print this Month
+
+        // console.log('window');
+        // console.log(this);  // 會印出calendarAll的 Module
+    }
+
+    calendarAllPrevMonth = () => {
+        this.calendarHeadRef.current.handleSlideClick('left');
+        this.calendarBodyRef.current.printNextMonthData(); // 其實是print this Month
+    }
+
+    printModule = () => {
+        console.log(this);
+    }
+
+
     render() {
         const { nowDate } = this.state;
         // if (minYearMonth) {
@@ -160,6 +185,8 @@ class CalendarAll extends Component {
                         transferYearMonth={this.transferYearMonth}
                         maxYearMonth={this.state.maxYearMonth}
                         minYearMonth={this.state.minYearMonth}
+                        ref = {this.calendarHeadRef}
+                        printModule = {this.props.printModule}
                     />
                     {/* <h1 className = 'text' > {this.props.text}</h1> */}
                     {/* <h2 className = 'test'>test2</h2> */}

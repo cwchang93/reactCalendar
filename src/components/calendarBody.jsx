@@ -215,7 +215,7 @@ class CalendarBody extends Component {
 
         const finalSortedArr = uniqueDataArr.concat(sortedDataArr);
         // return sortedDataArr;
-        console.log('最終篩選: finalSortedArr');
+        // console.log('最終篩選: finalSortedArr');  VIP
         console.log(finalSortedArr);
         return finalSortedArr;
     }
@@ -225,9 +225,9 @@ class CalendarBody extends Component {
 
     calendarBodyInput = (newData) => {
         const { travelData } = this.state;
-        console.log('newData印出來了', newData);
-        console.log(typeof(newData));
-        console.log('originaltripData', travelData );
+        // console.log('newData印出來了', newData);
+        // console.log(typeof(newData));
+        // console.log('originaltripData', travelData );
         // const processingTravelData = travelData;
         let newTravelData;
         newTravelData = travelData; // Key 這邊指向同一個，所以都會被改變!
@@ -270,8 +270,8 @@ class CalendarBody extends Component {
         const nowMonthLen = new Date(nowYear, nowMonth, 0).getDate();
         const newDataForCompare = this.filterArrFunc(this.state.travelData);
         if (newDataForCompare.length) {
-            console.log('RENDERDAYCON:newDtArr');
-            console.log(newDataForCompare);
+            // console.log('RENDERDAYCON:newDtArr');
+            // console.log(newDataForCompare);
             for (let j = 0; j < nowMonthLen; j++) {
                 const idDate = `${nowYear}/${
                     nowMonth.length == 1 ? '0' : ''
@@ -280,7 +280,6 @@ class CalendarBody extends Component {
                 }${j + 1}`;
 
                 if (mode === 'bodycalendar_month_mode') {
-                    console.log('MonthCalendarArr');
                     dayContentArr.push(
                         <div className={ j + 1 == toggleId ? ' day clicked' : 'day'}
                             id={j + 1}
@@ -316,10 +315,6 @@ class CalendarBody extends Component {
         const { guaranteed, status, available, price, total } = this.props.dataKeySetting;
         const { clickClass } = this.state;
         for (let k = 0; k < compareData.length; k++) {
-            // console.log('compareData matchDay');
-            // console.log(compareData);
-            // console.log('this.props.dataKeySetting in matchDay');
-            // console.log(this.props.dataKeySetting.guaranteed);
             if (idDate === compareData[k].date) {
                 // 依照狀態判斷並變更status的的className
                 let classStatus = '';
@@ -364,28 +359,10 @@ class CalendarBody extends Component {
 
 
     renderWeekDay = (idDate) => { // ListMonde裡面render星期的function
-        // const { nowYear, nowMonth } = this.state;
         const renderDate = idDate.substr(idDate.length - 2, 2);
-        console.log('dateinrender');
-        console.log(renderDate);
-        // console.log('idDate in renderWeekDay');
-        // console.log(idDate);
-        // console.log('nowYearinrender');
-        // console.log(nowYear);
-        // console.log('nowMonthinrender');
-        // console.log(nowMonth);
-        // if (nowYear) {
         const renderYear = idDate.substr(0, 4);
         const renderMonth = idDate.substr(5, 2);
-        // console.log('renderYear999');
-        // console.log(renderYear);
-        // console.log('renderMonth999');
-        // console.log(renderMonth);
-        // console.log(typeof(renderMonth));
         const renderWDay = new Date(renderYear, parseInt(renderMonth) - 1, renderDate );
-        // console.log('renderWDay was called');
-        console.log('renderWDay.getDay()8787');
-        console.log(renderWDay.getDay());
         const renderNewDay = renderWDay.getDay();
 
         let renderFinalWeekDay;
@@ -409,8 +386,6 @@ class CalendarBody extends Component {
 
     showWeekDay= () => {
         const showDay = this.renderWeekDay();
-        console.log('showDay was called');
-        console.log(showDay);
     }
 
     // listMode
@@ -474,7 +449,7 @@ class CalendarBody extends Component {
 
     wasClicked = (e) => {
         // console.log(e.currentTarget.getAttribute('id'));
-        console.log(e.currentTarget.getAttribute('id'));
+        // console.log(e.currentTarget.getAttribute('id'));
         // if (e.currentTarget)
         this.setState({
             toggleId: e.currentTarget.getAttribute('id'),
@@ -483,10 +458,20 @@ class CalendarBody extends Component {
     }
 
     printToggleId = () => {
-        console.log('toggleIdWasCalled');
-        console.log(this.state.toggleId);
+        // console.log('toggleIdWasCalled');
+        // console.log(this.state.toggleId);
     }
 
+    printNextMonthData = () => {
+        const compareData = this.filterArrFunc(this.state.travelData);
+        // console.log('88888888');
+        // console.log(compareData);
+    }
+    printPrevMonthData = () => {
+        const compareData = this.filterArrFunc(this.state.travelData);
+        console.log('77777777');
+        console.log(compareData);
+    }
 
     render() {
         const { travelData, weekDay, newDataArr } = this.state;
