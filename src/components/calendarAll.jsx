@@ -177,10 +177,12 @@ class CalendarAll extends Component {
         return (
             <React.Fragment>
                 <div className="calendars" >
+                    <div className="underLine_wrap">
 
-                    <div className="underLine"
-                        onClick={this.changeModeFunc}>
+                        <div className="underLine"
+                            onClick={this.changeModeFunc}>
                         切換{ this.state.mode === 'bodycalendar_month_mode' ? '列表' : '月曆'}顯示
+                        </div>
                     </div>
                     <CalendarHead path={this.props.path}
                         initYearMonth= {this.props.initYearMonth}

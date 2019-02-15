@@ -36,6 +36,7 @@ class App extends Component {
         super(props);
         this.calendarAllRef = React.createRef();
         this.state = {
+            isAlive: true,
             nowYear: null,
             nowMonth: null,
             nowDate: null, // for testing
@@ -211,9 +212,18 @@ class App extends Component {
 
     destroy() {
         console.log('destroy was called');
-        this.calendarAllRef.current.componentWillUnmount();
+        // this.calendarAllRef.current.componentWillUnmount();
+        this.setState({
+            isAlive: false,
+        });
         // console.log();
         // console.log(this.calendarAllRef).queryselector();
+    }
+
+    alive() {
+        this.setState({
+            isAlive: true,
+        });
     }
 
     render() {
@@ -224,7 +234,8 @@ class App extends Component {
 
         return (
             <React.Fragment>
-                {this.state.isLoad &&
+
+                {this.state.isLoad && this.state.isAlive &&
                     <CalendarAll
                         ref = {this.calendarAllRef}
                         path={this.props.dataSource}

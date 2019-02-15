@@ -283,8 +283,8 @@ class CalendarHead extends Component {
                 // console.log(parseMonth);
                 parseMonth = initYearMonth.substr(initYearMonth.length - 1, 1);
             } else {
-                console.log('parseMonth else');
-                console.log(parseMonth);
+                // console.log('parseMonth else');
+                // console.log(parseMonth);
                 parseMonth = initYearMonth.substr(initYearMonth.length - 2, 2);
             }
 
