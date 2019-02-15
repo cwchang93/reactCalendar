@@ -125,8 +125,8 @@ class App extends Component {
         this.calendarAllRef.current.calendarAllInput(newData);
     }
 
-    reset() {
-        this.calendarAllRef.current.calendarAllReset();
+    reset(resetData) {
+        this.calendarAllRef.current.calendarAllReset(resetData);
     }
 
     selectedDate = (val) => {

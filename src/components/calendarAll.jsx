@@ -134,8 +134,8 @@ class CalendarAll extends Component {
         this.calendarBodyRef.current.calendarBodyInput(newData);
     }
 
-    calendarAllReset() {
-        this.calendarBodyRef.current.calendarBodyReset();
+    calendarAllReset(resetData) {
+        this.calendarBodyRef.current.calendarBodyReset(resetData);
     }
 
     render() {
@@ -148,7 +148,7 @@ class CalendarAll extends Component {
         // console.log(maxYearMonth);
         return (
             <React.Fragment>
-                <div className="calendars">
+                <div className="calendars" >
 
                     <div className="underLine"
                         onClick={this.changeModeFunc}>

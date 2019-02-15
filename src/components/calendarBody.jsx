@@ -229,28 +229,36 @@ class CalendarBody extends Component {
         console.log(typeof(newData));
         console.log('originaltripData', travelData );
         // const processingTravelData = travelData;
-        const newTravelData = travelData;
+        let newTravelData;
+        newTravelData = travelData; // Key 這邊指向同一個，所以都會被改變!
         for ( let i = 0; i < newData.length; i++ ) {
             console.log('newData[i]');
             console.log(newData[i]);
             newTravelData.unshift(newData[i]); // 這邊不能另外賦值，否則會變數字
             console.log('newTravelData', newTravelData);
         }
+        const newInputData = this.filterArrFunc(newTravelData);
 
         this.setState({
-            travelDataInput: newTravelData,
+            travelDataInput: newInputData,
         }, ()=> {
             // this.calendarBodyReset();
         });
     }
 
-    calendarBodyReset= () => {
+    calendarBodyReset= (resetData) => {
         const { travelData } = this.state;
-        console.log('new travelData');
-        console.log(travelData);
-        console.log('typeof travelData');
-        console.log(typeof travelData);
+        // console.log('travelData123');
+        // console.log(travelData);
+        // console.log('typeof travelData');
+        // console.log(typeof travelData);
         // this.filterArrFunc(travelData);
+        console.log('resetData');
+        console.log(resetData);
+        const resetDataArr = resetData;
+        this.setState({
+            travelData: resetDataArr,
+        });
     }
 
 
