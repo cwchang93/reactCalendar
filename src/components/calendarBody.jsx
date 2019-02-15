@@ -283,7 +283,12 @@ class CalendarBody extends Component {
                     dayContentArr.push(
                         <div className={ j + 1 == toggleId ? ' day clicked' : 'day'}
                             id={j + 1}
-                            onClick={this.wasClicked}>
+                            onClick={this.wasClicked}
+                            // onClick={(e)=> {
+                            //     this.wasClicked();
+                            //     console.log(e.currentTarget);
+                            // }}
+                        >
 
                             <div className="generalinfo" />
                             <span className="daynum"
@@ -295,7 +300,7 @@ class CalendarBody extends Component {
                         </div>
                     );
                 } else {
-                    console.log('ListCalendarwas called');
+                    // console.log('ListCalendarwas called');
                     dayContentArr.push(
                         <React.Fragment>
 
@@ -409,7 +414,13 @@ class CalendarBody extends Component {
                         <div className={ j + 1 == toggleId ? ' day clicked' : 'day'}
                         // <div className={ 'day'}
                             id={j + 1}
-                            onClick={this.wasClicked}>
+                            onClick={
+                                this.wasClicked
+                            }
+                            // onClick={(e)=> {
+                            //     console.log(e.currentTarget);
+                            // }}
+                        >
 
                             <div className="generalinfo" />
                             <div className="dayweekblock">
@@ -463,14 +474,14 @@ class CalendarBody extends Component {
     }
 
     printNextMonthData = () => {
-        const compareData = this.filterArrFunc(this.state.travelData);
+        // const compareData = this.filterArrFunc(this.state.travelData);
         // console.log('88888888');
         // console.log(compareData);
     }
     printPrevMonthData = () => {
-        const compareData = this.filterArrFunc(this.state.travelData);
-        console.log('77777777');
-        console.log(compareData);
+        // const compareData = this.filterArrFunc(this.state.travelData);
+        // console.log('77777777');
+        // console.log(compareData);
     }
 
     render() {

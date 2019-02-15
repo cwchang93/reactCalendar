@@ -6,6 +6,14 @@ import './App.scss';
 import CalendarAll from './components/calendarAll.jsx';
 // webpack 這邊需要加jsx才能找得到
 
+// const initialState = {
+//     nowYear: null,
+//     nowMonth: null,
+//     nowDate: null, // for testing
+//     isLoad: null,
+//     minYearMonth: null,
+//     maxYearMonth: null,
+// };
 
 class App extends Component {
     // 只要用到props就要指定型別
@@ -41,6 +49,7 @@ class App extends Component {
         this.getFirstData(this.props.dataSource);
         this.setState({ initYearMonth: this.props.initYearMonth, isLoad: true });
     }
+
 
     // 一開始先檢測initYearMonth是否符合規定
     // 若超出範圍 => 會顯示最近的
@@ -125,7 +134,7 @@ class App extends Component {
         this.calendarAllRef.current.calendarAllInput(newData);
     }
 
-    reset(resetData) {
+    resetData(resetData) {
         this.calendarAllRef.current.calendarAllReset(resetData);
     }
 
@@ -203,6 +212,8 @@ class App extends Component {
     destroy() {
         console.log('destroy was called');
         this.calendarAllRef.current.componentWillUnmount();
+        // console.log();
+        // console.log(this.calendarAllRef).queryselector();
     }
 
     render() {

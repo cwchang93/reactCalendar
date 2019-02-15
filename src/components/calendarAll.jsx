@@ -47,6 +47,9 @@ class CalendarAll extends Component {
     componentWillUnmount() {
         console.log('Say Good Bye in calendarAll');
         this.getFirstData(this.props.path);
+
+        console.log(document.querySelector('#root').childNodes[0]);
+        document.querySelector('#root').removeChild(document.querySelector('#root').childNodes[0]);
     }
 
     getFirstData(path) {
@@ -159,7 +162,7 @@ class CalendarAll extends Component {
     }
 
     printModule = () => {
-        console.log(this);
+        // console.log(this);
     }
 
 

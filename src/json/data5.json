@@ -1,0 +1,25 @@
+[{
+    "guaranteed": false,
+    "date": "2017/10/06",
+    "price": 76263,
+    "availableVancancy": 16,
+    "totalVacnacy": 166,
+    "status": "預定"
+},
+{
+    "guaranteed": false,
+    "date": "2017/10/09",
+    "price": 81524,
+    "availableVancancy": 10,
+    "totalVacnacy": 164,
+    "status": "預定"
+},
+{
+    "guaranteed": true,
+    "date": "2017/10/27",
+    "price": 60541,
+    "availableVancancy": 80,
+    "totalVacnacy": 9,
+    "status": "報名"
+}
+]
