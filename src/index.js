@@ -14,7 +14,6 @@ const jsonDate = {
     // 4. 頭尾兩邊的月份不能點=> render的變數需要更正  ok
     // Body
     // 1.
-
     // "certain": false,
     // "date": "2017/08/26",
     // "price": 909,
