@@ -436,7 +436,7 @@ class CalendarBody extends Component {
                                 style={{
                                     display: compareData[k][guaranteed] === true ? '' : 'none',
                                 }}
-                            >
+                            ><i className="fas fa-flag"></i>
               成團
                             </span>
                             <div className="details">

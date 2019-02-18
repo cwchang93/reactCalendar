@@ -181,7 +181,9 @@ class CalendarAll extends Component {
 
                         <div className="underLine"
                             onClick={this.changeModeFunc}>
-                        切換{ this.state.mode === 'bodycalendar_month_mode' ? '列表' : '月曆'}顯示
+                            <i className = { this.state.mode === 'bodycalendar_month_mode' ? 'fas fa-list-ul' : 'fas fa-calendar-alt'}></i>
+
+                        &nbsp;切換{ this.state.mode === 'bodycalendar_month_mode' ? '列表' : '月曆'}顯示
                         </div>
                     </div>
                     <CalendarHead path={this.props.path}

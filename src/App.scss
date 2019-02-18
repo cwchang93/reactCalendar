@@ -25,13 +25,12 @@ $classname: "calendars";
     // top:-22px;
     position: absolute;
 
-    margin-left: 500px;
     font-size:15px;
     top:0;
     right:0;
     color:rgb(30, 135, 188);
     cursor: pointer;
-    width:95px;
+    width:auto;
     height: 17px;
     border-bottom:dashed 1px rgb(227, 227, 277);
      
@@ -365,7 +364,7 @@ $classname: "calendars";
           /* width: 100%; */
           font-size: 14px;
           z-index: 1;
-          width: 40px;
+          width: 45px;
           height: 20px;
           color: #fff;
           /* text-align: right; */
