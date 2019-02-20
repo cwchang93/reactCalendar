@@ -291,10 +291,13 @@ class CalendarBody extends Component {
                         >
 
                             <div className="generalinfo" />
-                            <span className="daynum"
-                                id={idDate}>
-                                {j + 1}{' '}
-                            </span>
+                            <div className="dayweekblock">
+                                <span className="daynum"
+                                    id={idDate}>
+                                    {j + 1}{' '}
+                                </span>
+                                <span className="wkDayList"></span>
+                            </div>
 
                             {this.matchDay(idDate, newDataForCompare)}
                         </div>
@@ -340,7 +343,7 @@ class CalendarBody extends Component {
                             style={{
                                 display: compareData[k][guaranteed] === true ? '' : 'none',
                             }}
-                        >
+                        ><i className="fas fa-flag"></i>
               成團
                         </span>
                         <div className="details">

@@ -20,6 +20,7 @@ class App extends Component {
     static propTypes = {
         text: PropTypes.string,
         dataSource: PropTypes.string,
+        // dataSource: PropTypes.array,
         initYearMonth: PropTypes.string,
         dataKeySetting: PropTypes.object,
         test: PropTypes.string,

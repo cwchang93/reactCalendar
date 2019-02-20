@@ -149,6 +149,14 @@ $classname: "calendars";
       }
     }
 
+    .dayweekblock {
+      // display: none;
+    }
+
+    .fas {
+      display:none;
+    }
+
     .daycontainer {
       display: flex;
       box-sizing: border-box;
