@@ -339,10 +339,7 @@ class CalendarBody extends Component {
                         {/* className={clickClass}> */}
 
                         <span
-                            className="guaranteed"
-                            style={{
-                                display: compareData[k][guaranteed] === true ? '' : 'none',
-                            }}
+                            className= {compareData[k][guaranteed] === true ? 'guaranteed' : 'guaranteednone'}
                         ><i className="fas fa-flag"></i>
               成團
                         </span>
@@ -435,10 +432,7 @@ class CalendarBody extends Component {
                             </div>
 
                             <span
-                                className="guaranteed"
-                                style={{
-                                    display: compareData[k][guaranteed] === true ? '' : 'none',
-                                }}
+                                className= {compareData[k][guaranteed] === true ? 'guaranteed' : 'guaranteednone'}
                             ><i className="fas fa-flag"></i>
               成團
                             </span>
